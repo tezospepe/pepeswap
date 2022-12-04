@@ -15,6 +15,7 @@ import { GlobalStyle } from 'styles/global-styles';
 import { HomePage } from './pages/HomePage/Loadable';
 import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
+import { Swap } from './pages/Swap';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -33,6 +34,7 @@ export function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/swap" element={<Swap />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <GlobalStyle />
