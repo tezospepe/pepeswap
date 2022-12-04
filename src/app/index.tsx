@@ -12,10 +12,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { GlobalStyle } from 'styles/global-styles';
 
+import { Swap } from './pages/Swap/Loadable';
 import { HomePage } from './pages/HomePage/Loadable';
 import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
-import { Swap } from './pages/Swap';
 
 export function App() {
   const { i18n } = useTranslation();
