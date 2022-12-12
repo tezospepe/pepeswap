@@ -7,7 +7,6 @@ export function SwapWidget() {
   return (
     <Wrapper>
       <MainWidget>
-        <Header></Header>
         <Options>
           <UilSlidersVAlt size="25px" />
           <UilSync size="25px" />
