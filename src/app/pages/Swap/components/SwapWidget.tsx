@@ -109,11 +109,10 @@ const Tabs = styled.div`
   gap: 10px;
 `;
 
-//todo: use color from theme - shouldn't be hardcoded
 const ConnectButton = styled.button`
   width: 100%;
-  background: rgba(90, 94, 230, 1);
-  border: 1px solid rgba(90, 94, 230, 1);
+  background: ${p => p.theme.backgroundVariant};
+  border: 1px solid ${p => p.theme.backgroundVariant};
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
@@ -137,13 +136,13 @@ const ConnectButton = styled.button`
   &:hover {
     background-color: initial;
     background-position: 0 0;
-    color: rgba(90, 94, 230, 1);
+    color: ${p => p.theme.backgroundVariant};
   }
 
   &:active {
     background-color: initial;
     background-position: 0 0;
-    color: rgba(90, 94, 230, 1);
+    color: ${p => p.theme.backgroundVariant};
     opacity: 0.5;
   }
 `;
