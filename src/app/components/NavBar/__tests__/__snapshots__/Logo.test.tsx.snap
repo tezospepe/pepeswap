@@ -29,12 +29,12 @@ exports[`<Logo /> should match snapshot 1`] = `
   <div
     class="c1"
   >
-    React Boilerplate
+    SpicySwap
   </div>
   <div
     class="c2"
   >
-    Create React App Template
+    next-generation DEX
   </div>
 </div>
 `;
