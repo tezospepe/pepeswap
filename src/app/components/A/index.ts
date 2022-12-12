@@ -1,11 +1,11 @@
 import styled from 'styled-components/macro';
 
 export const A = styled.a`
-  color: ${p => p.theme.primary};
+  color: ${p => p.theme.textSecondary};
+  cursor: pointer;
   text-decoration: none;
 
   &:hover {
-    text-decoration: underline;
     opacity: 0.8;
   }
 

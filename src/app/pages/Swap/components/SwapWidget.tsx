@@ -2,14 +2,19 @@ import * as React from 'react';
 import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import styled from 'styled-components';
+import { A } from 'app/components/A';
 
 export function SwapWidget() {
   return (
     <Wrapper>
       <MainWidget>
         <Options>
-          <UilSlidersVAlt size="25px" />
-          <UilSync size="25px" />
+          <A>
+            <UilSlidersVAlt size="25px" />
+          </A>
+          <A>
+            <UilSync size="25px" />
+          </A>
         </Options>
         <Tabs>
           <P3 className="active" style={{ fontSize: '16px' }}>
