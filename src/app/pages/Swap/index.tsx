@@ -7,6 +7,9 @@ import { StyleConstants } from 'styles/StyleConstants';
 
 const Wrapper = styled(PageWrapper)`
   height: calc(100vh - ${StyleConstants.NAV_BAR_HEIGHT});
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export function Swap() {
