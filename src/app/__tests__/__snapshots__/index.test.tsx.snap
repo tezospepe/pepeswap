@@ -3,7 +3,7 @@
 exports[`<App /> should render and match the snapshot 1`] = `
 <BrowserRouter>
   <Helmet
-    defaultTitle="React Boilerplate"
+    defaultTitle="SpicySwap"
     defer={true}
     encodeSpecialCharacters={true}
     htmlAttributes={
@@ -12,10 +12,10 @@ exports[`<App /> should render and match the snapshot 1`] = `
       }
     }
     prioritizeSeoTags={false}
-    titleTemplate="%s - React Boilerplate"
+    titleTemplate="%s - SpicySwap"
   >
     <meta
-      content="A React Boilerplate application"
+      content="SpicySwap is a next-generation DEX built by Genius Contracts specifically for token-to-token swaps on Tezos. SpicySwap is governed by SalsaDAO ($sDAO)."
       name="description"
     />
   </Helmet>
