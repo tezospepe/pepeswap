@@ -17,7 +17,7 @@ describe('<A />', () => {
   it('should have theme', () => {
     const a = renderWithTheme();
     expect(a.container.firstChild).toHaveStyle(
-      `color: ${themes.light.primary}`,
+      `color: ${themes.light.textSecondary}`,
     );
   });
 });

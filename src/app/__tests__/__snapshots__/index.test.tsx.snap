@@ -26,6 +26,10 @@ exports[`<App /> should render and match the snapshot 1`] = `
     />
     <Route
       element={<Unknown />}
+      path="/swap"
+    />
+    <Route
+      element={<Unknown />}
       path="*"
     />
   </Routes>

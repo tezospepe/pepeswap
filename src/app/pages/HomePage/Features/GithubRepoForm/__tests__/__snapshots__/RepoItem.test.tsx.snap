@@ -2,13 +2,12 @@
 
 exports[`<RepoItem /> should match the snapshot 1`] = `
 .c4 {
+  cursor: pointer;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
 .c4:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
   opacity: 0.8;
 }
 
