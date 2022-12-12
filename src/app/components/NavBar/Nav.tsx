@@ -1,28 +1,60 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
-import { ReactComponent as DocumentationIcon } from './assets/documentation-icon.svg';
-import { ReactComponent as GithubIcon } from './assets/github-icon.svg';
+import {
+  UilAnalytics,
+  UilUsdCircle,
+  UilMoneyInsert,
+  UilHome,
+  UilTrowel,
+} from '@iconscout/react-unicons';
 
 export function Nav() {
   return (
     <Wrapper>
       <Item
-        href="https://cansahin.gitbook.io/react-boilerplate-cra-template/"
+        href="#"
         target="_blank"
-        title="Documentation Page"
+        title="Dashboard Page"
         rel="noopener noreferrer"
       >
-        <DocumentationIcon />
-        Documentation
+        <UilHome size="25" style={{ paddingRight: '5px' }} />
+        Dashboard
       </Item>
       <Item
-        href="https://github.com/react-boilerplate/react-boilerplate-cra-template"
+        href="#"
         target="_blank"
-        title="Github Page"
+        title="Swap Page"
         rel="noopener noreferrer"
       >
-        <GithubIcon />
-        Github
+        <UilUsdCircle size="25" style={{ paddingRight: '5px' }} />
+        Swap
+      </Item>
+      <Item
+        href="#"
+        target="_blank"
+        title="Liquidity Page"
+        rel="noopener noreferrer"
+      >
+        <UilMoneyInsert size="25" style={{ paddingRight: '5px' }} />
+        Liquidity
+      </Item>
+      <Item
+        href="#"
+        target="_blank"
+        title="Farm Page"
+        rel="noopener noreferrer"
+      >
+        <UilTrowel size="25" style={{ paddingRight: '5px' }} />
+        Farm
+      </Item>
+      <Item
+        href="#"
+        target="_blank"
+        title="Analytics Page"
+        rel="noopener noreferrer"
+      >
+        <UilAnalytics size="25" style={{ paddingRight: '5px' }} />
+        Analytics
       </Item>
     </Wrapper>
   );
