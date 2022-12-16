@@ -49,6 +49,7 @@ export function SwapWidget() {
 const Wrapper = styled.div`
   height: 400px;
   width: 400px;
+  margin-bottom: 100px;
 `;
 
 //todo: use color from theme - shouldn't be hardcoded
@@ -63,6 +64,7 @@ const MainWidget = styled.div`
   max-width: 420px;
   min-width: 300px;
   height: 300px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 `;
 
 const SwapSubsection = styled.div`
