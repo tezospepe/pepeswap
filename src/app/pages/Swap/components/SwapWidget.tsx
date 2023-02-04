@@ -50,8 +50,9 @@ export function SwapWidget() {
 }
 
 const Wrapper = styled.div`
-  height: 400px;
-  width: 400px;
+  height: 100%;
+  max-width: 400px;
+  min-width: 300px;
   padding: 10px;
 `;
 
@@ -64,8 +65,6 @@ const MainWidget = styled.div`
   background-color: #2d3033;
   z-index: 2;
   border-radius: 15px;
-  max-width: 420px;
-  min-width: 300px;
   height: 300px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 `;

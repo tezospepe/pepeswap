@@ -9,9 +9,14 @@ import { StatisticsBanner } from 'app/components/StatisticsBanner';
 
 const Wrapper = styled(PageWrapper)`
   height: calc(100vh - ${StyleConstants.NAV_BAR_HEIGHT});
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.2fr 1fr 0.2fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
   justify-content: center;
-  align-items: center;
+  justify-items: center;
+  flex-direction: column;
 `;
 
 export function Swap() {
@@ -25,8 +30,8 @@ export function Swap() {
         />
       </Helmet>
       <NavBar />
-      <StatisticsBanner />
       <Wrapper>
+        <StatisticsBanner />
         <SwapWidget />
       </Wrapper>
     </>
