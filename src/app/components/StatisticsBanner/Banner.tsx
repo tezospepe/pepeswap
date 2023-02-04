@@ -63,6 +63,7 @@ const StatList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+  gap: 5px;
   display: inline-flex;
 `;
 
@@ -90,7 +91,6 @@ const StatItem = styled.a`
 
 const StatListItem = styled.li`
   display: inline-flex;
-  margin-right: 10px;
   gap: 5px;
   text-align: center;
 `;
