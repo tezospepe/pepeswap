@@ -5,6 +5,7 @@ import { SwapWidget } from './components/SwapWidget';
 import styled from 'styled-components';
 import { StyleConstants } from 'styles/StyleConstants';
 import { NavBar } from 'app/components/NavBar';
+import { StatisticsBanner } from 'app/components/StatisticsBanner';
 
 const Wrapper = styled(PageWrapper)`
   height: calc(100vh - ${StyleConstants.NAV_BAR_HEIGHT});
@@ -24,6 +25,7 @@ export function Swap() {
         />
       </Helmet>
       <NavBar />
+      <StatisticsBanner />
       <Wrapper>
         <SwapWidget />
       </Wrapper>
