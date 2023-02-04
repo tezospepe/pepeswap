@@ -3,6 +3,7 @@ import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import styled from 'styled-components';
 import { A } from 'app/components/A';
+import { SwapSelector } from './SwapSelector';
 
 export function SwapWidget() {
   return (
@@ -23,7 +24,9 @@ export function SwapWidget() {
           <P3 style={{ fontSize: '16px' }}>Limit</P3>
           <P3 style={{ fontSize: '16px' }}>Liquidity</P3>
         </Tabs>
-        <Swap></Swap>
+        <Swap>
+          <SwapSelector />
+        </Swap>
         <Execute>
           <ConnectButton>Connect</ConnectButton>
         </Execute>
@@ -49,6 +52,7 @@ export function SwapWidget() {
 const Wrapper = styled.div`
   height: 400px;
   width: 400px;
+  padding: 10px;
 `;
 
 //todo: use color from theme - shouldn't be hardcoded
@@ -80,6 +84,11 @@ const Header = styled.div`
 const Swap = styled.div`
   grid-area: 2 / 1 / 3 / 4;
   text-align: center;
+  padding-top: 10px;
+  row-gap: 15px;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
 `;
 
 const Execute = styled.div`
