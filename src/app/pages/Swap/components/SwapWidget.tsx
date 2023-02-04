@@ -54,6 +54,9 @@ const Wrapper = styled.div`
   max-width: 400px;
   min-width: 300px;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 //todo: use color from theme - shouldn't be hardcoded
