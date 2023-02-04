@@ -6,17 +6,17 @@ import styled from 'styled-components';
 import { StyleConstants } from 'styles/StyleConstants';
 import { NavBar } from 'app/components/NavBar';
 import { StatisticsBanner } from 'app/components/StatisticsBanner';
+import { Footer } from 'app/components/Footer';
 
 const Wrapper = styled(PageWrapper)`
   height: calc(100vh - ${StyleConstants.NAV_BAR_HEIGHT});
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.2fr 1fr 0.2fr;
+  grid-template-rows: 1fr auto;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  justify-content: center;
   justify-items: center;
-  flex-direction: column;
+  align-items: center;
 `;
 
 export function Swap() {
@@ -31,8 +31,8 @@ export function Swap() {
       </Helmet>
       <NavBar />
       <Wrapper>
-        <StatisticsBanner />
         <SwapWidget />
+        <Footer />
       </Wrapper>
     </>
   );
