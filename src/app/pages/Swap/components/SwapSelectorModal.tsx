@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { UilSearch, UilArrowLeft, UilCog } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
-import { Lead } from 'app/components/Lead';
 import { SwapInput } from './SwapSelector';
 import tezosIcon from '../../../assets/tezos-icon.png';
 import mttrIcon from '../../../assets/mttr-icon.png';
