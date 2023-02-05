@@ -4,48 +4,59 @@ import { UilSync } from '@iconscout/react-unicons';
 import styled from 'styled-components';
 import { A } from 'app/components/A';
 import { SwapSelector } from './SwapSelector';
+import { SwapSelectorModal } from './SwapSelectorModal';
+import { useState } from 'react';
 
 export function SwapWidget() {
+  const [modalView, setModalView] = useState(false);
+
+  const toggleModal = () => {
+    setModalView(!modalView);
+  };
+
   return (
-    <Wrapper>
-      <MainWidget>
-        <Options>
-          <A>
-            <UilSlidersVAlt size="25px" />
-          </A>
-          <A>
-            <UilSync size="25px" />
-          </A>
-        </Options>
-        <Tabs>
-          <P3 className="active" style={{ fontSize: '16px' }}>
-            Swap
-          </P3>
-          <P3 style={{ fontSize: '16px' }}>Limit</P3>
-          <P3 style={{ fontSize: '16px' }}>Liquidity</P3>
-        </Tabs>
-        <Swap>
-          <SwapSelector />
-        </Swap>
-        <Execute>
-          <ConnectButton>Connect</ConnectButton>
-        </Execute>
-      </MainWidget>
-      <SwapSubsection>
-        <Rate>
-          <P>Rate</P>
-          <P2>1 XTZ for 0.91 sDAO</P2>
-        </Rate>
-        <Slippage>
-          <P>Slippage</P>
-          <P2>0.01%</P2>
-        </Slippage>
-        <PriceImpact>
-          <P>Impact</P>
-          <P2>0.01%</P2>
-        </PriceImpact>
-      </SwapSubsection>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <MainWidget>
+          <Options>
+            <A>
+              <UilSlidersVAlt size="25px" />
+            </A>
+            <A>
+              <UilSync size="25px" />
+            </A>
+          </Options>
+          <Tabs>
+            <P3 className="active" style={{ fontSize: '16px' }}>
+              Swap
+            </P3>
+            <P3 style={{ fontSize: '16px' }}>Limit</P3>
+            <P3 style={{ fontSize: '16px' }}>Liquidity</P3>
+          </Tabs>
+          <Swap>
+            <SwapSelector toggleModal={toggleModal} />
+          </Swap>
+          <Execute>
+            <ConnectButton>Connect</ConnectButton>
+          </Execute>
+        </MainWidget>
+        <SwapSubsection>
+          <Rate>
+            <P>Rate</P>
+            <P2>1 XTZ for 0.91 sDAO</P2>
+          </Rate>
+          <Slippage>
+            <P>Slippage</P>
+            <P2>0.01%</P2>
+          </Slippage>
+          <PriceImpact>
+            <P>Impact</P>
+            <P2>0.01%</P2>
+          </PriceImpact>
+        </SwapSubsection>
+      </Wrapper>
+      <SwapSelectorModal modalView={modalView} toggleModal={toggleModal} />
+    </>
   );
 }
 
