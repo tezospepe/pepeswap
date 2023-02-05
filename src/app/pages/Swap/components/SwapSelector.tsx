@@ -1,18 +1,36 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { UilScroll } from '@iconscout/react-unicons';
-import { SwapSelectorAsset } from './SwapSelectorAsset';
+import { UilScroll, UilAngleDown } from '@iconscout/react-unicons';
+import { A } from 'app/components/A';
 
-export function SwapSelector() {
+interface Props {
+  toggleModal: void;
+}
+
+export function SwapSelector<Props>({ toggleModal }) {
+  const handleTokenClick = () => {
+    toggleModal();
+  };
+
   return (
     <>
       <SwapSelection>
-        <SwapSelectorAsset />
+        <A onClick={handleTokenClick}>
+          <SwapAsset>
+            XTZ
+            <UilAngleDown color="#5a5ee6" />
+          </SwapAsset>
+        </A>
         <SwapInput />
       </SwapSelection>
       <UilScroll color="#ffffff" style={{ cursor: 'pointer' }} />
       <SwapSelection>
-        <SwapSelectorAsset />
+        <A onClick={handleTokenClick}>
+          <SwapAsset>
+            XTZ
+            <UilAngleDown color="#5a5ee6" />
+          </SwapAsset>
+        </A>
         <SwapInput />
       </SwapSelection>
     </>
@@ -40,7 +58,7 @@ const SwapSelection = styled.div`
   gap: 6px;
 `;
 
-const SwapInput = styled.input`
+export const SwapInput = styled.input`
   height: 45px;
   width: 60%;
   flex: 1;
@@ -53,4 +71,11 @@ const SwapInput = styled.input`
   text-align: right;
   font-size: 18px;
   padding: 15px;
+`;
+
+const SwapAsset = styled.div`
+  display: flex;
+  padding-left: 4px;
+  gap: 4px;
+  align-items: center;
 `;
