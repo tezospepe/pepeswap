@@ -65,7 +65,6 @@ const MainWidget = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 4.5fr 1fr;
   gap: 0px 0px;
-  background-color: #2d3033;
   z-index: 2;
   border-radius: 15px;
   height: 300px;
