@@ -121,7 +121,7 @@ const Tabs = styled.div`
   gap: 10px;
 `;
 
-const ConnectButton = styled.button`
+export const ConnectButton = styled.button`
   width: 100%;
   background: ${p => p.theme.backgroundVariant};
   border: 1px solid ${p => p.theme.backgroundVariant};

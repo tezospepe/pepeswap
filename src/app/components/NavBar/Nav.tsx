@@ -8,6 +8,7 @@ import {
   UilTrowel,
 } from '@iconscout/react-unicons';
 import { A } from '../A';
+import { ConnectButton } from 'app/pages/Swap/components/SwapWidget';
 
 export function Nav() {
   return (
@@ -33,37 +34,19 @@ export function Nav() {
       <Item
         href="#"
         target="_blank"
-        title="Liquidity Page"
-        rel="noopener noreferrer"
-      >
-        <UilMoneyInsert size="25" style={{ paddingRight: '5px' }} />
-        Liquidity
-      </Item>
-      <Item
-        href="#"
-        target="_blank"
-        title="Farm Page"
-        rel="noopener noreferrer"
-      >
-        <UilTrowel size="25" style={{ paddingRight: '5px' }} />
-        Farm
-      </Item>
-      <Item
-        href="#"
-        target="_blank"
         title="Analytics Page"
         rel="noopener noreferrer"
       >
         <UilAnalytics size="25" style={{ paddingRight: '5px' }} />
         Analytics
       </Item>
+      <WalletButton>Connect Wallet</WalletButton>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.nav`
   display: flex;
-  margin-right: -1rem;
 `;
 
 const Item = styled(A)`
@@ -76,4 +59,12 @@ const Item = styled(A)`
   .icon {
     margin-right: 0.25rem;
   }
+
+  :last-of-type {
+    margin-right: 1rem;
+  }
+`;
+
+const WalletButton = styled(ConnectButton)`
+  padding: 0 1rem;
 `;
