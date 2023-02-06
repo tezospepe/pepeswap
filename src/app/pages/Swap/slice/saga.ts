@@ -12,7 +12,7 @@ export function* getTokens() {
 
   try {
     // Call our request helper (see 'utils/request')
-    const tokens = yield call(request, requestURL);
+    const { tokens } = yield call(request, requestURL);
 
     const transformTokens = (tokens): SpicyToken[] => {
       return tokens.map(token => ({
@@ -22,14 +22,11 @@ export function* getTokens() {
         img: token.img,
         tag: token.tag,
         derivedXtz: token.derivedxtz,
-        derivedUsd: token.derivedxtz,
+        derivedUsd: token.derivedusd,
         totalLiquidityXtz: token.totalliquidityxtz,
         totalLiquidityUsd: token.totalliquidityusd,
       }));
     };
-
-    console.log(tokens);
-    console.log(transformTokens(tokens));
 
     if (tokens?.length > 0) {
       const transformedTokens = transformTokens(tokens);
