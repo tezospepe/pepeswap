@@ -3,12 +3,13 @@ import { request } from 'utils/request';
 import { spicySwapActions as actions } from '.';
 import { SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
+import { calculateDayAgg } from 'utils/spicy';
 
 const SPICY_API = 'https://spicyb.sdaotools.xyz/api/rest';
 
 export function* getTokens() {
   yield delay(500);
-  const requestURL = `${SPICY_API}/TokenList`;
+  const requestURL = `${SPICY_API}/TokenList?day_agg_start=${calculateDayAgg()}`;
 
   try {
     // Call our request helper (see 'utils/request')
