@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import styled from 'styled-components';
@@ -6,13 +6,36 @@ import { A } from 'app/components/A';
 import { SwapSelector } from './SwapSelector';
 import { SwapSelectorModal } from './SwapSelectorModal';
 import { useState } from 'react';
+import { useSpicySwapSlice } from '../slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectTokens, selectLoading, selectError } from '../slice/selectors';
 
 export function SwapWidget() {
+  const { actions } = useSpicySwapSlice();
+
   const [modalView, setModalView] = useState(false);
+
+  const tokens = useSelector(selectTokens);
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+
+  const dispatch = useDispatch();
 
   const toggleModal = () => {
     setModalView(!modalView);
   };
+
+  const useEffectOnMount = (effect: React.EffectCallback) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(effect, []);
+  };
+
+  useEffectOnMount(() => {
+    // When initial state does not contain tokens, call api to load tokens
+    if (tokens.length === 0) {
+      dispatch(actions.loadTokens());
+    }
+  });
 
   return (
     <>

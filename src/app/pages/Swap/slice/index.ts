@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
+import { spicySwapSaga } from './saga';
 import { SpicySwapState, SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
 
@@ -43,5 +44,6 @@ export const { actions: spicySwapActions, reducer } = slice;
 
 export const useSpicySwapSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
+  useInjectSaga({ key: slice.name, saga: spicySwapSaga });
   return { actions: slice.actions };
 };
