@@ -78,7 +78,11 @@ export function SwapWidget() {
           </PriceImpact>
         </SwapSubsection>
       </Wrapper>
-      <SwapSelectorModal modalView={modalView} toggleModal={toggleModal} />
+      <SwapSelectorModal
+        modalView={modalView}
+        toggleModal={toggleModal}
+        tokens={tokens}
+      />
     </>
   );
 }

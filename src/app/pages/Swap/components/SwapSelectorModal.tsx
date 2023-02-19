@@ -2,12 +2,8 @@ import styled from 'styled-components';
 import { UilSearch, UilArrowLeft, UilCog } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
 import { SwapInput } from './SwapSelector';
-import tezosIcon from '../../../assets/tezos-icon.png';
-import mttrIcon from '../../../assets/mttr-icon.png';
-import sdaoIcon from '../../../assets/sdao-icon.png';
-import tetherIcon from '../../../assets/tether-icon.png';
-import uusdIcon from '../../../assets/uusd-icon.png';
-import wtzIcon from '../../../assets/wtz-icon.png';
+import { SpicyToken } from 'types/SpicyToken';
+import { SwapTokenIcon } from './SwapTokenIcon';
 
 interface Props {
   show: boolean;
@@ -16,6 +12,7 @@ interface Props {
 interface SwapSelectorProps {
   modalView: boolean;
   toggleModal: void;
+  tokens: SpicyToken[];
 }
 
 const P = styled.p`
@@ -40,6 +37,7 @@ const P2 = styled(P)`
 export function SwapSelectorModal<SwapSelectorProps>({
   modalView,
   toggleModal,
+  tokens,
 }) {
   const handleTokenClick = () => {
     toggleModal();
@@ -62,56 +60,18 @@ export function SwapSelectorModal<SwapSelectorProps>({
           <SwapAssetInput placeholder="Search token by name" />
         </SwapSelectionSearch>
         <SwapSelectionTokenList>
-          <SwapSelectionTokenItem>
-            <SwapSelectionTokenIcon src={tezosIcon} />
-            <SwapSelectionTokenAssetText>
-              <P>Tezos</P>
-              <P2>XTZ</P2>
-            </SwapSelectionTokenAssetText>
-            <SwapSelectionTokenAssetBalance>
-              <P>0.01</P>
-            </SwapSelectionTokenAssetBalance>
-          </SwapSelectionTokenItem>
-          <SwapSelectionTokenItem>
-            <SwapSelectionTokenIcon src={wtzIcon} />
-            <SwapSelectionTokenAssetText>
-              <P>Wrapped Tezos</P>
-              <P2>WTZ</P2>
-            </SwapSelectionTokenAssetText>
-            <SwapSelectionTokenAssetBalance>
-              <P>0.00</P>
-            </SwapSelectionTokenAssetBalance>
-          </SwapSelectionTokenItem>
-          <SwapSelectionTokenItem>
-            <SwapSelectionTokenIcon src={sdaoIcon} />
-            <SwapSelectionTokenAssetText>
-              <P>Salsa DAO</P>
-              <P2>sDAO</P2>
-            </SwapSelectionTokenAssetText>
-            <SwapSelectionTokenAssetBalance>
-              <P>0.00</P>
-            </SwapSelectionTokenAssetBalance>
-          </SwapSelectionTokenItem>
-          <SwapSelectionTokenItem>
-            <SwapSelectionTokenIcon src={tetherIcon} />
-            <SwapSelectionTokenAssetText>
-              <P>Tether USD</P>
-              <P2>USDT</P2>
-            </SwapSelectionTokenAssetText>
-            <SwapSelectionTokenAssetBalance>
-              <P>0.00</P>
-            </SwapSelectionTokenAssetBalance>
-          </SwapSelectionTokenItem>
-          <SwapSelectionTokenItem>
-            <SwapSelectionTokenIcon src={uusdIcon} />
-            <SwapSelectionTokenAssetText>
-              <P>Youves USD</P>
-              <P2>uUSD</P2>
-            </SwapSelectionTokenAssetText>
-            <SwapSelectionTokenAssetBalance>
-              <P>0.00</P>
-            </SwapSelectionTokenAssetBalance>
-          </SwapSelectionTokenItem>
+          {tokens.map(token => (
+            <SwapSelectionTokenItem>
+              <SwapTokenIcon url={token.img} />
+              <SwapSelectionTokenAssetText>
+                <P>{token.name}</P>
+                <P2>{token.symbol}</P2>
+              </SwapSelectionTokenAssetText>
+              <SwapSelectionTokenAssetBalance>
+                <P>$ {token.derivedUsd.toFixed(2)}</P>
+              </SwapSelectionTokenAssetBalance>
+            </SwapSelectionTokenItem>
+          ))}
         </SwapSelectionTokenList>
       </SwapSelection>
     </SwapSelectionModal>
@@ -208,8 +168,4 @@ const SwapSelectionTokenAssetText = styled.div`
 const SwapSelectionTokenAssetBalance = styled.div`
   margin-left: auto;
   align-self: center;
-`;
-
-const SwapSelectionTokenIcon = styled.img`
-  width: 32px;
 `;
