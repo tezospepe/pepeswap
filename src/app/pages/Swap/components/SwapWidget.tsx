@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import styled from 'styled-components';
@@ -8,22 +8,43 @@ import { SwapSelectorModal } from './SwapSelectorModal';
 import { useState } from 'react';
 import { useSpicySwapSlice } from '../slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectTokens, selectLoading, selectError } from '../slice/selectors';
+import {
+  selectTokens,
+  selectLoading,
+  selectError,
+  selectPair,
+} from '../slice/selectors';
+import { SwapDirection, SwapPair } from 'types/Swap';
 
 export function SwapWidget() {
   const { actions } = useSpicySwapSlice();
 
   const [modalView, setModalView] = useState(false);
 
+  const activeSwapDir = useRef<SwapDirection>();
+
   const tokens = useSelector(selectTokens);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
+  const pair = useSelector(selectPair);
 
   const dispatch = useDispatch();
 
-  const toggleModal = () => {
+  const toggleModal = (dir: SwapDirection) => {
+    if (dir) activeSwapDir.current = dir;
     setModalView(!modalView);
   };
+
+  const setPair = token => {
+    const swapPair: SwapPair = {
+      ...pair,
+      [activeSwapDir.current as string]: token,
+    };
+
+    dispatch(actions.setPair(swapPair));
+  };
+
+  console.log(pair);
 
   const useEffectOnMount = (effect: React.EffectCallback) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,7 +78,7 @@ export function SwapWidget() {
             <P3 style={{ fontSize: '16px' }}>Liquidity</P3>
           </Tabs>
           <Swap>
-            <SwapSelector toggleModal={toggleModal} />
+            <SwapSelector toggleModal={toggleModal} pair={pair} />
           </Swap>
           <Execute>
             <ConnectButton>Connect</ConnectButton>
@@ -82,6 +103,7 @@ export function SwapWidget() {
         modalView={modalView}
         toggleModal={toggleModal}
         tokens={tokens}
+        setPair={setPair}
       />
     </>
   );

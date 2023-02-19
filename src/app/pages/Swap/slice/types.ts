@@ -1,4 +1,5 @@
 import { SpicyToken } from 'types/SpicyToken';
+import { SwapPair } from 'types/Swap';
 
 /* --- STATE --- */
 export interface SpicySwapState {
@@ -9,6 +10,7 @@ export interface SpicySwapState {
   toAmount?: number;
   fromAmountUsd?: number;
   toAmountUsd?: number;
+  pair?: SwapPair;
 }
 
 export const enum SpicySwapErrorType {

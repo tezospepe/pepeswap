@@ -20,3 +20,8 @@ export const selectError = createSelector(
   [selectDomain],
   spicySwapState => spicySwapState.error,
 );
+
+export const selectPair = createSelector(
+  [selectDomain],
+  spicySwapState => spicySwapState.pair,
+);

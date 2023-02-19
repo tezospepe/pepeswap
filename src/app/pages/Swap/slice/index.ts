@@ -4,6 +4,7 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { spicySwapSaga } from './saga';
 import { SpicySwapState, SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
+import { SwapPair } from 'types/Swap';
 
 export const initialState: SpicySwapState = {
   tokens: [],
@@ -17,6 +18,9 @@ const slice = createSlice({
   name: 'spicySwap',
   initialState,
   reducers: {
+    setPair(state, action: PayloadAction<SwapPair>) {
+      state.pair = action.payload;
+    },
     setFromAmount(state, action: PayloadAction<number>) {
       state.fromAmount = action.payload;
     },

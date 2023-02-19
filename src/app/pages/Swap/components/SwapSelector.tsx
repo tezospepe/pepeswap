@@ -2,22 +2,28 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { UilScroll, UilAngleDown } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
+import { SwapDirection, SwapPair } from 'types/Swap';
 
 interface Props {
   toggleModal: void;
+  pair: SwapPair;
 }
 
-export function SwapSelector<Props>({ toggleModal }) {
-  const handleTokenClick = () => {
-    toggleModal();
+export function SwapSelector<Props>({ toggleModal, pair }) {
+  const handleTokenClick = (dir: SwapDirection) => {
+    toggleModal(dir);
   };
 
   return (
     <>
       <SwapSelection>
-        <A onClick={handleTokenClick}>
+        <A
+          onClick={() => {
+            handleTokenClick('from');
+          }}
+        >
           <SwapAsset>
-            XTZ
+            {pair && pair.hasOwnProperty('from') ? pair.from.symbol : 'XTZ'}
             <UilAngleDown color="#5a5ee6" />
           </SwapAsset>
         </A>
@@ -25,9 +31,13 @@ export function SwapSelector<Props>({ toggleModal }) {
       </SwapSelection>
       <UilScroll color="#ffffff" style={{ cursor: 'pointer' }} />
       <SwapSelection>
-        <A onClick={handleTokenClick}>
+        <A
+          onClick={() => {
+            handleTokenClick('to');
+          }}
+        >
           <SwapAsset>
-            XTZ
+            {pair && pair.hasOwnProperty('to') ? pair.to.symbol : 'XTZ'}
             <UilAngleDown color="#5a5ee6" />
           </SwapAsset>
         </A>

@@ -13,6 +13,7 @@ interface SwapSelectorProps {
   modalView: boolean;
   toggleModal: void;
   tokens: SpicyToken[];
+  setPair: void;
 }
 
 const P = styled.p`
@@ -38,8 +39,10 @@ export function SwapSelectorModal<SwapSelectorProps>({
   modalView,
   toggleModal,
   tokens,
+  setPair,
 }) {
-  const handleTokenClick = () => {
+  const handleTokenClick = (token: SpicyToken) => {
+    setPair(token);
     toggleModal();
   };
 
@@ -47,7 +50,11 @@ export function SwapSelectorModal<SwapSelectorProps>({
     <SwapSelectionModal show={modalView}>
       <SwapSelection>
         <SwapSelectionHeader>
-          <SwapSelectionHeaderIcon onClick={toggleModal}>
+          <SwapSelectionHeaderIcon
+            onClick={() => {
+              toggleModal();
+            }}
+          >
             <UilArrowLeft size="34" />
           </SwapSelectionHeaderIcon>
           <P style={{ fontSize: '18px' }}>Token Selection</P>
@@ -61,7 +68,7 @@ export function SwapSelectorModal<SwapSelectorProps>({
         </SwapSelectionSearch>
         <SwapSelectionTokenList>
           {tokens.map(token => (
-            <SwapSelectionTokenItem>
+            <SwapSelectionTokenItem onClick={() => handleTokenClick(token)}>
               <SwapTokenIcon url={token.img} />
               <SwapSelectionTokenAssetText>
                 <P>{token.name}</P>
