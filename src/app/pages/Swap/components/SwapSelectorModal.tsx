@@ -98,7 +98,7 @@ export const SwapSelection = styled.div`
   max-height: 600px;
   border-radius: 10px;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.1fr 0.2fr 1fr;
+  grid-template-rows: 0.1fr 0.1fr 1fr;
   grid-row-gap: 12px;
 `;
 
@@ -136,7 +136,29 @@ const SwapSelectionTokenList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 0 16px;
+  padding-right: 2px;
+  padding-left: 16px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+  }
 `;
 
 const SwapSelectionTokenItem = styled.div`
@@ -144,7 +166,7 @@ const SwapSelectionTokenItem = styled.div`
   align-items: center;
   cursor: pointer;
   max-width: 400px;
-  height: 60px;
+  min-height: 60px;
   background-color: ${p => p.theme.borderLight};
   border-radius: 10px;
   padding: 0 12px;
