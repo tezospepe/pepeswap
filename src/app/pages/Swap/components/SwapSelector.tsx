@@ -32,12 +32,12 @@ export function SwapSelector<Props>({ toggleModal, pair }) {
             ) : (
               'Select Token'
             )}
-            <UilAngleDown color="#5a5ee6" />
+            <SwapSelectIcon />
           </SwapAsset>
         </A>
         <SwapInput />
       </SwapSelection>
-      <UilScroll color="#ffffff" style={{ cursor: 'pointer' }} />
+      <SwapScrollIcon />
       <SwapSelection>
         <A
           onClick={() => {
@@ -53,7 +53,7 @@ export function SwapSelector<Props>({ toggleModal, pair }) {
             ) : (
               'Select Token'
             )}
-            <UilAngleDown color="#5a5ee6" />
+            <SwapSelectIcon />
           </SwapAsset>
         </A>
         <SwapInput />
@@ -73,9 +73,9 @@ const SwapSelection = styled.div`
       /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
       'rgba$1,0.45)',
     )};
-  border: 1px solid rgba(0, 0, 0, 0.1);
+
   border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.05) 1px 2px 2px;
   box-sizing: border-box;
   padding-left: 12px;
   padding-right: 8px;
@@ -94,7 +94,7 @@ export const SwapInput = styled.input`
   border: none;
   color: ${p => p.theme.textSecondary};
   text-align: right;
-  font-size: 18px;
+  font-size: 16px;
   padding: 15px;
 `;
 
@@ -110,4 +110,13 @@ const SwapAsset = styled.div`
 
 const SwapWidgetTokenIcon = styled(SwapTokenIcon)`
   margin-right: 6px;
+`;
+
+const SwapSelectIcon = styled(UilAngleDown)`
+  color: ${p => p.theme.backgroundVariant};
+`;
+
+const SwapScrollIcon = styled(UilScroll)`
+  color: ${p => p.theme.backgroundVariant};
+  cursor: pointer;
 `;

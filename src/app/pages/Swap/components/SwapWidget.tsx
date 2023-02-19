@@ -128,7 +128,8 @@ const MainWidget = styled.div`
   z-index: 2;
   border-radius: 15px;
   height: 300px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  background-color: ${p => p.theme.primary};
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px 0px;
 `;
 
 const SwapSubsection = styled.div`
@@ -187,7 +188,7 @@ export const ConnectButton = styled.button`
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
-  color: #ffffff;
+  color: ${p => p.theme.background};
   cursor: pointer;
   display: inline-block;
   font-size: 16px;

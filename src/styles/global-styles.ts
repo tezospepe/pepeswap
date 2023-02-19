@@ -13,6 +13,8 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     padding-top: ${StyleConstants.NAV_BAR_HEIGHT};
     background-color: ${p => p.theme.background};
+    font-size: 1rem;
+    font-weight: 500;
   }
 
   body.fontLoaded {

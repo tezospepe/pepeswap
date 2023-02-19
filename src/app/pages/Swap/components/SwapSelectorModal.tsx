@@ -100,7 +100,7 @@ export const SwapSelectionModal = styled.div<Props>`
 
 export const SwapSelection = styled.div`
   display: grid;
-  background-color: ${p => p.theme.background};
+  background-color: ${p => p.theme.primary};
   max-width: 600px;
   max-height: 600px;
   border-radius: 10px;
@@ -122,15 +122,22 @@ export const SwapSelectionHeaderIcon = styled(A)``;
 export const SwapSelectionSearchIcon = styled(UilSearch)`
   position: absolute;
   z-index: 10;
-  color: white;
+  color: ${p => p.theme.backgroundVariant};
   margin-left: 10px;
 `;
 
 const SwapAssetInput = styled(SwapInput)`
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: ${p => p.theme.background};
   font-size: 16px;
   text-align: left;
   padding-left: 42px;
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: ${p => p.theme.textSecondary};
+  }
+  :-ms-input-placeholder {
+    color: ${p => p.theme.textSecondary};
+  }
 `;
 
 const SwapSelectionSearch = styled.div`
@@ -158,14 +165,18 @@ const SwapSelectionTokenList = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #d6dee1;
+    background-color: ${p => p.theme.backgroundVariant};
     border-radius: 20px;
     border: 6px solid transparent;
     background-clip: content-box;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: #a8bbbf;
+    background-color: ${p =>
+      p.theme.backgroundVariant.replace(
+        /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
+        'rgba$1,0.5)',
+      )};
   }
 `;
 
