@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { UilScroll, UilAngleDown } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
 import { SwapDirection, SwapPair } from 'types/Swap';
+import { SwapTokenIcon } from './SwapTokenIcon';
 
 interface Props {
   toggleModal: void;
@@ -23,7 +24,14 @@ export function SwapSelector<Props>({ toggleModal, pair }) {
           }}
         >
           <SwapAsset>
-            {pair && pair.hasOwnProperty('from') ? pair.from.symbol : 'XTZ'}
+            {pair && pair.hasOwnProperty('from') ? (
+              <>
+                <SwapWidgetTokenIcon url={pair.from.img} />
+                {pair.from.symbol}
+              </>
+            ) : (
+              'Select Token'
+            )}
             <UilAngleDown color="#5a5ee6" />
           </SwapAsset>
         </A>
@@ -37,7 +45,14 @@ export function SwapSelector<Props>({ toggleModal, pair }) {
           }}
         >
           <SwapAsset>
-            {pair && pair.hasOwnProperty('to') ? pair.to.symbol : 'XTZ'}
+            {pair && pair.hasOwnProperty('to') ? (
+              <>
+                <SwapWidgetTokenIcon url={pair.to.img} />
+                {pair.to.symbol}
+              </>
+            ) : (
+              'Select Token'
+            )}
             <UilAngleDown color="#5a5ee6" />
           </SwapAsset>
         </A>
@@ -70,7 +85,7 @@ const SwapSelection = styled.div`
 
 export const SwapInput = styled.input`
   height: 45px;
-  width: 60%;
+  min-width: 80px;
   flex: 1;
   background-color: rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -88,4 +103,11 @@ const SwapAsset = styled.div`
   padding-left: 4px;
   gap: 4px;
   align-items: center;
+  border-radius: 5px;
+  padding: 8px;
+  min-width: 60px;
+`;
+
+const SwapWidgetTokenIcon = styled(SwapTokenIcon)`
+  margin-right: 6px;
 `;
