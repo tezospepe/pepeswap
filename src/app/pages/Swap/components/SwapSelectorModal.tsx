@@ -138,6 +138,7 @@ const SwapSelectionTokenList = styled.div`
   gap: 6px;
   padding-right: 2px;
   padding-left: 16px;
+  padding-bottom: 12px;
   overflow-y: scroll;
   scrollbar-width: none;
 
