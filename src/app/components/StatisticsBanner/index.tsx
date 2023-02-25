@@ -12,6 +12,9 @@ export function StatisticsBanner() {
 
 const Wrapper = styled.div`
   display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
   justify-content: center;
   align-items: center;
   height: 3rem;

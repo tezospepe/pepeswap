@@ -26,10 +26,12 @@ export function Swap() {
         <title>Swap</title>
         <meta
           name="description"
-          content="SpicySwap is a next-generation DEX built by Genius Contracts specifically for token-to-token swaps on Tezos. SpicySwap is governed by SalsaDAO ($sDAO)."
+          content="SpicySwap is a next-generation DEX built by Genius Contracts specifically for token-to-token swaps on Tezos. 
+          SpicySwap is governed by SalsaDAO ($sDAO)."
         />
       </Helmet>
       <NavBar />
+      <StatisticsBanner />
       <Wrapper>
         <SwapWidget />
         <Footer />

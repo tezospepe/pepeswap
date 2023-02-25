@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 export function Logo() {
   return (
     <Wrapper>
-      <Title>SpicySwap</Title>
+      <Title>SourSwap</Title>
       <Description>next-generation DEX</Description>
     </Wrapper>
   );
