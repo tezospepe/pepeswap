@@ -125,7 +125,7 @@ const MainWidget = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 4.5fr 1fr;
   gap: 0px 0px;
-  z-index: 2;
+  z-index: 1;
   border-radius: 15px;
   height: 300px;
   background-color: ${p => p.theme.primary};
