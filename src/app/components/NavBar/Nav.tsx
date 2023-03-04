@@ -92,13 +92,13 @@ const Item = styled(A)`
   }
 
   :last-of-type {
-    margin-right: 1rem;
-    margin: 0 auto;
+    margin-right: 2rem;
   }
 `;
 
 const WalletButton = styled(ConnectButton)`
   padding: 0 1rem;
+  margin-right: 2px;
 `;
 
 const HamburgerButton = styled(ConnectButton)`
