@@ -31,7 +31,6 @@ export function Swap() {
         />
       </Helmet>
       <NavBar />
-      <StatisticsBanner />
       <Wrapper>
         <SwapWidget />
         <Footer />
