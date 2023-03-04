@@ -26,46 +26,29 @@ export function MobileNav<Props>({ toggleModal }) {
         e.stopPropagation();
       }}
     >
-      <MobileNavCloseIcon onClick={toggleModal} />
-      <Item
-        href="#"
-        target="_blank"
-        title="Dashboard Page"
-        rel="noopener noreferrer"
-      >
+      <MobileNavCloseIcon onClick={handleMobileNavClose} />
+      <Item href="#" target="_blank" rel="noopener noreferrer">
         <UilHome size="20" className="icon" />
         dashboard
       </Item>
-      <Item
-        href="#"
-        target="_blank"
-        title="Swap Page"
-        rel="noopener noreferrer"
-      >
+      <Item href="#" target="_blank" rel="noopener noreferrer">
         <UilUsdCircle size="25" className="icon" />
         swap
       </Item>
-      <Item
-        href="#"
-        target="_blank"
-        title="Analytics Page"
-        rel="noopener noreferrer"
-      >
+      <Item href="#" target="_blank" rel="noopener noreferrer">
         <UilAnalytics size="25" className="icon" />
         analytics
       </Item>
-      <WalletButton>Connect Wallet</WalletButton>
-      <Item
-        href="#"
-        target="_blank"
-        title="Analytics Page"
-        rel="noopener noreferrer"
-      >
+      <Item href="#" target="_blank" rel="noopener noreferrer">
         <UilNotebooks size="25" className="icon" />
-        guides
+        learn
+      </Item>
+      <Item>
+        <WalletButton>Connect Wallet</WalletButton>
       </Item>
       <RpcStatus>
         <OnlineIndicator online={true} />
+        {/* replace with rpc url from wallet state */}
         <P>https://mainnet.api.tez.ie</P>
       </RpcStatus>
     </MobileWrapper>
@@ -86,36 +69,47 @@ const MobileWrapper = styled.div`
   right: 0;
   padding-top: 12px;
   padding-bottom: 20px;
-  background-color: ${p => p.theme.background};
-  overflow-x: hidden;
+  @supports (backdrop-filter: blur(10px)) {
+    backdrop-filter: blur(10px);
+    background-color: ${p =>
+      p.theme.background.replace(
+        /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
+        'rgba$1,0.75)',
+      )};
+  }
 `;
 
 const Item = styled(A)`
   display: flex;
   padding: 0.5rem 0;
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 500;
   align-items: center;
 
   .icon {
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
     width: 22px;
   }
 
   :last-of-type {
-    margin: 0 auto;
     margin-top: auto;
+  }
+
+  &:hover {
+    color: ${p => p.theme.text};
+    opacity: 1.5;
   }
 `;
 
 const WalletButton = styled(ConnectButton)`
   max-width: 180px;
-  margin-top: 12px;
+  margin: 0.5rem 0;
+  padding: 1rem 1.5rem;
 `;
 
 const P = styled.p`
   margin: 0;
-  color: ${p => p.theme.text};
+  color: ${p => p.theme.textSecondary};
   user-select: none;
   text-decoration: none;
   display: flex;
@@ -131,7 +125,17 @@ const RpcStatus = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
+  padding: 0.5rem 0;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.4;
+  }
 `;
 
 const MobileNavCloseIcon = styled(UilMultiply)`
@@ -142,4 +146,8 @@ const MobileNavCloseIcon = styled(UilMultiply)`
   margin-right: 16px;
   margin-bottom: 16px;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;
