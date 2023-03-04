@@ -47,8 +47,12 @@ export function SwapSelectorModal<SwapSelectorProps>({
   };
 
   return (
-    <SwapSelectionModal show={modalView}>
-      <SwapSelection>
+    <SwapSelectionModal show={modalView} onClick={toggleModal}>
+      <SwapSelection
+        onClick={e => {
+          e.stopPropagation();
+        }}
+      >
         <SwapSelectionHeader>
           <SwapSelectionHeaderIcon
             onClick={() => {
