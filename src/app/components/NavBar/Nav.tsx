@@ -92,7 +92,7 @@ const Item = styled(A)`
   }
 
   :last-of-type {
-    margin-right: 2rem;
+    margin-right: 1rem;
   }
 `;
 

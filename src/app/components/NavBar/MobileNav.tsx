@@ -42,7 +42,7 @@ export function MobileNav<Props>({ toggleModal }) {
         title="Swap Page"
         rel="noopener noreferrer"
       >
-        <UilUsdCircle style={{ marginTop: '2px' }} size="25" className="icon" />
+        <UilUsdCircle size="25" className="icon" />
         swap
       </Item>
       <Item
@@ -86,9 +86,8 @@ const MobileWrapper = styled.div`
   right: 0;
   padding-top: 12px;
   padding-bottom: 20px;
-  background-color: #111;
+  background-color: ${p => p.theme.background};
   overflow-x: hidden;
-  transition: 0.5s;
 `;
 
 const Item = styled(A)`
@@ -140,7 +139,7 @@ const MobileNavCloseIcon = styled(UilMultiply)`
   width: 32px;
   height: 32px;
   align-self: flex-end;
-  margin-right: 24px;
-  margin-bottom: 40px;
+  margin-right: 16px;
+  margin-bottom: 16px;
   cursor: pointer;
 `;
