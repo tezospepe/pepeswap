@@ -4,6 +4,7 @@ import { A } from 'app/components/A';
 import { SwapInput } from './SwapSelector';
 import { SpicyToken } from 'types/SpicyToken';
 import { SwapTokenIcon } from './SwapTokenIcon';
+import { ChangeEvent, useState } from 'react';
 
 interface Props {
   show: boolean;
@@ -41,9 +42,18 @@ export function SwapSelectorModal<SwapSelectorProps>({
   tokens,
   setPair,
 }) {
+  const [tokenSearchInput, setTokenSearchInput] = useState<string>('');
+
   const handleTokenClick = (token: SpicyToken) => {
     setPair(token);
     toggleModal();
+  };
+
+  const handleSwapSearchInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const inputValue = event.target.value;
+    setTokenSearchInput(inputValue.toLowerCase());
   };
 
   return (
@@ -68,21 +78,30 @@ export function SwapSelectorModal<SwapSelectorProps>({
         </SwapSelectionHeader>
         <SwapSelectionSearch>
           <SwapSelectionSearchIcon size="22" />
-          <SwapAssetInput placeholder="Search token by name" />
+          <SwapAssetInput
+            placeholder="Search token by name"
+            onChange={handleSwapSearchInputChange}
+          />
         </SwapSelectionSearch>
         <SwapSelectionTokenList>
-          {tokens.map(token => (
-            <SwapSelectionTokenItem onClick={() => handleTokenClick(token)}>
-              <SwapTokenIcon url={token.img} />
-              <SwapSelectionTokenAssetText>
-                <P>{token.name}</P>
-                <P2>{token.symbol}</P2>
-              </SwapSelectionTokenAssetText>
-              <SwapSelectionTokenAssetBalance>
-                <P>$ {token.derivedUsd.toFixed(2)}</P>
-              </SwapSelectionTokenAssetBalance>
-            </SwapSelectionTokenItem>
-          ))}
+          {tokens
+            .filter(
+              token =>
+                token.name.toLowerCase().includes(tokenSearchInput) ||
+                token.symbol.toLowerCase().includes(tokenSearchInput),
+            )
+            .map(token => (
+              <SwapSelectionTokenItem onClick={() => handleTokenClick(token)}>
+                <SwapTokenIcon url={token.img} />
+                <SwapSelectionTokenAssetText>
+                  <P>{token.name}</P>
+                  <P2>{token.symbol}</P2>
+                </SwapSelectionTokenAssetText>
+                <SwapSelectionTokenAssetBalance>
+                  <P>$ {token.derivedUsd.toFixed(2)}</P>
+                </SwapSelectionTokenAssetBalance>
+              </SwapSelectionTokenItem>
+            ))}
         </SwapSelectionTokenList>
       </SwapSelection>
     </SwapSelectionModal>
