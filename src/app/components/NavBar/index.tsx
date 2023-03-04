@@ -1,18 +1,33 @@
 import * as React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components/macro';
 import { Logo } from './Logo';
 import { StyleConstants } from 'styles/StyleConstants';
 import { Nav } from './Nav';
 import { PageWrapper } from '../PageWrapper';
+import { Modal } from '../Modal';
+import { MobileNav } from './MobileNav';
 
 export function NavBar() {
+  const [modalView, setModalView] = useState(false);
+
+  const toggleModal = () => {
+    setModalView(!modalView);
+  };
+
   return (
-    <Wrapper>
-      <PageWrapper>
-        <Logo />
-        <Nav />
-      </PageWrapper>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <PageWrapper>
+          <Logo />
+          <Nav toggleModal={toggleModal} modalView={modalView} />
+        </PageWrapper>
+      </Wrapper>
+      {/*e.stopPropagation();*/}
+      <Modal show={modalView} onClick={toggleModal}>
+        <MobileNav toggleModal={toggleModal} />
+      </Modal>
+    </>
   );
 }
 
