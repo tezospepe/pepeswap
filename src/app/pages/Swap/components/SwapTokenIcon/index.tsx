@@ -1,14 +1,9 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import { TokenIcon } from './SwapTokenIcon';
 
 interface Props {
   url: void;
   className?: string;
 }
-
-const SwapSelectionTokenIcon = styled.img`
-  width: 32px;
-`;
 
 const transformSpicyIpfsImg = url =>
   url.replace('ipfs://', 'https://ipfs.io/ipfs/');
@@ -19,12 +14,5 @@ export function SwapTokenIcon<Props>(props) {
 
   if (url.includes('ipfs://')) img = transformSpicyIpfsImg(url);
 
-  return (
-    <SwapSelectionTokenIcon
-      className={className}
-      src={img || url}
-      alt=""
-      key={url}
-    />
-  );
+  return <TokenIcon className={className} src={img || url} alt="" key={url} />;
 }
