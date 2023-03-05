@@ -1,7 +1,7 @@
 import { UilArrowLeft, UilCog } from '@iconscout/react-unicons';
 import { SpicyToken } from 'types/SpicyToken';
 import { SwapTokenIcon } from '../SwapTokenIcon';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
 import { stopPropagation } from 'utils/helper';
 import {
   SwapTokenListBox,
@@ -29,10 +29,15 @@ export function SwapTokenList<SwapTokenListProps>({
   setPair,
 }) {
   const [tokenSearchInput, setTokenSearchInput] = useState<string>('');
+  const refTokenSearchInput = useRef<HTMLInputElement>(null);
 
   const handleTokenClick = (token: SpicyToken) => {
     setPair(token);
     toggleModal();
+  };
+
+  const handleSwapSearchEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') refTokenSearchInput?.current?.blur();
   };
 
   const handleSwapSearchInputChange = (
@@ -65,6 +70,8 @@ export function SwapTokenList<SwapTokenListProps>({
         <SwapTokenListSearchInput
           placeholder="Search token by name"
           onChange={handleSwapSearchInputChange}
+          onKeyDown={handleSwapSearchEnter}
+          ref={refTokenSearchInput}
         />
       </SwapTokenListSearch>
       <SwapTokenListContent>
