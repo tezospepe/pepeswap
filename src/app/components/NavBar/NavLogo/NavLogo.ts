@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from 'styles/media';
 
 export const LogoWrapper = styled.div`
   display: flex;
@@ -13,7 +14,12 @@ export const LogoTitle = styled.div`
 `;
 
 export const LogoDescription = styled.div`
+  display: none;
   font-size: 0.875rem;
   color: ${p => p.theme.textSecondary};
   font-weight: normal;
+
+  ${media.small} {
+    display: block;
+  }
 `;
