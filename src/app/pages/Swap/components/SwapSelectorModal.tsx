@@ -114,8 +114,8 @@ export const SwapSelectionModal = styled.div<Props>`
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
@@ -124,8 +124,8 @@ export const SwapSelectionModal = styled.div<Props>`
 export const SwapSelection = styled.div`
   display: grid;
   background-color: ${p => p.theme.primary};
-  max-width: 600px;
-  max-height: 600px;
+  width: 365px;
+  height: 600px;
   border-radius: 10px;
   grid-template-columns: 1fr;
   grid-template-rows: 0.1fr 0.1fr 1fr;
