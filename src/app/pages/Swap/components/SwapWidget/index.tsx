@@ -99,7 +99,11 @@ export function SwapWidget() {
         <SwapSubsection>
           <Rate>
             <P>Rate</P>
-            <P2>1 XTZ for 0.91 sDAO</P2>
+            <P2>
+              {pair?.to && pair?.from
+                ? `1 ${pair?.from?.symbol} for 1 ${pair?.to?.symbol}`
+                : ''}
+            </P2>
           </Rate>
           <Slippage>
             <P>Slippage</P>
