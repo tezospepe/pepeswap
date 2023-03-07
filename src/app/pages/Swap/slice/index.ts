@@ -12,6 +12,8 @@ export const initialState: SpicySwapState = {
   error: null,
   fromAmount: 0,
   fromAmountUsd: 0,
+  toAmount: 0,
+  toAmountUsd: 0,
 };
 
 const slice = createSlice({

@@ -25,3 +25,13 @@ export const selectPair = createSelector(
   [selectDomain],
   spicySwapState => spicySwapState.pair,
 );
+
+export const selectFromAmount = createSelector(
+  [selectDomain],
+  spicySwapState => spicySwapState.fromAmount,
+);
+
+export const selectToAmount = createSelector(
+  [selectDomain],
+  spicySwapState => spicySwapState.toAmount,
+);

@@ -8,6 +8,10 @@ import {
   SwapSelectionTokenIcon,
 } from './SwapSelection';
 import { A } from 'app/components/A';
+import { useSpicySwapSlice } from '../../slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectFromAmount, selectToAmount } from '../../slice/selectors';
+import { ChangeEvent } from 'react';
 
 interface Props {
   toggleModal: void;
@@ -15,9 +19,28 @@ interface Props {
 }
 
 export function SwapAssetSelection<Props>({ toggleModal, pair }) {
+  const { actions } = useSpicySwapSlice();
+  const dispatch = useDispatch();
+
+  const fromAmount = useSelector(selectFromAmount);
+  const toAmount = useSelector(selectToAmount);
+
+  const formatAmount = (value: number | undefined) => (value ? value : '');
+
   const handleTokenClick = (dir: SwapDirection) => {
     toggleModal(dir);
   };
+  const handleFromAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const fromInputValue = Number(event.target.value);
+    dispatch(actions.setFromAmount(fromInputValue));
+  };
+
+  const handleToAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const toInputValue = Number(event.target.value);
+    dispatch(actions.setToAmount(toInputValue));
+  };
+
+  console.log(toAmount);
 
   return (
     <>
@@ -39,7 +62,11 @@ export function SwapAssetSelection<Props>({ toggleModal, pair }) {
             <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
-        <SwapSelectionAmountInput />
+        <SwapSelectionAmountInput
+          type="number"
+          onChange={handleFromAmountChange}
+          value={formatAmount(fromAmount)}
+        />
       </SwapSelection>
       <SwapSelectionScrollIcon />
       <SwapSelection>
@@ -60,7 +87,11 @@ export function SwapAssetSelection<Props>({ toggleModal, pair }) {
             <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
-        <SwapSelectionAmountInput />
+        <SwapSelectionAmountInput
+          type="number"
+          onChange={handleToAmountChange}
+          value={formatAmount(toAmount)}
+        />
       </SwapSelection>
     </>
   );
