@@ -40,8 +40,6 @@ export function SwapAssetSelection<Props>({ toggleModal, pair }) {
     dispatch(actions.setToAmount(toInputValue));
   };
 
-  console.log(toAmount);
-
   return (
     <>
       <SwapSelection>
