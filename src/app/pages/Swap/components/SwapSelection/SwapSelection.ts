@@ -36,6 +36,12 @@ export const SwapSelectionAmountInput = styled.input`
   text-align: right;
   font-size: 16px;
   padding: 15px;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield;
 `;
 
 export const SwapSelectionAsset = styled.div`
