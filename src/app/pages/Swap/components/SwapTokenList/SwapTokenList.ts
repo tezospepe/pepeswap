@@ -5,6 +5,7 @@ import { A } from 'app/components/A';
 
 export const SwapTokenListBox = styled.div`
   display: grid;
+  position: absolute;
   background-color: ${p => p.theme.primary};
   width: 365px;
   height: 600px;
