@@ -3,7 +3,7 @@ import { SwapTokenIcon } from '../SwapTokenIcon';
 import { UilScroll, UilAngleDown } from '@iconscout/react-unicons';
 
 export const SwapSelection = styled.div`
-  width: 97%;
+  width: 100%;
   height: 60px;
   display: flex;
   flex-direction: row;

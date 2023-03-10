@@ -73,10 +73,10 @@ export function SwapWidget() {
         <MainWidget>
           <Options>
             <A>
-              <UilSlidersVAlt size="25px" />
+              <UilSlidersVAlt />
             </A>
             <A>
-              <UilSync size="25px" />
+              <UilSync />
             </A>
           </Options>
           <SwapWidgetTabs>
