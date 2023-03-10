@@ -18,7 +18,7 @@ export const MainWidget = styled.div`
   gap: 0px 0px;
   z-index: 1;
   border-radius: 15px;
-  height: 300px;
+  max-height: 700px;
   background-color: ${p => p.theme.primary};
   box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px 0px;
 `;
@@ -38,9 +38,9 @@ export const Header = styled.div`
 export const Swap = styled.div`
   grid-area: 2 / 1 / 3 / 4;
   text-align: center;
-  padding-top: 10px;
-  row-gap: 15px;
+  row-gap: 10px;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   display: flex;
 `;
@@ -49,6 +49,7 @@ export const Execute = styled.div`
   grid-area: 3 / 1 / 4 / 4;
   display: inline-flex;
   justify-content: space-around;
+  align-items: flex-end;
   padding: 5px;
 `;
 
