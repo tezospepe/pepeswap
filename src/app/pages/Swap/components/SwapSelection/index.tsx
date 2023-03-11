@@ -15,7 +15,7 @@ import { ChangeEvent } from 'react';
 
 interface Props {
   toggleModal: void;
-  pair: SwapPair;
+  pair?: SwapPair;
   showSwitch?: boolean;
 }
 
