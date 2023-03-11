@@ -16,9 +16,14 @@ import { ChangeEvent } from 'react';
 interface Props {
   toggleModal: void;
   pair: SwapPair;
+  showSwitch?: boolean;
 }
 
-export function SwapAssetSelection<Props>({ toggleModal, pair }) {
+export function SwapAssetSelection<Props>({
+  toggleModal,
+  pair,
+  showSwitch = true,
+}) {
   const { actions } = useSpicySwapSlice();
   const dispatch = useDispatch();
 
@@ -64,9 +69,10 @@ export function SwapAssetSelection<Props>({ toggleModal, pair }) {
           type="number"
           onChange={handleFromAmountChange}
           value={formatAmount(fromAmount)}
+          placeholder="0.00000000"
         />
       </SwapSelection>
-      <SwapSelectionScrollIcon />
+      {showSwitch ? <SwapSelectionScrollIcon /> : null}
       <SwapSelection>
         <A
           onClick={() => {
@@ -89,6 +95,7 @@ export function SwapAssetSelection<Props>({ toggleModal, pair }) {
           type="number"
           onChange={handleToAmountChange}
           value={formatAmount(toAmount)}
+          placeholder="0.00000000"
         />
       </SwapSelection>
     </>
