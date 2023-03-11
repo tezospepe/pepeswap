@@ -52,6 +52,12 @@ export const PriceChartHeaderDescription = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  height: 60px;
+  width: 100%;
+
+  ${media.small} {
+    max-width: 40%;
+  }
 `;
 
 export const PriceChartHeaderOptions = styled.div`
@@ -147,6 +153,11 @@ export const HeaderPriceContainer = styled.div`
   display: flex;
   gap: 4px;
   align-items: center;
+  justify-content: center;
+
+  ${media.small} {
+    justify-content: initial;
+  }
 `;
 
 export const PriceChartTimeSelection = styled.div`
@@ -166,5 +177,24 @@ export const QuestionMarkIcon = styled(UilQuestionCircle)`
   }
   &:active {
     opacity: 0.4;
+  }
+`;
+
+export const PriceChartPlaceholder = styled.div`
+  min-width: 90%;
+  height: 100%;
+  background-color: ${p => p.theme.background};
+  border-radius: 15px;
+  outline: 1px solid transparent;
+  animation: pulseanim 0.7s linear infinite;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+
+  @keyframes pulseanim {
+    0% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0.4;
+    }
   }
 `;

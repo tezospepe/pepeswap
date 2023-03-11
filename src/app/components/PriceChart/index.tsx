@@ -20,11 +20,30 @@ import {
   PriceChartFooter,
   QuestionMarkIcon,
   PriceChart as PriceChartBox,
+  PriceChartPlaceholder,
 } from './styles';
 import { TimeSelectOption } from './types';
 import { useState } from 'react';
+import { SpicyToken } from 'types/SpicyToken';
+import { SwapPair, SwapDirection } from 'types/Swap';
+import ReactPlaceholder from 'react-placeholder/lib';
+import 'react-placeholder/lib/reactPlaceholder.css';
 
-export default function PriceChart() {
+type PriceChartProps = {
+  tokens?: SpicyToken[];
+  pair?: SwapPair;
+  setPair: (token: SpicyToken) => void;
+  modalView: boolean;
+  toggleModal: (dir?: SwapDirection) => void;
+};
+
+export default function PriceChart({
+  tokens,
+  pair,
+  setPair,
+  modalView,
+  toggleModal,
+}: PriceChartProps) {
   const timeSelectOptions = Object.values(TimeSelectOption);
 
   const [activeTab, setActiveTab] = useState(0);
@@ -50,11 +69,18 @@ export default function PriceChart() {
     <PriceChartContainer>
       <PriceChartHeader>
         <PriceChartHeaderDescription>
-          <HeaderText>WTZ/MTTR</HeaderText>
-          <HeaderPriceContainer>
-            <SubHeaderText>0.021 WTZ</SubHeaderText>
-            <SubHeaderTextColor up={true}>+0.00%</SubHeaderTextColor>
-          </HeaderPriceContainer>
+          <ReactPlaceholder
+            ready={Boolean(pair)}
+            customPlaceholder={<PriceChartPlaceholder />}
+          >
+            <HeaderText>
+              {`${pair?.from?.symbol}/${pair?.to?.symbol}`}
+            </HeaderText>
+            <HeaderPriceContainer>
+              <SubHeaderText>0.021 {pair?.from?.symbol}</SubHeaderText>
+              <SubHeaderTextColor up={true}>+0.00%</SubHeaderTextColor>
+            </HeaderPriceContainer>
+          </ReactPlaceholder>
         </PriceChartHeaderDescription>
         <PriceChartHeaderOptions>
           <PriceChartTimeSelection>{hourlyOptions}</PriceChartTimeSelection>
@@ -64,7 +90,14 @@ export default function PriceChart() {
           </ButtonGroup>
         </PriceChartHeaderOptions>
       </PriceChartHeader>
-      <PriceChartBox>{renderLineChart}</PriceChartBox>
+      <PriceChartBox>
+        <ReactPlaceholder
+          ready={Boolean(pair)}
+          customPlaceholder={<PriceChartPlaceholder />}
+        >
+          {renderLineChart}
+        </ReactPlaceholder>
+      </PriceChartBox>
       <PriceChartFooter>
         <SubHeaderText style={{ fontSize: '0.85rem' }}>
           With limit orders, you may create and post swaps that will only
