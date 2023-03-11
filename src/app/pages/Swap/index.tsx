@@ -19,18 +19,13 @@ import {
 } from './slice/selectors';
 import { useEffect, useRef, useState } from 'react';
 import { SpicyToken } from 'types/SpicyToken';
+import { getTokenByTag } from 'utils/spicy';
 
-const Wrapper = styled(PageWrapper)`
-  height: calc(100vh - ${StyleConstants.NAV_BAR_HEIGHT});
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr auto;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  justify-items: center;
-  align-items: center;
-`;
+//define default pair by contract address / tag
+export const defaultPairList: string[] = [
+  'KT1PnUZCp3u2KzWr93pn4DD7HAJnm3rWVrgn:0',
+  'KT1K4jn23GonEmZot3pMGth7unnzZ6EaMVjY:0',
+];
 
 export function Swap() {
   const { actions } = useSpicySwapSlice();
@@ -56,6 +51,31 @@ export function Swap() {
     }
   }, []);
 
+  useEffect(() => {
+    const constructPair = (tags, tokenList) => {
+      const pair = Object.assign(
+        {},
+        ...tags.map((tag, index) => {
+          const token = getTokenByTag(tokenList, tag);
+          return {
+            ...(index === 0 && {
+              from: token,
+            }),
+            ...(index === 1 && {
+              to: token,
+            }),
+          };
+        }),
+      );
+
+      return pair;
+    };
+
+    if (!pair && tokens.length) {
+      dispatch(actions.setPair(constructPair(defaultPairList, tokens)));
+    }
+  }, [tokens, pair]);
+
   const setPair = (token: SpicyToken) => {
     const swapPair: SwapPair = {
       ...pair,
@@ -77,7 +97,13 @@ export function Swap() {
       <NavBar />
       <Wrapper>
         <Content>
-          <PriceChart />
+          <PriceChart
+            tokens={tokens}
+            pair={pair}
+            setPair={setPair}
+            modalView={modalView}
+            toggleModal={toggleModal}
+          />
           <SwapWidget
             tokens={tokens}
             pair={pair}
@@ -91,6 +117,18 @@ export function Swap() {
     </>
   );
 }
+
+const Wrapper = styled(PageWrapper)`
+  height: calc(100vh - ${StyleConstants.NAV_BAR_HEIGHT});
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  justify-items: center;
+  align-items: center;
+`;
 
 export const Content = styled.div`
   display: flex;
