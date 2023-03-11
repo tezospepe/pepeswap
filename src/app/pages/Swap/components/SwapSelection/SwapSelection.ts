@@ -4,7 +4,7 @@ import { UilScroll, UilAngleDown } from '@iconscout/react-unicons';
 
 export const SwapSelection = styled.div`
   width: 100%;
-  height: 60px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -27,7 +27,7 @@ export const SwapSelectionAmountInput = styled.input`
   height: 45px;
   min-width: 80px;
   flex: 1;
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   outline: none;

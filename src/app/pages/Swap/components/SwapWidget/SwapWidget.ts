@@ -39,7 +39,7 @@ export const Header = styled.div`
 export const Swap = styled.div`
   grid-area: 2 / 1 / 3 / 4;
   text-align: center;
-  row-gap: 10px;
+  row-gap: 15px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
