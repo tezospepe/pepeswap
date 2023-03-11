@@ -5,8 +5,9 @@ import { SwapWidget } from './components/SwapWidget';
 import styled from 'styled-components';
 import { StyleConstants } from 'styles/StyleConstants';
 import { NavBar } from 'app/components/NavBar';
-import { StatisticsBanner } from 'app/components/StatisticsBanner';
 import { Footer } from 'app/components/Footer';
+import { media } from 'styles/media';
+import PriceChart from 'app/components/PriceChart';
 
 const Wrapper = styled(PageWrapper)`
   height: calc(100vh - ${StyleConstants.NAV_BAR_HEIGHT});
@@ -33,9 +34,26 @@ export function Swap() {
       </Helmet>
       <NavBar />
       <Wrapper>
-        <SwapWidget />
+        <Content>
+          <PriceChart />
+          <SwapWidget />
+        </Content>
         <Footer />
       </Wrapper>
     </>
   );
 }
+
+export const Content = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 28px;
+  flex-direction: column-reverse;
+
+  ${media.medium} {
+    flex-direction: row;
+  }
+`;

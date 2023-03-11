@@ -4,10 +4,11 @@ export const Wrapper = styled.div`
   height: 100%;
   max-width: 400px;
   min-width: 300px;
-  padding: 0 20px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
+  justify-self: flex-end;
 `;
 
 //todo: use color from theme - shouldn't be hardcoded
