@@ -35,38 +35,21 @@ import { Modal } from 'app/components/Modal';
 import LimitOrderPanel from '../LimitOrderPanel';
 import SwapWidgetTabs from '../SwapWidgetTabs';
 
-export function SwapWidget() {
-  const { actions } = useSpicySwapSlice();
-  const dispatch = useDispatch();
+type SwapWidgetProps = {
+  tokens?: SpicyToken[];
+  pair?: SwapPair;
+  setPair: (token: SpicyToken) => void;
+  modalView: boolean;
+  toggleModal: (dir?: SwapDirection) => void;
+};
 
-  const [modalView, setModalView] = useState(false);
-  const activeSwapDir = useRef<SwapDirection>();
-
-  const tokens = useSelector(selectTokens);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-  const pair = useSelector(selectPair);
-
-  const toggleModal = (dir?: SwapDirection) => {
-    if (dir) activeSwapDir.current = dir;
-    setModalView(!modalView);
-  };
-
-  const setPair = (token: SpicyToken) => {
-    const swapPair: SwapPair = {
-      ...pair,
-      [activeSwapDir.current as string]: token,
-    };
-    dispatch(actions.setPair(swapPair));
-  };
-
-  useEffect(() => {
-    // When initial state does not contain tokens, call api to load tokens
-    if (tokens.length === 0) {
-      dispatch(actions.loadTokens());
-    }
-  }, []);
-
+export function SwapWidget({
+  tokens,
+  pair,
+  setPair,
+  modalView,
+  toggleModal,
+}: SwapWidgetProps) {
   return (
     <>
       <Wrapper>

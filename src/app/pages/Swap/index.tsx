@@ -8,6 +8,17 @@ import { NavBar } from 'app/components/NavBar';
 import { Footer } from 'app/components/Footer';
 import { media } from 'styles/media';
 import PriceChart from 'app/components/PriceChart';
+import { useDispatch, useSelector } from 'react-redux';
+import { SwapDirection, SwapPair } from 'types/Swap';
+import { useSpicySwapSlice } from './slice';
+import {
+  selectTokens,
+  selectLoading,
+  selectError,
+  selectPair,
+} from './slice/selectors';
+import { useEffect, useRef, useState } from 'react';
+import { SpicyToken } from 'types/SpicyToken';
 
 const Wrapper = styled(PageWrapper)`
   height: calc(100vh - ${StyleConstants.NAV_BAR_HEIGHT});
@@ -22,6 +33,37 @@ const Wrapper = styled(PageWrapper)`
 `;
 
 export function Swap() {
+  const { actions } = useSpicySwapSlice();
+  const dispatch = useDispatch();
+
+  const tokens = useSelector(selectTokens);
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+  const pair = useSelector(selectPair);
+
+  const [modalView, setModalView] = useState(false);
+  const activeSwapDir = useRef<SwapDirection>();
+
+  const toggleModal = (dir?: SwapDirection) => {
+    if (dir) activeSwapDir.current = dir;
+    setModalView(!modalView);
+  };
+
+  useEffect(() => {
+    // When initial state does not contain tokens, call api to load tokens
+    if (tokens.length === 0) {
+      dispatch(actions.loadTokens());
+    }
+  }, []);
+
+  const setPair = (token: SpicyToken) => {
+    const swapPair: SwapPair = {
+      ...pair,
+      [activeSwapDir.current as string]: token,
+    };
+    dispatch(actions.setPair(swapPair));
+  };
+
   return (
     <>
       <Helmet>
@@ -36,7 +78,13 @@ export function Swap() {
       <Wrapper>
         <Content>
           <PriceChart />
-          <SwapWidget />
+          <SwapWidget
+            tokens={tokens}
+            pair={pair}
+            setPair={setPair}
+            modalView={modalView}
+            toggleModal={toggleModal}
+          />
         </Content>
         <Footer />
       </Wrapper>
