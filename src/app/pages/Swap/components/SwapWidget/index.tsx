@@ -1,4 +1,4 @@
-import { useEffect, useRef, EffectCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
@@ -32,6 +32,8 @@ import {
   Wrapper,
 } from './SwapWidget';
 import { Modal } from 'app/components/Modal';
+import LimitOrderPanel from '../LimitOrderPanel';
+import SwapWidgetTabs from '../SwapWidgetTabs';
 
 export function SwapWidget() {
   const { actions } = useSpicySwapSlice();
@@ -58,17 +60,12 @@ export function SwapWidget() {
     dispatch(actions.setPair(swapPair));
   };
 
-  const useEffectOnMount = (effect: EffectCallback) => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(effect, []);
-  };
-
-  useEffectOnMount(() => {
+  useEffect(() => {
     // When initial state does not contain tokens, call api to load tokens
     if (tokens.length === 0) {
       dispatch(actions.loadTokens());
     }
-  });
+  }, []);
 
   return (
     <>
@@ -76,22 +73,16 @@ export function SwapWidget() {
         <MainWidget>
           <Options>
             <A>
-              <UilSlidersVAlt size="25px" />
+              <UilSlidersVAlt />
             </A>
             <A>
-              <UilSync size="25px" />
+              <UilSync />
             </A>
           </Options>
-          <Tabs>
-            <P3 className="active" style={{ fontSize: '16px' }}>
-              Swap
-            </P3>
-            <P3 style={{ fontSize: '16px' }}>Limit</P3>
-            <P3 style={{ fontSize: '16px' }}>Liquidity</P3>
-          </Tabs>
-          <Swap>
+          <SwapWidgetTabs>
             <SwapAssetSelection toggleModal={toggleModal} pair={pair} />
-          </Swap>
+            <LimitOrderPanel toggleModal={toggleModal} pair={pair} />
+          </SwapWidgetTabs>
           <Execute>
             <ConnectButton>Connect</ConnectButton>
           </Execute>

@@ -14,11 +14,12 @@ export const Wrapper = styled.div`
 export const MainWidget = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 4.5fr 1fr;
+  grid-template-rows: auto;
   gap: 0px 0px;
   z-index: 1;
   border-radius: 15px;
-  height: 300px;
+  padding: 10px;
+  gap: 20px;
   background-color: ${p => p.theme.primary};
   box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px 0px;
 `;
@@ -38,9 +39,9 @@ export const Header = styled.div`
 export const Swap = styled.div`
   grid-area: 2 / 1 / 3 / 4;
   text-align: center;
-  padding-top: 10px;
   row-gap: 15px;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   display: flex;
 `;
@@ -49,14 +50,13 @@ export const Execute = styled.div`
   grid-area: 3 / 1 / 4 / 4;
   display: inline-flex;
   justify-content: space-around;
-  padding: 5px;
+  align-items: flex-end;
 `;
 
 export const Options = styled.div`
   grid-area: 1 / 3 / 2 / 4;
   color: ${p => p.theme.textSecondary};
   justify-content: flex-end;
-  padding: 10px;
   display: flex;
   gap: 10px;
 `;
@@ -64,11 +64,9 @@ export const Options = styled.div`
 export const Tabs = styled.div`
   grid-area: 1 / 1 / 2 / 3;
   color: ${p => p.theme.textSecondary};
-  padding: 10px;
   margin-left: 5px;
   display: flex;
-  align-items: center;
-  height: 45px;
+  height: 100%;
   gap: 10px;
 `;
 
