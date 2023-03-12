@@ -11,6 +11,7 @@ import PriceChart from 'app/components/PriceChart';
 import { useDispatch, useSelector } from 'react-redux';
 import { SwapDirection, SwapPair } from 'types/Swap';
 import { useSpicySwapSlice } from './slice';
+import { useWalletSlice } from 'app/slice/wallet';
 import {
   selectTokens,
   selectLoading,
@@ -29,6 +30,7 @@ export const defaultPairList: string[] = [
 
 export function Swap() {
   const { actions } = useSpicySwapSlice();
+  const { actions: walletActions } = useWalletSlice();
   const dispatch = useDispatch();
 
   const tokens = useSelector(selectTokens);
@@ -42,6 +44,10 @@ export function Swap() {
   const toggleModal = (dir?: SwapDirection) => {
     if (dir) activeSwapDir.current = dir;
     setModalView(!modalView);
+  };
+
+  const onWalletConnect = async () => {
+    dispatch(walletActions.connectWallet());
   };
 
   useEffect(() => {
@@ -110,6 +116,7 @@ export function Swap() {
             setPair={setPair}
             modalView={modalView}
             toggleModal={toggleModal}
+            onWalletConnect={onWalletConnect}
           />
         </Content>
         <Footer />

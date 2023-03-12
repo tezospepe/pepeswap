@@ -34,6 +34,7 @@ import {
 import { Modal } from 'app/components/Modal';
 import LimitOrderPanel from '../LimitOrderPanel';
 import SwapWidgetTabs from '../SwapWidgetTabs';
+import { selectConnected } from 'app/slice/wallet/selectors';
 
 type SwapWidgetProps = {
   tokens?: SpicyToken[];
@@ -41,6 +42,7 @@ type SwapWidgetProps = {
   setPair: (token: SpicyToken) => void;
   modalView: boolean;
   toggleModal: (dir?: SwapDirection) => void;
+  onWalletConnect: () => void;
 };
 
 export function SwapWidget({
@@ -49,7 +51,11 @@ export function SwapWidget({
   setPair,
   modalView,
   toggleModal,
+  onWalletConnect,
 }: SwapWidgetProps) {
+  const connected = useSelector(selectConnected);
+  const handleSwapClick = () => (connected ? false : onWalletConnect());
+
   return (
     <>
       <Wrapper>
@@ -67,7 +73,9 @@ export function SwapWidget({
             <LimitOrderPanel toggleModal={toggleModal} pair={pair} />
           </SwapWidgetTabs>
           <Execute>
-            <ConnectButton>Connect</ConnectButton>
+            <ConnectButton onClick={handleSwapClick}>
+              {connected ? 'Swap' : 'Connect'}
+            </ConnectButton>
           </Execute>
         </MainWidget>
         <SwapSubsection>

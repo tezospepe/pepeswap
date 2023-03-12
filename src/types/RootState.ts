@@ -1,4 +1,5 @@
 import { SpicySwapState } from 'app/pages/Swap/slice/types';
+import { WalletState } from 'app/slice/wallet/types';
 import { ThemeState } from 'styles/theme/slice/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
@@ -11,5 +12,6 @@ import { ThemeState } from 'styles/theme/slice/types';
 export interface RootState {
   theme?: ThemeState;
   spicySwap?: SpicySwapState;
+  wallet?: WalletState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }

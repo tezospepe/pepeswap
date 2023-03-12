@@ -15,12 +15,21 @@ import {
   RpcStatus,
 } from './MobileNav';
 import { NavPage } from './types';
+import { AccountInfo } from '@airgap/beacon-sdk';
 
-interface Props {
-  toggleModal: void;
+interface MobileNavProps {
+  toggleModal: () => void;
+  handleButtonClick: () => void;
+  connected: boolean;
+  account?: AccountInfo;
 }
 
-export function MobileNav<Props>({ toggleModal }) {
+export function MobileNav({
+  toggleModal,
+  handleButtonClick,
+  connected,
+  account,
+}: MobileNavProps) {
   const handleMobileNavClose = () => {
     toggleModal();
   };
@@ -70,7 +79,9 @@ export function MobileNav<Props>({ toggleModal }) {
         </MobileNavItem>
       ))}
       <MobileNavItem>
-        <MobileNavWalletButton>Connect Wallet</MobileNavWalletButton>
+        <MobileNavWalletButton onClick={handleButtonClick}>
+          {connected ? account?.address : 'Connect Wallet'}
+        </MobileNavWalletButton>
       </MobileNavItem>
       <RpcStatus>
         <OnlineIndicator online={true} />

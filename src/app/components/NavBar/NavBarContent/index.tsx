@@ -13,8 +13,21 @@ import {
   NavIcon,
 } from './NavBarContent';
 import { NavPage } from '../types';
+import { AccountInfo } from '@airgap/beacon-sdk';
 
-export function NavBarContent<Props>({ toggleModal }) {
+type NavBarContentProps = {
+  toggleModal: () => void;
+  handleButtonClick: () => void;
+  connected: boolean;
+  account?: AccountInfo;
+};
+
+export function NavBarContent({
+  toggleModal,
+  handleButtonClick,
+  connected,
+  account,
+}: NavBarContentProps) {
   const handleHamburgerClick = () => {
     toggleModal();
   };
@@ -54,7 +67,9 @@ export function NavBarContent<Props>({ toggleModal }) {
             {page.name}
           </NavItem>
         ))}
-        <NavWalletButton>Connect Wallet</NavWalletButton>
+        <NavWalletButton onClick={handleButtonClick}>
+          {connected ? account?.address : 'Connect Wallet'}
+        </NavWalletButton>
       </NavWrapper>
       <MobileNavWrapper>
         <NavHamburgerButton onClick={handleHamburgerClick}>
