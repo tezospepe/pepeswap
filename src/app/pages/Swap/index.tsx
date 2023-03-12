@@ -134,7 +134,6 @@ const Wrapper = styled(PageWrapper)`
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   justify-items: center;
-  align-items: center;
 `;
 
 export const Content = styled.div`
