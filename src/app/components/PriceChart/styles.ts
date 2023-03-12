@@ -12,14 +12,23 @@ export const PriceChartContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-width: 300px;
-  max-width: 800px;
+  max-width: 400px;
   max-height: 600px;
-  background-color: ${p => p.theme.background}
+  background-color: ${p => p.theme.background};
   border-radius: 15px;
   gap: 20px;
   padding: 10px;
   background-color: ${p => p.theme.primary};
   box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px 0px;
+
+  ${media.small} {
+    max-height: 500px;
+    max-width: 600px;
+  }
+
+  ${media.medium} {
+    max-width: 800px;
+  }
 `;
 
 export const PriceChartHeader = styled.div`

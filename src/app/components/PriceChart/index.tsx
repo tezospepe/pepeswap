@@ -28,6 +28,8 @@ import { SpicyToken } from 'types/SpicyToken';
 import { SwapPair, SwapDirection } from 'types/Swap';
 import ReactPlaceholder from 'react-placeholder/lib';
 import 'react-placeholder/lib/reactPlaceholder.css';
+import { useTheme } from 'styled-components';
+import { Theme } from 'styles/theme/themes';
 
 type PriceChartProps = {
   tokens?: SpicyToken[];
@@ -44,6 +46,7 @@ export default function PriceChart({
   modalView,
   toggleModal,
 }: PriceChartProps) {
+  const theme = useTheme();
   const timeSelectOptions = Object.values(TimeSelectOption);
 
   const [activeTab, setActiveTab] = useState(0);
@@ -95,7 +98,7 @@ export default function PriceChart({
           ready={Boolean(pair)}
           customPlaceholder={<PriceChartPlaceholder />}
         >
-          {renderLineChart}
+          {renderLineChart(theme)}
         </ReactPlaceholder>
       </PriceChartBox>
       <PriceChartFooter>
@@ -196,33 +199,36 @@ const data = [
   },
 ];
 
-const renderLineChart = (
+const renderLineChart = (theme: Theme) => (
   <ResponsiveContainer width="100%" height="100%">
     <AreaChart
       width={500}
       height={400}
       data={data}
       margin={{
-        top: 10,
-        right: 30,
-        left: 0,
-        bottom: 0,
+        top: 5,
+        right: 20,
+        left: 10,
+        bottom: 5,
       }}
     >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" dy={10} />
+      <XAxis dataKey="name" dy={10} stroke={theme.textSecondary} />
       <YAxis
         dx={-5}
-        dy={-2}
         tickFormatter={value => `$${value.toFixed(2)}`}
         allowDecimals={true}
+        stroke={theme.textSecondary}
       />
       <Tooltip />
       <Area
         type="monotone"
         dataKey="uv"
-        stroke="rgba(149,215,146,1)"
-        fill="rgba(149,215,146,1)"
+        stroke={theme.backgroundVariant.replace(
+          /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
+          'rgba$1,1.5)',
+        )}
+        strokeWidth={3}
+        fill={theme.backgroundVariant}
       />
     </AreaChart>
   </ResponsiveContainer>
