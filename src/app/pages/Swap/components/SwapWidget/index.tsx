@@ -33,7 +33,10 @@ import {
 } from './SwapWidget';
 import { Modal } from 'app/components/Modal';
 import LimitOrderPanel from '../LimitOrderPanel';
-import SwapWidgetTabs from '../SwapWidgetTabs';
+import SwapWidgetTabs, {
+  SwapWidgetTab,
+  swapWidgetTabs,
+} from '../SwapWidgetTabs';
 import { selectConnected } from 'app/slice/wallet/selectors';
 
 type SwapWidgetProps = {
@@ -43,6 +46,7 @@ type SwapWidgetProps = {
   modalView: boolean;
   toggleModal: (dir?: SwapDirection) => void;
   onWalletConnect: () => void;
+  toggleLimit: (show?: boolean) => void;
 };
 
 export function SwapWidget({
@@ -52,9 +56,21 @@ export function SwapWidget({
   modalView,
   toggleModal,
   onWalletConnect,
+  toggleLimit,
 }: SwapWidgetProps) {
   const connected = useSelector(selectConnected);
+  const [activeTab, setActiveTab] = useState<string>(SwapWidgetTab.Swap);
   const handleSwapClick = () => (connected ? false : onWalletConnect());
+
+  const handleTabChange = (tab: SwapWidgetTab | string) => {
+    if (tab === SwapWidgetTab.Limit) {
+      toggleLimit();
+    } else {
+      toggleLimit(false);
+    }
+
+    setActiveTab(tab);
+  };
 
   return (
     <>
@@ -68,7 +84,10 @@ export function SwapWidget({
               <UilSync />
             </A>
           </Options>
-          <SwapWidgetTabs>
+          <SwapWidgetTabs
+            activeTab={activeTab}
+            handleTabChange={handleTabChange}
+          >
             <SwapAssetSelection toggleModal={toggleModal} pair={pair} />
             <LimitOrderPanel toggleModal={toggleModal} pair={pair} />
           </SwapWidgetTabs>

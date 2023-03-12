@@ -39,7 +39,13 @@ export function Swap() {
   const pair = useSelector(selectPair);
 
   const [modalView, setModalView] = useState(false);
+  const [limitView, setLimitView] = useState(false);
+
   const activeSwapDir = useRef<SwapDirection>();
+
+  const toggleLimit = (show: boolean = true) => {
+    setLimitView(show);
+  };
 
   const toggleModal = (dir?: SwapDirection) => {
     if (dir) activeSwapDir.current = dir;
@@ -109,6 +115,7 @@ export function Swap() {
             setPair={setPair}
             modalView={modalView}
             toggleModal={toggleModal}
+            active={limitView}
           />
           <SwapWidget
             tokens={tokens}
@@ -117,6 +124,7 @@ export function Swap() {
             modalView={modalView}
             toggleModal={toggleModal}
             onWalletConnect={onWalletConnect}
+            toggleLimit={toggleLimit}
           />
         </Content>
         <Footer />

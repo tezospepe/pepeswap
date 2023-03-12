@@ -37,6 +37,7 @@ type PriceChartProps = {
   setPair: (token: SpicyToken) => void;
   modalView: boolean;
   toggleModal: (dir?: SwapDirection) => void;
+  active: boolean;
 };
 
 export default function PriceChart({
@@ -45,6 +46,7 @@ export default function PriceChart({
   setPair,
   modalView,
   toggleModal,
+  active,
 }: PriceChartProps) {
   const theme = useTheme();
   const timeSelectOptions = Object.values(TimeSelectOption);
@@ -67,6 +69,10 @@ export default function PriceChart({
       </SubHeaderText>
     </>
   ));
+
+  if (!active) {
+    return null;
+  }
 
   return (
     <PriceChartContainer>

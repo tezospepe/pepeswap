@@ -6,32 +6,25 @@ import { SwapDirection, SwapPair } from 'types/Swap';
 
 type SwapWidgetTabsProps = {
   children: ReactElement[];
+  activeTab: string;
+  handleTabChange: (tab: SwapWidgetTab | string) => void;
 };
 
-type SwapWidgetTab = {
-  label: string;
-};
+export enum SwapWidgetTab {
+  Swap = 'Swap',
+  Limit = 'Limit',
+  Liquidity = 'Liquidity',
+}
 
-const swapWidgetTabs: SwapWidgetTab[] = [
-  {
-    label: 'Swap',
-  },
-  {
-    label: 'Limit',
-  },
-  {
-    label: 'Liquidity',
-  },
-];
+export const swapWidgetTabs = Object.keys(SwapWidgetTab);
 
-export default function SwapWidgetTabs({ children }: SwapWidgetTabsProps) {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const isActiveTab = (tab: SwapWidgetTab) =>
-    swapWidgetTabs.indexOf(tab) === activeTab ? 'active' : '';
-
-  const handleTabChange = (tab: SwapWidgetTab) =>
-    setActiveTab(swapWidgetTabs.indexOf(tab));
+export default function SwapWidgetTabs({
+  children,
+  activeTab,
+  handleTabChange,
+}: SwapWidgetTabsProps) {
+  const isActiveTab = (tab: SwapWidgetTab | string) =>
+    tab === activeTab ? 'active' : '';
 
   return (
     <>
@@ -41,13 +34,13 @@ export default function SwapWidgetTabs({ children }: SwapWidgetTabsProps) {
             className={isActiveTab(tab)}
             onClick={() => handleTabChange(tab)}
             style={{ fontSize: '16px' }}
-            key={tab.label}
+            key={tab}
           >
-            {tab.label}
+            {tab}
           </P3>
         ))}
       </Tabs>
-      <Swap>{children[activeTab]}</Swap>
+      <Swap>{children[swapWidgetTabs.indexOf(activeTab)]}</Swap>
     </>
   );
 }
