@@ -1,7 +1,6 @@
 import {
   ResponsiveContainer,
   AreaChart,
-  CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,

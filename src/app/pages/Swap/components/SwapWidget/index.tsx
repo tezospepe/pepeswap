@@ -1,16 +1,8 @@
-import { useEffect, useRef } from 'react';
 import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
 import { useState } from 'react';
-import { useSpicySwapSlice } from '../../slice';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectTokens,
-  selectLoading,
-  selectError,
-  selectPair,
-} from '../../slice/selectors';
+import { useSelector } from 'react-redux';
 import { SwapDirection, SwapPair } from 'types/Swap';
 import { SwapAssetSelection } from '../SwapSelection';
 import { SwapTokenList } from '../SwapTokenList';
@@ -22,21 +14,15 @@ import {
   Options,
   P,
   P2,
-  P3,
   PriceImpact,
   Rate,
   Slippage,
-  Swap,
   SwapSubsection,
-  Tabs,
   Wrapper,
 } from './SwapWidget';
 import { Modal } from 'app/components/Modal';
 import LimitOrderPanel from '../LimitOrderPanel';
-import SwapWidgetTabs, {
-  SwapWidgetTab,
-  swapWidgetTabs,
-} from '../SwapWidgetTabs';
+import SwapWidgetTabs, { SwapWidgetTab } from '../SwapWidgetTabs';
 import { selectConnected } from 'app/slice/wallet/selectors';
 
 type SwapWidgetProps = {

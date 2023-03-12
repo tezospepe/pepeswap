@@ -1,8 +1,5 @@
-import { useState, ReactElement } from 'react';
-import LimitOrderPanel from '../LimitOrderPanel';
+import { ReactElement } from 'react';
 import { P3, Swap, Tabs } from '../SwapWidget/SwapWidget';
-import { SwapAssetSelection } from '../SwapSelection';
-import { SwapDirection, SwapPair } from 'types/Swap';
 
 type SwapWidgetTabsProps = {
   children: ReactElement[];
