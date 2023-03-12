@@ -133,13 +133,14 @@ const Wrapper = styled(PageWrapper)`
 export const Content = styled.div`
   display: flex;
   width: 100%;
-  align-items: center;
   justify-content: center;
   padding: 20px;
   gap: 28px;
   flex-direction: column-reverse;
+  align-items: center;
 
   ${media.medium} {
     flex-direction: row;
+    align-items: initial;
   }
 `;
