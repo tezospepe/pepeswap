@@ -11,11 +11,8 @@ export const Panel = styled.div`
 `;
 
 export const RangeSliderSelection = styled(SwapSelection)`
-  padding: 5px 10px;
-  padding-left: 20px;
+  padding: 5px 12px;
   display: grid;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
 `;
 
 export const Slider = styled.input`
@@ -53,6 +50,7 @@ export const Slider = styled.input`
 export const Subtext = styled(P)`
   font-size: 0.75rem;
   grid-area: 1 / 1 / 2 / 2;
+  color: rgba(255, 255, 255, 0.5);
 `;
 
 export const Rate = styled(P)`
@@ -64,18 +62,17 @@ export const TitleText = styled(P)`
   justify-self: flex-end;
   font-size: 0.75rem;
   grid-area: 1 / 2 / 2 / 3;
+  color: rgba(255, 255, 255, 0.5);
 `;
 
 export const LimitSelectionInput = styled(SwapSelectionAmountInput)`
-  height: 100%;
-  padding: 4px 12px;
-  width: 140px;
   justify-self: flex-end;
   background-color: rgba(0, 0, 0, 0);
 `;
 
 export const ExecutionBountyButtons = styled.div`
   grid-area: 2 / 1 / 3 / 2;
+  padding: 10px 0;
   display: flex;
   gap: 6px;
 `;
@@ -84,7 +81,6 @@ export const ExecutionBountyButton = styled(ConnectButton)`
   padding: 0;
   font-size: 0.75rem;
   font-weight: 600;
-  line-height: 16px;
-  min-height: 0px;
-  height: 22px;
+  width: 100%;
+  min-height: 20px;
 `;

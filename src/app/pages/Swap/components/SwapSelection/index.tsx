@@ -1,11 +1,14 @@
 import { SwapDirection, SwapPair } from 'types/Swap';
 import {
+  MainText,
+  Subtext,
   SwapSelection,
   SwapSelectionAmountInput,
   SwapSelectionArrowIcon,
   SwapSelectionAsset,
   SwapSelectionScrollIcon,
   SwapSelectionTokenIcon,
+  TitleText,
 } from './SwapSelection';
 import { A } from 'app/components/A';
 import { useSpicySwapSlice } from '../../slice';
@@ -48,6 +51,7 @@ export function SwapAssetSelection<Props>({
   return (
     <>
       <SwapSelection>
+        <Subtext>From</Subtext>
         <A
           onClick={() => {
             handleTokenClick('from');
@@ -65,6 +69,7 @@ export function SwapAssetSelection<Props>({
             <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
+        <TitleText>Balance: 1212.22</TitleText>
         <SwapSelectionAmountInput
           type="number"
           onChange={handleFromAmountChange}
@@ -74,6 +79,7 @@ export function SwapAssetSelection<Props>({
       </SwapSelection>
       {showSwitch ? <SwapSelectionScrollIcon /> : null}
       <SwapSelection>
+        <Subtext>To</Subtext>
         <A
           onClick={() => {
             handleTokenClick('to');
@@ -91,6 +97,7 @@ export function SwapAssetSelection<Props>({
             <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
+        <TitleText>Balance: 0.00</TitleText>
         <SwapSelectionAmountInput
           type="number"
           onChange={handleToAmountChange}
