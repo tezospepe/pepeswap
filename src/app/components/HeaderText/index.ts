@@ -16,6 +16,9 @@ export const HeaderText = styled.p`
 `;
 
 export const SubHeaderText = styled.p<SubHeaderTextProps>`
+  display: flex;
+  align-items: center;
+  gap: 2px;
   color: ${p => p.theme.textSecondary};
   font-weight: 500;
   font-size: 1rem;
@@ -31,6 +34,9 @@ export const SubHeaderText = styled.p<SubHeaderTextProps>`
 `;
 
 export const SubHeaderTextColor = styled.p<SubHeaderTextColorProps>`
+  display: flex;
+  align-items: center;
+  gap: 2px;
   color: ${({ up }) => (up ? p => p.theme.text : '#fc0303')};
   font-weight: 500;
   font-size: 1rem;

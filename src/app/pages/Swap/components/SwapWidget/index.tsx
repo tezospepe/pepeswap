@@ -34,6 +34,7 @@ type SwapWidgetProps = {
   toggleModal: (dir?: SwapDirection) => void;
   onWalletConnect: () => void;
   toggleLimit: (show?: boolean) => void;
+  togglePool: (show?: boolean) => void;
 };
 
 export function SwapWidget({
@@ -44,12 +45,33 @@ export function SwapWidget({
   toggleModal,
   onWalletConnect,
   toggleLimit,
+  togglePool,
 }: SwapWidgetProps) {
   const connected = useSelector(selectConnected);
   const [activeTab, setActiveTab] = useState<string>(SwapWidgetTab.Swap);
   const handleSwapClick = () => (connected ? false : onWalletConnect());
 
   const handleTabChange = (tab: SwapWidgetTab | string) => {
+    //todo: optimize this state management logic. it's ugly
+    switch (tab) {
+      case SwapWidgetTab.Limit: {
+        togglePool(false);
+        toggleLimit();
+        break;
+      }
+
+      case SwapWidgetTab.Liquidity: {
+        toggleLimit(false);
+        togglePool();
+        break;
+      }
+
+      case SwapWidgetTab.Swap: {
+        toggleLimit(false);
+        togglePool(false);
+      }
+    }
+
     if (tab === SwapWidgetTab.Limit) {
       toggleLimit();
     } else {

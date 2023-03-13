@@ -8,18 +8,20 @@ import {
 } from 'recharts';
 import { HeaderText, SubHeaderText, SubHeaderTextColor } from '../HeaderText';
 import {
-  PriceChartContainer,
-  PriceChartHeader,
-  PriceChartHeaderDescription,
+  PoolChartContainer,
+  PoolChartHeader,
+  PoolChartHeaderDescription,
   HeaderPriceContainer,
-  PriceChartHeaderOptions,
-  PriceChartTimeSelection,
+  PoolChartHeaderOptions,
+  PoolChartTimeSelection,
   ButtonGroup,
   Button,
-  PriceChartFooter,
+  PoolChartFooter,
   QuestionMarkIcon,
-  PriceChart as PriceChartBox,
-  PriceChartPlaceholder,
+  PoolChart as PoolChartBox,
+  PoolChartPlaceholder,
+  PoolChartStatistic,
+  QuestionMarkIconSmall,
 } from './styles';
 import { TimeSelectOption } from '../../common/types';
 import { useState } from 'react';
@@ -30,7 +32,7 @@ import 'react-placeholder/lib/reactPlaceholder.css';
 import { useTheme } from 'styled-components';
 import { Theme } from 'styles/theme/themes';
 
-type PriceChartProps = {
+type PoolChartProps = {
   tokens?: SpicyToken[];
   pair?: SwapPair;
   setPair: (token: SpicyToken) => void;
@@ -39,47 +41,36 @@ type PriceChartProps = {
   active: boolean;
 };
 
-export default function PriceChart({
+export default function PoolChart({
   tokens,
   pair,
   setPair,
   modalView,
   toggleModal,
   active,
-}: PriceChartProps) {
+}: PoolChartProps) {
   const theme = useTheme();
+  const [activeTab, setActiveTab] = useState(0);
+
   const timeSelectOptions = Object.values(TimeSelectOption);
 
-  const [activeTab, setActiveTab] = useState(0);
   const isActiveTab = (tab: TimeSelectOption) =>
     timeSelectOptions.indexOf(tab) === activeTab ? 'active' : '';
 
   const handleTabChange = (tab: TimeSelectOption) =>
     setActiveTab(timeSelectOptions.indexOf(tab));
 
-  const hourlyOptions = Object.values(TimeSelectOption).map(selectOption => (
-    <>
-      <SubHeaderText
-        className={isActiveTab(selectOption)}
-        onClick={() => handleTabChange(selectOption)}
-        hover={true}
-      >
-        {selectOption}
-      </SubHeaderText>
-    </>
-  ));
-
   if (!active) {
     return null;
   }
 
   return (
-    <PriceChartContainer>
-      <PriceChartHeader>
-        <PriceChartHeaderDescription>
+    <PoolChartContainer>
+      <PoolChartHeader>
+        <PoolChartHeaderDescription>
           <ReactPlaceholder
             ready={Boolean(pair)}
-            customPlaceholder={<PriceChartPlaceholder />}
+            customPlaceholder={<PoolChartPlaceholder />}
           >
             <HeaderText>
               {`${pair?.from?.symbol}/${pair?.to?.symbol}`}
@@ -89,31 +80,43 @@ export default function PriceChart({
               <SubHeaderTextColor up={true}>+0.00%</SubHeaderTextColor>
             </HeaderPriceContainer>
           </ReactPlaceholder>
-        </PriceChartHeaderDescription>
-        <PriceChartHeaderOptions>
-          <PriceChartTimeSelection>{hourlyOptions}</PriceChartTimeSelection>
+        </PoolChartHeaderDescription>
+        <PoolChartHeaderOptions>
+          <PoolChartTimeSelection>
+            <PoolChartStatistic>
+              <SubHeaderTextColor up={true}>TVL</SubHeaderTextColor>
+              <SubHeaderText>217.93</SubHeaderText>
+            </PoolChartStatistic>
+            <PoolChartStatistic>
+              <SubHeaderTextColor up={true}>APR</SubHeaderTextColor>
+              <SubHeaderText>2.818%</SubHeaderText>
+            </PoolChartStatistic>
+            <PoolChartStatistic>
+              <SubHeaderTextColor up={true}>spAPR 🌶️</SubHeaderTextColor>
+              <SubHeaderText>0.612%</SubHeaderText>
+            </PoolChartStatistic>
+          </PoolChartTimeSelection>
           <ButtonGroup>
-            <Button className="active">Price</Button>
-            <Button>Depth</Button>
+            <Button>View</Button>
           </ButtonGroup>
-        </PriceChartHeaderOptions>
-      </PriceChartHeader>
-      <PriceChartBox>
+        </PoolChartHeaderOptions>
+      </PoolChartHeader>
+      <PoolChartBox>
         <ReactPlaceholder
           ready={Boolean(pair)}
-          customPlaceholder={<PriceChartPlaceholder />}
+          customPlaceholder={<PoolChartPlaceholder />}
         >
           {renderLineChart(theme)}
         </ReactPlaceholder>
-      </PriceChartBox>
-      <PriceChartFooter>
+      </PoolChartBox>
+      <PoolChartFooter>
         <SubHeaderText style={{ fontSize: '0.85rem' }}>
-          With limit orders, you may create and post swaps that will only
-          execute when a certain price threshold is crossed.
+          Spicyswap liquidity providers earn 0.2% on swap fees, and another 0.1%
+          can be gained by fee farming with the SPI utility token.
         </SubHeaderText>
         <QuestionMarkIcon />
-      </PriceChartFooter>
-    </PriceChartContainer>
+      </PoolChartFooter>
+    </PoolChartContainer>
   );
 }
 

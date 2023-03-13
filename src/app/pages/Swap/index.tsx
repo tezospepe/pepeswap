@@ -21,6 +21,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { SpicyToken } from 'types/SpicyToken';
 import { getTokenByTag } from 'utils/spicy';
+import PoolChart from 'app/components/PoolChart';
 
 //define default pair by contract address / tag
 export const defaultPairList: string[] = [
@@ -29,9 +30,9 @@ export const defaultPairList: string[] = [
 ];
 
 export function Swap() {
+  const dispatch = useDispatch();
   const { actions } = useSpicySwapSlice();
   const { actions: walletActions } = useWalletSlice();
-  const dispatch = useDispatch();
 
   const tokens = useSelector(selectTokens);
   const loading = useSelector(selectLoading);
@@ -40,12 +41,12 @@ export function Swap() {
 
   const [modalView, setModalView] = useState(false);
   const [limitView, setLimitView] = useState(false);
+  const [poolView, setPoolView] = useState(false);
 
   const activeSwapDir = useRef<SwapDirection>();
 
-  const toggleLimit = (show: boolean = true) => {
-    setLimitView(show);
-  };
+  const toggleLimit = (show: boolean = true) => setLimitView(show);
+  const togglePool = (show: boolean = true) => setPoolView(show);
 
   const toggleModal = (dir?: SwapDirection) => {
     if (dir) activeSwapDir.current = dir;
@@ -54,6 +55,14 @@ export function Swap() {
 
   const onWalletConnect = async () => {
     dispatch(walletActions.connectWallet());
+  };
+
+  const setPair = (token: SpicyToken) => {
+    const swapPair: SwapPair = {
+      ...pair,
+      [activeSwapDir.current as string]: token,
+    };
+    dispatch(actions.setPair(swapPair));
   };
 
   useEffect(() => {
@@ -88,14 +97,6 @@ export function Swap() {
     }
   }, [tokens, pair]);
 
-  const setPair = (token: SpicyToken) => {
-    const swapPair: SwapPair = {
-      ...pair,
-      [activeSwapDir.current as string]: token,
-    };
-    dispatch(actions.setPair(swapPair));
-  };
-
   return (
     <>
       <Helmet>
@@ -117,6 +118,14 @@ export function Swap() {
             toggleModal={toggleModal}
             active={limitView}
           />
+          <PoolChart
+            tokens={tokens}
+            pair={pair}
+            setPair={setPair}
+            modalView={modalView}
+            toggleModal={toggleModal}
+            active={poolView}
+          />
           <SwapWidget
             tokens={tokens}
             pair={pair}
@@ -125,6 +134,7 @@ export function Swap() {
             toggleModal={toggleModal}
             onWalletConnect={onWalletConnect}
             toggleLimit={toggleLimit}
+            togglePool={togglePool}
           />
         </Content>
         <Footer />
