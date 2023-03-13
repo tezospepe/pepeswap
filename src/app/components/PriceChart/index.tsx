@@ -120,85 +120,85 @@ export default function PriceChart({
 const data = [
   {
     name: '02/07',
-    uv: 6.9,
+    price: 6.9,
     pv: 2400,
     amt: 2400,
   },
   {
     name: '02/28',
-    uv: 6.5,
+    price: 6.5,
     pv: 2400,
     amt: 2400,
   },
   {
     name: '03/01',
-    uv: 6.0,
+    price: 6.0,
     pv: 2400,
     amt: 2400,
   },
   {
     name: '03/02',
-    uv: 1.7,
+    price: 1.7,
     pv: 2400,
     amt: 2400,
   },
   {
     name: '03/03',
-    uv: 1.6,
+    price: 1.6,
     pv: 2400,
     amt: 2400,
   },
   {
     name: '03/04',
-    uv: 1.5,
+    price: 1.5,
     pv: 2400,
     amt: 2400,
   },
   {
     name: '03/05',
-    uv: 1.0,
+    price: 1.0,
     pv: 2400,
     amt: 2400,
   },
   {
     name: '03/06',
-    uv: 4.0,
+    price: 4.0,
     pv: 2400,
     amt: 2400,
   },
   {
     name: '03/07',
-    uv: 3.0,
+    price: 3.0,
     pv: 1398,
     amt: 2210,
   },
   {
     name: '03/08',
-    uv: 2.0,
+    price: 2.0,
     pv: 9800,
     amt: 2290,
   },
   {
     name: '03/09',
-    uv: 2.78,
+    price: 2.78,
     pv: 3908,
     amt: 2000,
   },
   {
     name: '03/10',
-    uv: 1.89,
+    price: 1.89,
     pv: 4800,
     amt: 2181,
   },
   {
     name: '03/11',
-    uv: 2.39,
+    price: 2.39,
     pv: 3800,
     amt: 2500,
   },
   {
     name: '03/12',
-    uv: 3.49,
+    price: 3.49,
     pv: 4300,
     amt: 2100,
   },
@@ -224,10 +224,19 @@ const renderLineChart = (theme: Theme) => (
         allowDecimals={true}
         stroke={theme.textSecondary}
       />
-      <Tooltip />
+      <Tooltip
+        labelStyle={{ color: theme.textSecondary }}
+        contentStyle={{
+          backgroundColor: theme.background.replace(
+            /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
+            'rgba$1,0.4)',
+          ),
+          borderRadius: 3,
+        }}
+      />
       <Area
         type="monotone"
-        dataKey="uv"
+        dataKey="price"
         stroke={theme.backgroundVariant.replace(
           /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
           'rgba$1,1.5)',
