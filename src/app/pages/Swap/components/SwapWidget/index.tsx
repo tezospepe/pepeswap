@@ -24,6 +24,7 @@ import { Modal } from 'app/components/Modal';
 import LimitOrderPanel from '../LimitOrderPanel';
 import SwapWidgetTabs, { SwapWidgetTab } from '../SwapWidgetTabs';
 import { selectConnected } from 'app/slice/wallet/selectors';
+import LiquidityPanel from '../LiquidityPanel';
 
 type SwapWidgetProps = {
   tokens?: SpicyToken[];
@@ -76,6 +77,7 @@ export function SwapWidget({
           >
             <SwapAssetSelection toggleModal={toggleModal} pair={pair} />
             <LimitOrderPanel toggleModal={toggleModal} pair={pair} />
+            <LiquidityPanel toggleModal={toggleModal} pair={pair} />
           </SwapWidgetTabs>
           <Execute>
             <ConnectButton onClick={handleSwapClick}>
