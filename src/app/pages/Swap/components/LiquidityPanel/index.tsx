@@ -30,7 +30,7 @@ export default function LiquidityPanel({
           {pair?.from?.symbol}/{pair?.to?.symbol} minted
         </Subtext>
         <MainText>0.0000000000000</MainText>
-        <TitleText>Total share (12.22%)</TitleText>
+        <TitleText>Share (12.22%)</TitleText>
         <AmountSelectionButtons>
           <AmountSelectionButton>max</AmountSelectionButton>
         </AmountSelectionButtons>

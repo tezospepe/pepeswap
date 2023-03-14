@@ -6,8 +6,6 @@ import { ConnectButton } from 'app/components/ConnectButton';
 export const LiquidityAmountSelection = styled(SwapSelection)`
   padding: 5px 12px;
   display: grid;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
 `;
 
 export const Subtext = styled(P)`
