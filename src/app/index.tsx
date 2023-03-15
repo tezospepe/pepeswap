@@ -14,6 +14,7 @@ import { GlobalStyle } from 'styles/global-styles';
 
 import { Swap } from './pages/Swap/Loadable';
 import { useTranslation } from 'react-i18next';
+import { NftMarketplace } from './pages/NftMarketplace/Loadable';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -32,6 +33,7 @@ export function App() {
 
       <Routes>
         <Route path="/" element={<Swap />} />
+        <Route path="/nft" element={<NftMarketplace />} />
         <Route path="*" element={<Swap />} />
       </Routes>
       <GlobalStyle />
