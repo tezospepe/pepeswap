@@ -11,9 +11,11 @@ import { walletActions } from 'app/slice/wallet';
 
 export function NavBar() {
   const dispatch = useDispatch();
-  const [modalView, setModalView] = useState(false);
   const connected = useSelector(selectConnected);
   const account = useSelector(selectAccount);
+
+  const [modalView, setModalView] = useState(false);
+  const [isProfileActive, setProfileActive] = useState(false);
 
   const onWalletConnect = async () => {
     dispatch(walletActions.connectWallet());
@@ -23,7 +25,13 @@ export function NavBar() {
     setModalView(!modalView);
   };
 
-  const handleButtonClick = () => (connected ? false : onWalletConnect());
+  const handleButtonClick = () => {
+    if (connected) {
+      setProfileActive(!isProfileActive);
+    } else {
+      onWalletConnect();
+    }
+  };
 
   return (
     <>
@@ -34,6 +42,7 @@ export function NavBar() {
           handleButtonClick={handleButtonClick}
           connected={connected}
           account={account}
+          isProfileActive={isProfileActive}
         />
       </NavBarWrapper>
       <Modal show={modalView} onClick={toggleModal}>

@@ -14,12 +14,15 @@ import {
 } from './NavBarContent';
 import { NavPage } from '../types';
 import { AccountInfo } from '@airgap/beacon-sdk';
+import { useState } from 'react';
+import ProfileOptions from '../ProfileOptions';
 
 type NavBarContentProps = {
   toggleModal: () => void;
   handleButtonClick: () => void;
   connected: boolean;
   account?: AccountInfo;
+  isProfileActive: boolean;
 };
 
 export function NavBarContent({
@@ -27,9 +30,12 @@ export function NavBarContent({
   handleButtonClick,
   connected,
   account,
+  isProfileActive,
 }: NavBarContentProps) {
   const handleHamburgerClick = () => {
-    toggleModal();
+    if (connected) {
+      toggleModal();
+    }
   };
 
   const pages: NavPage[] = [
@@ -71,6 +77,7 @@ export function NavBarContent({
           {connected ? account?.address : 'Connect Wallet'}
         </NavWalletButton>
       </NavWrapper>
+      <ProfileOptions account={account} visible={isProfileActive} />
       <MobileNavWrapper>
         <NavHamburgerButton onClick={handleHamburgerClick}>
           <UilBars />
