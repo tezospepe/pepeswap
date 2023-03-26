@@ -65,7 +65,7 @@ export default function PoolChart({
   }
 
   const handleChartHover: CategoricalChartFunc = (e: any) => {
-    if (!e.activePayload[0]) return;
+    if (!e.activePayload) return;
     setPoolDynamicValue(
       numberToLocaleAndFix(e.activePayload[0].payload.price, 4),
     );
