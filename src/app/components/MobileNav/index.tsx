@@ -68,8 +68,9 @@ export function MobileNav({
       }}
     >
       <MobileNavCloseIcon onClick={handleMobileNavClose} />
-      {pages.map(page => (
+      {pages.map((page, index) => (
         <MobileNavItem
+          key={index}
           href={page.url}
           target="_blank"
           rel="noopener noreferrer"

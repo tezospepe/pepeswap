@@ -62,8 +62,9 @@ export function NavBarContent({
   return (
     <>
       <NavWrapper>
-        {pages.map(page => (
+        {pages.map((page, index) => (
           <NavItem
+            key={index}
             href={page.url}
             target="_blank"
             title={page.alt}

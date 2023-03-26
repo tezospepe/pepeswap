@@ -75,8 +75,11 @@ export function SwapTokenList<SwapTokenListProps>({
         />
       </SwapTokenListSearch>
       <SwapTokenListContent>
-        {tokens.filter(trimTokenListByInput).map(token => (
-          <SwapTokenListItem onClick={() => handleTokenClick(token)}>
+        {tokens.filter(trimTokenListByInput).map((token, index) => (
+          <SwapTokenListItem
+            onClick={() => handleTokenClick(token)}
+            key={index}
+          >
             <SwapTokenIcon url={token.img} />
             <SwapTokenListAssetText>
               <P>{token.name}</P>
