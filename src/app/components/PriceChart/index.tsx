@@ -23,24 +23,16 @@ import {
 } from './styles';
 import { TimeSelectOption } from '../../common/types';
 import { useState } from 'react';
-import { SpicyToken } from 'types/SpicyToken';
-import { SwapPair, SwapDirection } from 'types/Swap';
 import ReactPlaceholder from 'react-placeholder/lib';
 import 'react-placeholder/lib/reactPlaceholder.css';
 import { useTheme } from 'styled-components';
 import { Theme } from 'styles/theme/themes';
-
-type PriceChartProps = {
-  tokens?: SpicyToken[];
-  pair?: SwapPair;
-  setPair: (token: SpicyToken) => void;
-  modalView: boolean;
-  toggleModal: (dir?: SwapDirection) => void;
-  active: boolean;
-};
+import { PriceChartProps } from './types';
 
 export default function PriceChart({
   tokens,
+  pools,
+  metrics,
   pair,
   setPair,
   modalView,

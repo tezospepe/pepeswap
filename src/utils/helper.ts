@@ -2,6 +2,10 @@ import { WalletConnectionError } from 'app/slice/wallet/types';
 import { MouseEvent } from 'react';
 import { BeaconError } from '@airgap/beacon-sdk';
 
+export const numberToLocaleAndFix = (number: number, precision: number) => {
+  return number.toLocaleString(undefined, { maximumFractionDigits: precision });
+};
+
 export const stopPropagation = (e: MouseEvent) => {
   e.stopPropagation();
 };

@@ -24,25 +24,21 @@ import {
   QuestionMarkIconSmall,
 } from './styles';
 import { TimeSelectOption } from '../../common/types';
-import { useState } from 'react';
-import { SpicyToken } from 'types/SpicyToken';
-import { SwapPair, SwapDirection } from 'types/Swap';
+import { useEffect, useState } from 'react';
 import ReactPlaceholder from 'react-placeholder/lib';
 import 'react-placeholder/lib/reactPlaceholder.css';
 import { useTheme } from 'styled-components';
 import { Theme } from 'styles/theme/themes';
-
-type PoolChartProps = {
-  tokens?: SpicyToken[];
-  pair?: SwapPair;
-  setPair: (token: SpicyToken) => void;
-  modalView: boolean;
-  toggleModal: (dir?: SwapDirection) => void;
-  active: boolean;
-};
+import { PoolChartProps } from './types';
+import { numberToLocaleAndFix } from 'utils/helper';
+import { calculateRate, getPoolByTags } from 'utils/spicy';
+import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
+import { CategoricalChartFunc } from 'recharts/types/chart/generateCategoricalChart';
 
 export default function PoolChart({
   tokens,
+  pools,
+  metrics,
   pair,
   setPair,
   modalView,
@@ -51,6 +47,8 @@ export default function PoolChart({
 }: PoolChartProps) {
   const theme = useTheme();
   const [activeTab, setActiveTab] = useState(0);
+  const [poolDynamicValue, setPoolDynamicValue] = useState('');
+  const [initialPoolValue, setInitialPoolValue] = useState('');
 
   const timeSelectOptions = Object.values(TimeSelectOption);
 
@@ -60,7 +58,36 @@ export default function PoolChart({
   const handleTabChange = (tab: TimeSelectOption) =>
     setActiveTab(timeSelectOptions.indexOf(tab));
 
-  if (!active) {
+  let pool: SpicyPool | undefined;
+
+  if (pools) {
+    pool = getPoolByTags(pools, pair?.from?.tag, pair?.to?.tag);
+  }
+
+  const handleChartHover: CategoricalChartFunc = (e: any) => {
+    if (!e.activePayload[0]) return;
+    setPoolDynamicValue(
+      numberToLocaleAndFix(e.activePayload[0].payload.price, 4),
+    );
+  };
+
+  const handleChartLeave: CategoricalChartFunc = (e: any) => {
+    setPoolDynamicValue(initialPoolValue);
+  };
+
+  useEffect(() => {
+    if (pool) {
+      const rate = calculateRate({
+        reserveFrom: pool.fromToken.reserve,
+        reserveTo: pool.toToken.reserve,
+      });
+
+      setPoolDynamicValue(rate);
+      setInitialPoolValue(rate);
+    }
+  }, [pool]);
+
+  if (!active || !pool) {
     return null;
   }
 
@@ -76,24 +103,35 @@ export default function PoolChart({
               {`${pair?.from?.symbol}/${pair?.to?.symbol}`}
             </HeaderText>
             <HeaderPriceContainer>
-              <SubHeaderText>0.021 {pair?.from?.symbol}</SubHeaderText>
-              <SubHeaderTextColor up={true}>+0.00%</SubHeaderTextColor>
+              <SubHeaderText>
+                {poolDynamicValue}
+                &nbsp;{`${pair?.from?.symbol}`}
+              </SubHeaderText>
+              <SubHeaderTextColor up={true}>
+                &nbsp;&nbsp;+0.00%
+              </SubHeaderTextColor>
             </HeaderPriceContainer>
           </ReactPlaceholder>
         </PoolChartHeaderDescription>
         <PoolChartHeaderOptions>
           <PoolChartTimeSelection>
             <PoolChartStatistic>
-              <SubHeaderTextColor up={true}>TVL</SubHeaderTextColor>
-              <SubHeaderText>217.93</SubHeaderText>
+              <SubHeaderText>TVL ꜩ</SubHeaderText>
+              <SubHeaderTextColor up={true}>
+                {numberToLocaleAndFix(pool?.totalReserveXtz, 2)}
+              </SubHeaderTextColor>
             </PoolChartStatistic>
             <PoolChartStatistic>
-              <SubHeaderTextColor up={true}>APR</SubHeaderTextColor>
-              <SubHeaderText>2.818%</SubHeaderText>
+              <SubHeaderText>APR</SubHeaderText>
+              <SubHeaderTextColor up={true}>
+                {numberToLocaleAndFix(pool.lpApr, 2)}%
+              </SubHeaderTextColor>
             </PoolChartStatistic>
             <PoolChartStatistic>
-              <SubHeaderTextColor up={true}>spAPR 🌶️</SubHeaderTextColor>
-              <SubHeaderText>0.612%</SubHeaderText>
+              <SubHeaderText>spAPR</SubHeaderText>
+              <SubHeaderTextColor up={true}>
+                {numberToLocaleAndFix(pool.farmApr, 4)}%
+              </SubHeaderTextColor>
             </PoolChartStatistic>
           </PoolChartTimeSelection>
           <ButtonGroup>
@@ -106,7 +144,7 @@ export default function PoolChart({
           ready={Boolean(pair)}
           customPlaceholder={<PoolChartPlaceholder />}
         >
-          {renderLineChart(theme)}
+          {renderLineChart(theme, handleChartHover, handleChartLeave, metrics)}
         </ReactPlaceholder>
       </PoolChartBox>
       <PoolChartFooter>
@@ -120,133 +158,48 @@ export default function PoolChart({
   );
 }
 
-const data = [
-  {
-    name: '02/07',
-    price: 6.9,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '02/28',
-    price: 6.5,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/01',
-    price: 6.0,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/02',
-    price: 1.7,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/03',
-    price: 1.6,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/04',
-    price: 1.5,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/05',
-    price: 1.0,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/06',
-    price: 4.0,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '03/07',
-    price: 3.0,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: '03/08',
-    price: 2.0,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: '03/09',
-    price: 2.78,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: '03/10',
-    price: 1.89,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: '03/11',
-    price: 2.39,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: '03/12',
-    price: 3.49,
-    pv: 4300,
-    amt: 2100,
-  },
-];
-
-const renderLineChart = (theme: Theme) => (
-  <ResponsiveContainer width="100%" height="100%">
-    <AreaChart
-      width={500}
-      height={400}
-      data={data}
-      margin={{
-        top: 5,
-        right: 20,
-        left: 10,
-        bottom: 5,
-      }}
-    >
-      <XAxis dataKey="name" dy={10} stroke={theme.textSecondary} />
-      <YAxis
-        dx={-5}
-        tickFormatter={value => `$${value.toFixed(2)}`}
-        allowDecimals={true}
-        stroke={theme.textSecondary}
-      />
-      <Tooltip
-        labelStyle={{ color: theme.textSecondary }}
-        contentStyle={{
-          backgroundColor: theme.background.replace(
-            /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
-            'rgba$1,0.4)',
-          ),
-          borderRadius: 3,
+const renderLineChart = (
+  theme: Theme,
+  handleChartHover: CategoricalChartFunc,
+  handleChartLeave: CategoricalChartFunc,
+  metrics?: SpicyPoolMetric[] | null,
+) =>
+  metrics && (
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart
+        width={500}
+        height={400}
+        data={[...metrics].reverse()}
+        margin={{
+          top: 5,
+          right: 20,
+          left: 10,
         }}
-      />
-      <Area
-        type="monotone"
-        dataKey="price"
-        stroke={theme.backgroundVariant.replace(
-          /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
-          'rgba$1,1.5)',
-        )}
-        strokeWidth={3}
-        fill={theme.backgroundVariant}
-      />
-    </AreaChart>
-  </ResponsiveContainer>
-);
+        onMouseMove={handleChartHover}
+        onMouseLeave={handleChartLeave}
+      >
+        <XAxis dataKey="day" dy={10} stroke={theme.textSecondary} />
+        <YAxis
+          dx={-2}
+          tickFormatter={value => `${value.toFixed(2)}ꜩ`}
+          allowDecimals={true}
+          stroke={theme.textSecondary}
+        />
+        <Tooltip
+          contentStyle={{
+            display: 'none',
+          }}
+        />
+        <Area
+          type="monotone"
+          dataKey="price"
+          stroke={theme.backgroundVariant.replace(
+            /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
+            'rgba$1,1.5)',
+          )}
+          strokeWidth={3}
+          fill={theme.backgroundVariant}
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  );

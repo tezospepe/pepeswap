@@ -9,3 +9,8 @@ export interface SpicyToken {
   totalLiquidityXtz: number;
   totalLiquidityUsd: number;
 }
+
+export interface TokenPrice {
+  derivedXtz: number;
+  derivedUsd: number;
+}

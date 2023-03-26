@@ -60,8 +60,6 @@ export const PoolChartHeaderDescription = styled.div`
   justify-self: flex-start;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  height: 60px;
 
   ${media.small} {
     max-width: 40%;
@@ -74,20 +72,23 @@ export const PoolChartHeaderOptions = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column-reverse;
+  width: 350px;
 
   ${media.small} {
     padding: 0;
-    gap: 24px;
+    gap: 20px;
     flex-direction: row;
+    justify-content: flex-end;
   }
 `;
 
 export const PoolChartStatistic = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 80px;
+  min-width: 60px;
   align-items: center;
   justify-content: center;
+  padding: 2px;
 `;
 
 export const PoolChart = styled.div`
@@ -174,7 +175,7 @@ export const PoolChartTimeSelection = styled.div`
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding-top: 10px;
+  padding-top: 5px;
 
   ${media.small} {
     padding: 0;
