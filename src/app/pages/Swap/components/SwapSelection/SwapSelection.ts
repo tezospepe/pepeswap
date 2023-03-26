@@ -28,8 +28,7 @@ export const SwapSelectionAmountInput = styled.input`
   grid-area: 2 / 2 / 3 / 3;
   justify-self: flex-end;
   height: 40px;
-  min-width: 80px;
-  flex: 1;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
