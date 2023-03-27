@@ -48,7 +48,6 @@ const slice = createSlice({
     },
     loadPoolMetrics(state, action: PayloadAction<number>) {
       state.error = null;
-      state.poolMetrics = null;
     },
     poolMetricsLoaded(state, action: PayloadAction<SpicyPoolMetric[]>) {
       const metrics = action.payload;
