@@ -141,7 +141,7 @@ export default function PoolChart({
       </PoolChartHeader>
       <PoolChartBox>
         <ReactPlaceholder
-          ready={Boolean(pair)}
+          ready={Boolean(pair && metrics)}
           customPlaceholder={<PoolChartPlaceholder />}
         >
           {renderLineChart(theme, handleChartHover, handleChartLeave, metrics)}
@@ -178,12 +178,18 @@ const renderLineChart = (
         onMouseMove={handleChartHover}
         onMouseLeave={handleChartLeave}
       >
-        <XAxis dataKey="day" dy={10} stroke={theme.textSecondary} />
+        <XAxis
+          dataKey="day"
+          dy={5}
+          stroke={theme.textSecondary}
+          tick={{ fontSize: '0.9rem' }}
+        />
         <YAxis
           dx={-2}
-          tickFormatter={value => `${value.toFixed(2)}ꜩ`}
+          tickFormatter={value => `${value.toFixed(3)}ꜩ`}
           allowDecimals={true}
           stroke={theme.textSecondary}
+          tick={{ fontSize: '0.9rem' }}
         />
         <Tooltip
           contentStyle={{
