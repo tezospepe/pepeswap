@@ -49,17 +49,18 @@ export default function PriceChart({
   const handleTabChange = (tab: TimeSelectOption) =>
     setActiveTab(timeSelectOptions.indexOf(tab));
 
-  const hourlyOptions = Object.values(TimeSelectOption).map(selectOption => (
-    <>
+  const hourlyOptions = Object.values(TimeSelectOption).map(
+    (selectOption, index) => (
       <SubHeaderText
         className={isActiveTab(selectOption)}
         onClick={() => handleTabChange(selectOption)}
         hover={true}
+        key={index}
       >
         {selectOption}
       </SubHeaderText>
-    </>
-  ));
+    ),
+  );
 
   if (!active) {
     return null;
