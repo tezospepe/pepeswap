@@ -15,6 +15,7 @@ import { GlobalStyle } from 'styles/global-styles';
 import { Swap } from './pages/Swap/Loadable';
 import { useTranslation } from 'react-i18next';
 import { NftMarketplace } from './pages/NftMarketplace/Loadable';
+import { NavBar } from './components/NavBar';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -30,7 +31,7 @@ export function App() {
           content="SpicySwap is a next-generation DEX built by Genius Contracts specifically for token-to-token swaps on Tezos. SpicySwap is governed by SalsaDAO ($sDAO)."
         />
       </Helmet>
-
+      <NavBar />
       <Routes>
         <Route path="/" element={<Swap />} />
         <Route path="/nft" element={<NftMarketplace />} />

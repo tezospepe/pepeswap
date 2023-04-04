@@ -125,7 +125,6 @@ export function Swap() {
           SpicySwap is governed by SalsaDAO ($sDAO)."
         />
       </Helmet>
-      <NavBar />
       <Wrapper>
         <Content>
           <PriceChart
