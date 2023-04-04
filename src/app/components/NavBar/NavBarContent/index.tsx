@@ -33,7 +33,7 @@ export function NavBarContent({
   isProfileActive,
 }: NavBarContentProps) {
   const handleHamburgerClick = () => {
-    if (connected) {
+    if (!connected) {
       toggleModal();
     }
   };
