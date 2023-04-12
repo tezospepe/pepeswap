@@ -19,6 +19,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
       name="description"
     />
   </Helmet>
+  <NavBar />
   <Routes>
     <Route
       element={<Unknown />}
@@ -26,7 +27,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
     />
     <Route
       element={<Unknown />}
-      path="/swap"
+      path="/nft"
     />
     <Route
       element={<Unknown />}

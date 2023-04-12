@@ -14,7 +14,7 @@ exports[`<LoadingIndicator /> should match snapshot 1`] = `
 .c1 {
   -webkit-animation: caVMmK 1.5s ease-in-out infinite;
   animation: caVMmK 1.5s ease-in-out infinite;
-  stroke: rgba(215,113,88,1);
+  stroke: rgba(30,31,40,1);
   stroke-linecap: round;
 }
 
@@ -47,7 +47,7 @@ exports[`<LoadingIndicator /> should match snapshot when props changed 1`] = `
 .c1 {
   -webkit-animation: caVMmK 1.5s ease-in-out infinite;
   animation: caVMmK 1.5s ease-in-out infinite;
-  stroke: rgba(215,113,88,1);
+  stroke: rgba(30,31,40,1);
   stroke-linecap: round;
 }
 

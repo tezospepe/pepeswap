@@ -2,7 +2,7 @@
 
 exports[`<Link /> should match snapshot 1`] = `
 .c0 {
-  color: rgba(215,113,88,1);
+  color: rgba(30,31,40,1);
   -webkit-text-decoration: none;
   text-decoration: none;
 }
