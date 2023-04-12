@@ -78,7 +78,7 @@ export function Swap() {
     if (pools.length === 0) {
       dispatch(actions.loadPools());
     }
-  }, []);
+  }, [dispatch, actions]);
 
   useEffect(() => {
     const constructPair = (tags, tokenList) => {
@@ -103,7 +103,7 @@ export function Swap() {
     if (!pair && tokens.length) {
       dispatch(actions.setPair(constructPair(defaultPairList, tokens)));
     }
-  }, [tokens, pair]);
+  }, [tokens, pair, dispatch, actions]);
 
   useEffect(() => {
     if (pools.length && pair && pair.from && pair.to) {
@@ -113,7 +113,7 @@ export function Swap() {
         dispatch(actions.loadPoolMetrics(pool?.pairId));
       }
     }
-  }, [pair, pools]);
+  }, [pair, pools, dispatch]);
 
   return (
     <>
