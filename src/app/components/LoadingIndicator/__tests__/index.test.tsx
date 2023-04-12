@@ -10,7 +10,7 @@ const renderWithTheme = (
   theme?: DefaultTheme,
 ) =>
   render(
-    <ThemeProvider theme={theme || themes.light}>
+    <ThemeProvider theme={theme || themes.dark}>
       <LoadingIndicator {...props} />
     </ThemeProvider>,
   );
@@ -29,7 +29,7 @@ describe('<LoadingIndicator />', () => {
   it('should have theme', () => {
     const loadingIndicator = renderWithTheme();
     expect(loadingIndicator.container.querySelector('circle')).toHaveStyle(
-      `stroke: ${themes.light.primary}`,
+      `stroke: ${themes.dark.primary}`,
     );
   });
 });

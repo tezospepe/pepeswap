@@ -6,7 +6,7 @@ import { themes } from 'styles/theme/themes';
 import { DefaultTheme } from 'styled-components';
 
 const renderWithTheme = (theme?: DefaultTheme) =>
-  render(<A theme={theme || themes.light} />);
+  render(<A theme={theme || themes.dark} />);
 
 describe('<A />', () => {
   it('should render an <a> tag', () => {
@@ -17,7 +17,7 @@ describe('<A />', () => {
   it('should have theme', () => {
     const a = renderWithTheme();
     expect(a.container.firstChild).toHaveStyle(
-      `color: ${themes.light.textSecondary}`,
+      `color: ${themes.dark.textSecondary}`,
     );
   });
 });

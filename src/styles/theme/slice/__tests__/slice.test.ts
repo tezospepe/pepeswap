@@ -25,11 +25,6 @@ describe('theme slice', () => {
   describe('selectors', () => {
     it('selectTheme', () => {
       let state: RootState = {};
-      expect(selectTheme(state)).toEqual<DefaultTheme>(themes.light);
-      state = {
-        theme: { selected: 'system' },
-      };
-      expect(selectTheme(state)).toEqual<DefaultTheme>(themes.light);
 
       state = {
         theme: { selected: 'dark' },

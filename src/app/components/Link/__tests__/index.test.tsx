@@ -9,7 +9,7 @@ import { MemoryRouter } from 'react-router-dom';
 const renderWithTheme = (theme?: DefaultTheme) => {
   return render(
     <MemoryRouter>
-      <Link to="/test" theme={theme || themes.light}>
+      <Link to="/test" theme={theme || themes.dark}>
         HeaderLink
       </Link>
     </MemoryRouter>,
@@ -25,7 +25,7 @@ describe('<Link />', () => {
   it('should have theme', () => {
     const link = renderWithTheme();
     expect(link.container.firstChild).toHaveStyle(
-      `color: ${themes.light.primary}`,
+      `color: ${themes.dark.primary}`,
     );
   });
 
