@@ -14,5 +14,13 @@ export function SwapTokenIcon<Props>(props) {
 
   if (url.includes('ipfs://')) img = transformSpicyIpfsImg(url);
 
-  return <TokenIcon className={className} src={img || url} alt="" key={url} />;
+  return (
+    <TokenIcon
+      className={className}
+      src={img || url}
+      alt=""
+      key={url}
+      loading="lazy"
+    />
+  );
 }
