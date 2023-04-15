@@ -50,13 +50,15 @@ export function SwapAssetSelection({
   };
 
   useEffect(() => {
-    if (pair && pair.pool) {
+    if (pair && pair.pool && fromAmount) {
       const { toAmount, priceImpact } = getSwapAmount({
         pair,
         fromAmount,
       });
 
       dispatch(actions.setToAmount(toAmount));
+    } else {
+      dispatch(actions.setToAmount(0));
     }
   }, [pair, fromAmount]);
 
