@@ -24,6 +24,7 @@ import { useEffect, useRef, useState } from 'react';
 import { SpicyToken } from 'types/SpicyToken';
 import { getPoolByTags, getTokenByTag } from 'utils/spicy';
 import PoolChart from 'app/components/PoolChart';
+import { constructPair } from './util/pair';
 
 //define default pair by contract address / tag
 export const defaultPairList: string[] = [
@@ -74,37 +75,24 @@ export function Swap() {
     if (tokens.length === 0) {
       dispatch(actions.loadTokens());
     }
+  }, [dispatch, actions, tokens]);
 
+  useEffect(() => {
+    // When initial state does not contain pools, call api to load pools
     if (pools.length === 0) {
       dispatch(actions.loadPools());
     }
-  }, [dispatch, actions]);
+  }, [dispatch, actions, pools]);
 
   useEffect(() => {
-    const constructPair = (tags, tokenList) => {
-      const pair = Object.assign(
-        {},
-        ...tags.map((tag, index) => {
-          const token = getTokenByTag(tokenList, tag);
-          return {
-            ...(index === 0 && {
-              from: token,
-            }),
-            ...(index === 1 && {
-              to: token,
-            }),
-          };
-        }),
-      );
-
-      return pair;
-    };
+    const pair = constructPair(defaultPairList, tokens);
 
     if (!pair && tokens.length) {
-      dispatch(actions.setPair(constructPair(defaultPairList, tokens)));
+      dispatch(actions.setPair(pair));
     }
   }, [tokens, pair, dispatch, actions]);
 
+  /* should find a better way to handle this */
   useEffect(() => {
     if (pools.length && pair && pair.from && pair.to) {
       const pool = getPoolByTags(pools, pair.from.tag, pair.to.tag);
