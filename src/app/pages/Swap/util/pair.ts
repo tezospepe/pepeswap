@@ -1,8 +1,7 @@
 import { getTokenByTag } from 'utils/spicy';
 
 export const constructPair = (tags, tokenList) => {
-  return Object.assign(
-    {},
+  const pair = {
     ...tags.map((tag, index) => {
       const token = getTokenByTag(tokenList, tag);
       return {
@@ -14,5 +13,7 @@ export const constructPair = (tags, tokenList) => {
         }),
       };
     }),
-  );
+  };
+
+  return Object.assign({}, pair);
 };

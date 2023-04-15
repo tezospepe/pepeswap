@@ -11,8 +11,8 @@ export interface SpicySwapState {
   tokens: SpicyToken[];
   pools: SpicyPool[];
   poolMetrics: SpicyPoolMetric[] | null;
-  fromAmount?: number;
-  toAmount?: number;
+  fromAmount: number;
+  toAmount: number;
   fromAmountUsd?: number;
   toAmountUsd?: number;
   pair?: SwapPair;

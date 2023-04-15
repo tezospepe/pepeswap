@@ -12,7 +12,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { GlobalStyle } from 'styles/global-styles';
 
-import { Swap } from './pages/Swap/Loadable';
+import { Swap } from './pages/Swap/';
 import { useTranslation } from 'react-i18next';
 import { NftMarketplace } from './pages/NftMarketplace/Loadable';
 import { NavBar } from './components/NavBar';

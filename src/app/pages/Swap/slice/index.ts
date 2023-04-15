@@ -6,6 +6,7 @@ import { SpicySwapState, SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
 import { SwapPair } from 'types/Swap';
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
+import { defaultFrom } from 'app/common/const';
 
 export const initialState: SpicySwapState = {
   tokens: [],
@@ -17,6 +18,7 @@ export const initialState: SpicySwapState = {
   fromAmountUsd: 0,
   toAmount: 0,
   toAmountUsd: 0,
+  pair: { from: defaultFrom },
 };
 
 const slice = createSlice({
@@ -55,6 +57,9 @@ const slice = createSlice({
     },
     poolMetricsError(state, action: PayloadAction<SpicySwapErrorType>) {
       state.error = action.payload;
+    },
+    setTokens(state, action: PayloadAction<SpicyToken[]>) {
+      state.tokens = action.payload;
     },
     loadTokens(state) {
       state.loading = true;

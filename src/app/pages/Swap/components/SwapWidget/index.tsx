@@ -126,18 +126,20 @@ export function SwapWidget({
           </PriceImpact>
         </SwapSubsection>
       </Wrapper>
-      <Modal
-        show={modalView}
-        onClick={() => {
-          toggleModal();
-        }}
-      >
-        <SwapTokenList
-          toggleModal={toggleModal}
-          tokens={tokens}
-          setPair={setPair}
-        />
-      </Modal>
+      {modalView && (
+        <Modal
+          show={modalView}
+          onClick={() => {
+            toggleModal();
+          }}
+        >
+          <SwapTokenList
+            toggleModal={toggleModal}
+            tokens={tokens}
+            setPair={setPair}
+          />
+        </Modal>
+      )}
     </>
   );
 }

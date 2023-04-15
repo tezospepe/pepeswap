@@ -15,8 +15,7 @@ import { useSpicySwapSlice } from '../../slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFromAmount, selectToAmount } from '../../slice/selectors';
 import { ChangeEvent, useEffect } from 'react';
-import { getSwapQuote } from '../../util/price';
-
+import { getSwapAmount } from '../../util/price';
 interface SwapAssetSelectionProps {
   toggleModal: (dir?: SwapDirection) => void;
   pair?: SwapPair;
@@ -34,41 +33,15 @@ export function SwapAssetSelection({
   const fromAmount = useSelector(selectFromAmount);
   const toAmount = useSelector(selectToAmount);
 
-  const formatAmount = (value: number | undefined) => (value ? value : '');
-
   const handleTokenClick = (dir: SwapDirection) => {
     toggleModal(dir);
   };
 
-  const getSwapAmount = (pair, fromAmount) => {
-    const tokenFrom =
-      pair.pool.fromToken.tag === pair.from?.tag
-        ? pair.pool.fromToken
-        : pair.pool.toToken;
-
-    const tokenTo =
-      pair.pool.toToken.tag === pair.to?.tag
-        ? pair.pool.toToken
-        : pair.pool.fromToken;
-
-    const tokenFromReserve = Number(tokenFrom.reserve);
-    const tokenToReserve = Number(tokenTo.reserve);
-
-    return getSwapQuote({
-      tokenFromReserve,
-      tokenToReserve,
-      tokenFromAmount: fromAmount,
-    });
-  };
+  const formatAmount = (value: number | undefined) => (value ? value : '');
 
   const handleFromAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const fromInputValue = Number(event.target.value);
     dispatch(actions.setFromAmount(fromInputValue));
-
-    if (pair && pair.pool) {
-      const toAmount = getSwapAmount(pair, fromInputValue);
-      dispatch(actions.setToAmount(toAmount));
-    }
   };
 
   const handleToAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -77,11 +50,15 @@ export function SwapAssetSelection({
   };
 
   useEffect(() => {
-    if (pair && pair.pool && fromAmount) {
-      const toAmount = getSwapAmount(pair, fromAmount);
+    if (pair && pair.pool) {
+      const { toAmount, priceImpact } = getSwapAmount({
+        pair,
+        fromAmount,
+      });
+
       dispatch(actions.setToAmount(toAmount));
     }
-  }, [pair]);
+  }, [pair, fromAmount]);
 
   return (
     <>
@@ -97,11 +74,11 @@ export function SwapAssetSelection({
               <>
                 <SwapSelectionTokenIcon url={pair.from.img} />
                 {pair.from.symbol}
+                <SwapSelectionArrowIcon />
               </>
             ) : (
-              'Select Token'
+              <></>
             )}
-            <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
         <TitleText>Balance: 1212.22</TitleText>

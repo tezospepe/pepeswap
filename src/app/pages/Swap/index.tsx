@@ -27,9 +27,15 @@ import { getPoolByTags } from 'utils/spicy';
 import PoolChart from 'app/components/PoolChart';
 import { constructPair } from './util/pair';
 import { defaultPairList } from 'app/common/const';
+import {
+  LocalStorageService,
+  StorageKeys,
+} from 'app/services/local-storage-service';
 
 export function Swap() {
   const dispatch = useDispatch();
+  const storageService = new LocalStorageService();
+
   const { actions } = useSpicySwapSlice();
   const { actions: walletActions } = useWalletSlice();
 
@@ -67,8 +73,14 @@ export function Swap() {
   };
 
   useEffect(() => {
-    // When initial state does not contain tokens, call api to load tokens
+    const localTokenMetadata = storageService.getItem<SpicyToken[]>(
+      StorageKeys.tokenMetadata,
+    );
+
     if (tokens.length === 0) {
+      if (localTokenMetadata) {
+        dispatch(actions.setTokens(localTokenMetadata));
+      }
       dispatch(actions.loadTokens());
     }
   }, [dispatch, actions]);
@@ -79,14 +91,6 @@ export function Swap() {
       dispatch(actions.loadPools());
     }
   }, [dispatch, actions]);
-
-  useEffect(() => {
-    const constructedPair = constructPair(defaultPairList, tokens);
-
-    if (!pair && tokens.length) {
-      dispatch(actions.setPair(constructedPair));
-    }
-  }, [tokens, pair, dispatch, actions]);
 
   useEffect(() => {
     if (pools.length && pair && pair.from && pair.to) {

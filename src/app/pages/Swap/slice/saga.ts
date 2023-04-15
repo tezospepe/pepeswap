@@ -4,8 +4,13 @@ import { spicySwapActions as actions } from '.';
 import { GetPoolProps, GetTokenProps, SpicySwapErrorType } from './types';
 import { calculateDayAgg, calculateHourAgg } from 'utils/spicy';
 import { transformPoolMetrics, transformPools, transformTokens } from './util';
+import {
+  LocalStorageService,
+  StorageKeys,
+} from 'app/services/local-storage-service';
 
 const SPICY_API = 'https://spicyb.sdaotools.xyz/api/rest';
+const storageService = new LocalStorageService();
 
 export function* getTokens({ transformTokens }: GetTokenProps) {
   const requestURL = `${SPICY_API}/TokenList?day_agg_start=${calculateDayAgg()}`;
@@ -17,6 +22,8 @@ export function* getTokens({ transformTokens }: GetTokenProps) {
     if (tokens?.length > 0) {
       const transformedTokens = transformTokens(tokens);
       yield put(actions.tokensLoaded(transformedTokens));
+
+      storageService.setItem(StorageKeys.tokenMetadata, transformedTokens);
     } else {
       yield put(actions.tokensError(SpicySwapErrorType.TOKEN_NOT_FOUND));
     }
