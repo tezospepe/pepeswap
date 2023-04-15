@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectFromAmount, selectToAmount } from '../../slice/selectors';
 import { ChangeEvent, useEffect } from 'react';
 import { getSwapAmount } from '../../util/price';
+import { switchPairDirection } from '../../util/pair';
 interface SwapAssetSelectionProps {
   toggleModal: (dir?: SwapDirection) => void;
   pair?: SwapPair;
@@ -35,6 +36,13 @@ export function SwapAssetSelection({
 
   const handleTokenClick = (dir: SwapDirection) => {
     toggleModal(dir);
+  };
+
+  const handlePairSwitch = () => {
+    if (pair) {
+      const pairSwitched = switchPairDirection(pair);
+      dispatch(actions.setPair(pairSwitched));
+    }
   };
 
   const formatAmount = (value: number | undefined) => (value ? value : '');
@@ -91,7 +99,9 @@ export function SwapAssetSelection({
           placeholder="0.00000000"
         />
       </SwapSelection>
-      {showSwitch ? <SwapSelectionScrollIcon /> : null}
+      {showSwitch ? (
+        <SwapSelectionScrollIcon onClick={handlePairSwitch} />
+      ) : null}
       <SwapSelection>
         <Subtext>To</Subtext>
         <A

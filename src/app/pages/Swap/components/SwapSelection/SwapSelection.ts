@@ -55,6 +55,7 @@ export const SwapSelectionAsset = styled.div`
   align-items: center;
   border-radius: 5px;
   min-width: 60px;
+  user-select: none;
 `;
 
 export const Subtext = styled(P)`

@@ -17,3 +17,11 @@ export const constructPair = (tags, tokenList) => {
 
   return Object.assign({}, pair);
 };
+
+export const switchPairDirection = pair => {
+  return {
+    ...pair,
+    from: pair.to,
+    to: pair.from,
+  };
+};
