@@ -1,5 +1,7 @@
 import { DAppClientOptions, NetworkType } from '@airgap/beacon-sdk';
 
+/* todo: refactor into one global config object for easy access and import */
+
 export const SPICY_API_URL: string = 'https://spicyb.sdaotools.xyz/';
 export const TZKT_API_URL: string = 'https://api.tzkt.io/v1/';
 
@@ -15,3 +17,8 @@ export const dappOptions: DAppClientOptions = {
   preferredNetwork: DEFAULT_NETWORK_TYPE,
   name: DAPP_NAME,
 };
+
+export const defaultPairList: string[] = [
+  'KT1PnUZCp3u2KzWr93pn4DD7HAJnm3rWVrgn:0',
+  'KT1K4jn23GonEmZot3pMGth7unnzZ6EaMVjY:0',
+];

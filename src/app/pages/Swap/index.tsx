@@ -22,15 +22,9 @@ import {
 } from './slice/selectors';
 import { useEffect, useRef, useState } from 'react';
 import { SpicyToken } from 'types/SpicyToken';
-import { getPoolByTags, getTokenByTag } from 'utils/spicy';
+import { getPoolByTags } from 'utils/spicy';
 import PoolChart from 'app/components/PoolChart';
 import { constructPair } from './util/pair';
-
-//define default pair by contract address / tag
-export const defaultPairList: string[] = [
-  'KT1PnUZCp3u2KzWr93pn4DD7HAJnm3rWVrgn:0',
-  'KT1K4jn23GonEmZot3pMGth7unnzZ6EaMVjY:0',
-];
 
 export function Swap() {
   const dispatch = useDispatch();
