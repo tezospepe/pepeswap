@@ -14,19 +14,20 @@ import { A } from 'app/components/A';
 import { useSpicySwapSlice } from '../../slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFromAmount, selectToAmount } from '../../slice/selectors';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
+import { getSwapQuote } from '../../util/price';
 
-interface Props {
-  toggleModal: void;
+interface SwapAssetSelectionProps {
+  toggleModal: (dir?: SwapDirection) => void;
   pair?: SwapPair;
   showSwitch?: boolean;
 }
 
-export function SwapAssetSelection<Props>({
+export function SwapAssetSelection({
   toggleModal,
   pair,
   showSwitch = true,
-}) {
+}: SwapAssetSelectionProps) {
   const { actions } = useSpicySwapSlice();
   const dispatch = useDispatch();
 
@@ -38,15 +39,49 @@ export function SwapAssetSelection<Props>({
   const handleTokenClick = (dir: SwapDirection) => {
     toggleModal(dir);
   };
+
+  const getSwapAmount = (pair, fromAmount) => {
+    const tokenFrom =
+      pair.pool.fromToken.tag === pair.from?.tag
+        ? pair.pool.fromToken
+        : pair.pool.toToken;
+
+    const tokenTo =
+      pair.pool.toToken.tag === pair.to?.tag
+        ? pair.pool.toToken
+        : pair.pool.fromToken;
+
+    const tokenFromReserve = Number(tokenFrom.reserve);
+    const tokenToReserve = Number(tokenTo.reserve);
+
+    return getSwapQuote({
+      tokenFromReserve,
+      tokenToReserve,
+      tokenFromAmount: fromAmount,
+    });
+  };
+
   const handleFromAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const fromInputValue = Number(event.target.value);
     dispatch(actions.setFromAmount(fromInputValue));
+
+    if (pair && pair.pool) {
+      const toAmount = getSwapAmount(pair, fromInputValue);
+      dispatch(actions.setToAmount(toAmount));
+    }
   };
 
   const handleToAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const toInputValue = Number(event.target.value);
     dispatch(actions.setToAmount(toInputValue));
   };
+
+  useEffect(() => {
+    if (pair && pair.pool && fromAmount) {
+      const toAmount = getSwapAmount(pair, fromAmount);
+      dispatch(actions.setToAmount(toAmount));
+    }
+  }, [pair]);
 
   return (
     <>
@@ -58,7 +93,7 @@ export function SwapAssetSelection<Props>({
           }}
         >
           <SwapSelectionAsset>
-            {pair && pair.hasOwnProperty('from') ? (
+            {pair && pair.from ? (
               <>
                 <SwapSelectionTokenIcon url={pair.from.img} />
                 {pair.from.symbol}
@@ -86,7 +121,7 @@ export function SwapAssetSelection<Props>({
           }}
         >
           <SwapSelectionAsset>
-            {pair && pair.hasOwnProperty('to') ? (
+            {pair && pair.to ? (
               <>
                 <SwapSelectionTokenIcon url={pair.to.img} />
                 {pair.to.symbol}

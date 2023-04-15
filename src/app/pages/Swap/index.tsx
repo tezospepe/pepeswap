@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { Helmet } from 'react-helmet-async';
 import { PageWrapper } from 'app/components/PageWrapper';
 import { SwapWidget } from './components/SwapWidget';
@@ -87,16 +88,19 @@ export function Swap() {
     }
   }, [tokens, pair, dispatch, actions]);
 
-  /* should find a better way to handle this */
   useEffect(() => {
     if (pools.length && pair && pair.from && pair.to) {
       const pool = getPoolByTags(pools, pair.from.tag, pair.to.tag);
+
+      if (!_.isEqual(pool, pair.pool)) {
+        dispatch(actions.setPair({ ...pair, pool }));
+      }
 
       if (pool) {
         dispatch(actions.loadPoolMetrics(pool?.pairId));
       }
     }
-  }, [pair, pools, dispatch]);
+  }, [pair, pools, actions, dispatch]);
 
   return (
     <>
