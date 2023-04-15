@@ -25,6 +25,7 @@ import { SpicyToken } from 'types/SpicyToken';
 import { getPoolByTags } from 'utils/spicy';
 import PoolChart from 'app/components/PoolChart';
 import { constructPair } from './util/pair';
+import { defaultPairList } from 'app/common/const';
 
 export function Swap() {
   const dispatch = useDispatch();
@@ -69,14 +70,14 @@ export function Swap() {
     if (tokens.length === 0) {
       dispatch(actions.loadTokens());
     }
-  }, [dispatch, actions, tokens]);
+  }, [dispatch, actions]);
 
   useEffect(() => {
     // When initial state does not contain pools, call api to load pools
     if (pools.length === 0) {
       dispatch(actions.loadPools());
     }
-  }, [dispatch, actions, pools]);
+  }, [dispatch, actions]);
 
   useEffect(() => {
     const pair = constructPair(defaultPairList, tokens);
