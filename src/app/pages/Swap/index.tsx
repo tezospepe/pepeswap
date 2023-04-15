@@ -80,10 +80,10 @@ export function Swap() {
   }, [dispatch, actions]);
 
   useEffect(() => {
-    const pair = constructPair(defaultPairList, tokens);
+    const constructedPair = constructPair(defaultPairList, tokens);
 
     if (!pair && tokens.length) {
-      dispatch(actions.setPair(pair));
+      dispatch(actions.setPair(constructedPair));
     }
   }, [tokens, pair, dispatch, actions]);
 
