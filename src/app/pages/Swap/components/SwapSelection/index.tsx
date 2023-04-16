@@ -97,11 +97,11 @@ export function SwapAssetSelection({
               <>
                 <SwapSelectionTokenIcon url={pair.from.img} />
                 {pair.from.symbol}
-                <SwapSelectionArrowIcon />
               </>
             ) : (
-              <></>
+              'Select Token'
             )}
+            <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
         <TitleText>Balance: 1212.22</TitleText>
