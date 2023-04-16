@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { isEqual } from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual';
 import { Helmet } from 'react-helmet-async';
 import { PageWrapper } from 'app/components/PageWrapper';
 import { SwapWidget } from './components/SwapWidget';
