@@ -1,6 +1,6 @@
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
-import { SwapPair } from 'types/Swap';
+import { SwapPair, SwapParameters } from 'types/Swap';
 import { SpicyPoolResponse } from './types/pool';
 import { SpicyTokenResponse } from './types/token';
 
@@ -16,6 +16,7 @@ export interface SpicySwapState {
   fromAmountUsd?: number;
   toAmountUsd?: number;
   pair?: SwapPair;
+  swap: SwapParameters | null;
 }
 
 export const enum SpicySwapErrorType {

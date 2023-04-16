@@ -4,7 +4,7 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { spicySwapSaga } from './saga';
 import { SpicySwapState, SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
-import { SwapPair } from 'types/Swap';
+import { SwapPair, SwapParameters } from 'types/Swap';
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { defaultFrom } from 'app/common/const';
 
@@ -18,6 +18,7 @@ export const initialState: SpicySwapState = {
   fromAmountUsd: 0,
   toAmount: 0,
   toAmountUsd: 0,
+  swap: null,
   pair: { from: defaultFrom },
 };
 
@@ -27,6 +28,9 @@ const slice = createSlice({
   reducers: {
     setPair(state, action: PayloadAction<SwapPair>) {
       state.pair = action.payload;
+    },
+    setSwapParameters(state, action: PayloadAction<SwapParameters>) {
+      state.swap = action.payload;
     },
     setFromAmount(state, action: PayloadAction<number>) {
       state.fromAmount = action.payload;

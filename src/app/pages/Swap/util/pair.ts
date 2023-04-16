@@ -18,10 +18,25 @@ export const constructPair = (tags, tokenList) => {
   return Object.assign({}, pair);
 };
 
-export const switchPairDirection = pair => {
-  return {
-    ...pair,
-    from: pair.to,
-    to: pair.from,
-  };
-};
+export const switchPairDirection = pair => ({
+  ...pair,
+  from: pair.to,
+  to: pair.from,
+});
+
+export const constructSwapParameters = ({
+  pair,
+  fromAmount,
+  toAmount,
+  rate,
+  impact,
+  slippage = 0.02,
+}) => ({
+  fromToken: pair.from,
+  toToken: pair.to,
+  fromAmount,
+  toAmount,
+  rate,
+  impact,
+  slippage,
+});

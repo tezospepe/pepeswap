@@ -36,6 +36,11 @@ export const selectPair = createSelector(
   spicySwapState => spicySwapState.pair,
 );
 
+export const selectSwapParameters = createSelector(
+  [selectDomain],
+  spicySwapState => spicySwapState.swap,
+);
+
 export const selectFromAmount = createSelector(
   [selectDomain],
   spicySwapState => spicySwapState.fromAmount,

@@ -13,8 +13,9 @@ type QuoteParameters = {
 };
 
 interface QuoteResponse {
+  rate: number;
   toAmount: number;
-  priceImpact: number;
+  impact: number;
 }
 
 export const getSwapQuote = ({
@@ -46,8 +47,9 @@ export const getSwapQuote = ({
     ((priceAfterTrade - priceBeforeTrade) / priceBeforeTrade) * 100;
 
   return {
+    rate: priceAfterTrade,
     toAmount: token2Amount,
-    priceImpact,
+    impact: priceImpact,
   };
 };
 

@@ -13,10 +13,14 @@ import {
 import { A } from 'app/components/A';
 import { useSpicySwapSlice } from '../../slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFromAmount, selectToAmount } from '../../slice/selectors';
+import {
+  selectFromAmount,
+  selectSwapParameters,
+  selectToAmount,
+} from '../../slice/selectors';
 import { ChangeEvent, useEffect } from 'react';
 import { getSwapAmount } from '../../util/price';
-import { switchPairDirection } from '../../util/pair';
+import { constructSwapParameters, switchPairDirection } from '../../util/pair';
 interface SwapAssetSelectionProps {
   toggleModal: (dir?: SwapDirection) => void;
   pair?: SwapPair;
@@ -58,13 +62,22 @@ export function SwapAssetSelection({
   };
 
   useEffect(() => {
-    if (pair && pair.pool && fromAmount) {
-      const { toAmount, priceImpact } = getSwapAmount({
+    if (pair && pair.pool) {
+      const { rate, toAmount, impact } = getSwapAmount({
         pair,
         fromAmount,
       });
 
+      const swapParameters = constructSwapParameters({
+        pair,
+        fromAmount,
+        toAmount,
+        rate,
+        impact,
+      });
+
       dispatch(actions.setToAmount(toAmount));
+      dispatch(actions.setSwapParameters({ ...swapParameters }));
     } else {
       dispatch(actions.setToAmount(0));
     }

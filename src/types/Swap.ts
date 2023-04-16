@@ -8,3 +8,13 @@ export interface SwapPair {
 }
 
 export type SwapDirection = 'from' | 'to';
+
+export interface SwapParameters {
+  fromToken: SpicyToken;
+  toToken: SpicyToken;
+  fromAmount: number;
+  toAmount: number;
+  rate: number;
+  impact: number;
+  slippage: number;
+}
