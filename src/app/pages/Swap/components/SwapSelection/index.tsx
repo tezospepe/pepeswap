@@ -76,7 +76,7 @@ export function SwapAssetSelection({
         impact,
       });
 
-      dispatch(actions.setToAmount(toAmount));
+      dispatch(actions.setToAmount(Number(toAmount.toPrecision(14))));
       dispatch(actions.setSwapParameters({ ...swapParameters }));
     } else {
       dispatch(actions.setToAmount(0));
@@ -106,10 +106,18 @@ export function SwapAssetSelection({
         </A>
         <TitleText>Balance: 1212.22</TitleText>
         <SwapSelectionAmountInput
-          type="number"
+          type="text"
           onChange={handleFromAmountChange}
-          value={formatAmount(fromAmount)}
           placeholder="0.00000000"
+          min={0}
+          onInput={e =>
+            (e.currentTarget.value = e.currentTarget.value.slice(0, 14))
+          }
+          onKeyPress={e => {
+            if (isNaN(Number(e.key)) && e.key !== '.') {
+              e.preventDefault();
+            }
+          }}
         />
       </SwapSelection>
       {showSwitch ? (
@@ -136,10 +144,16 @@ export function SwapAssetSelection({
         </A>
         <TitleText>Balance: 0.00</TitleText>
         <SwapSelectionAmountInput
-          type="number"
+          type="text"
           onChange={handleToAmountChange}
-          value={formatAmount(toAmount)}
+          onKeyPress={e => {
+            if (isNaN(Number(e.key))) {
+              e.preventDefault();
+            }
+          }}
           placeholder="0.00000000"
+          value={toAmount}
+          maxLength={14}
         />
       </SwapSelection>
     </>
