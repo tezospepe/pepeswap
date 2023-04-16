@@ -21,6 +21,7 @@ import {
 import { ChangeEvent, useEffect } from 'react';
 import { getSwapAmount } from '../../util/price';
 import { constructSwapParameters, switchPairDirection } from '../../util/pair';
+import { handleSwapKeyPress } from './input-helper';
 interface SwapAssetSelectionProps {
   toggleModal: (dir?: SwapDirection) => void;
   pair?: SwapPair;
@@ -106,18 +107,13 @@ export function SwapAssetSelection({
         </A>
         <TitleText>Balance: 1212.22</TitleText>
         <SwapSelectionAmountInput
-          type="text"
+          type="number"
           onChange={handleFromAmountChange}
           placeholder="0.00000000"
           min={0}
-          onInput={e =>
-            (e.currentTarget.value = e.currentTarget.value.slice(0, 14))
-          }
-          onKeyPress={e => {
-            if (isNaN(Number(e.key)) && e.key !== '.') {
-              e.preventDefault();
-            }
-          }}
+          step={0.000000000001}
+          maxLength={14}
+          onKeyPress={handleSwapKeyPress}
         />
       </SwapSelection>
       {showSwitch ? (
@@ -144,16 +140,14 @@ export function SwapAssetSelection({
         </A>
         <TitleText>Balance: 0.00</TitleText>
         <SwapSelectionAmountInput
-          type="text"
+          type="number"
           onChange={handleToAmountChange}
-          onKeyPress={e => {
-            if (isNaN(Number(e.key))) {
-              e.preventDefault();
-            }
-          }}
+          min={0}
+          step={0.000000000001}
           placeholder="0.00000000"
           value={toAmount}
           maxLength={14}
+          onInput={handleSwapKeyPress}
         />
       </SwapSelection>
     </>
