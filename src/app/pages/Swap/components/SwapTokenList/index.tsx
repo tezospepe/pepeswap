@@ -16,6 +16,9 @@ import {
   SwapTokenListSearchInput,
 } from './SwapTokenList';
 import { P, P2 } from 'app/components/P';
+import { useSelector } from 'react-redux';
+import { selectLoading } from '../../slice/selectors';
+import { LoadingIndicator } from 'app/components/LoadingIndicator';
 
 interface SwapTokenListProps {
   toggleModal: void;
@@ -30,6 +33,8 @@ export function SwapTokenList<SwapTokenListProps>({
 }) {
   const [tokenSearchInput, setTokenSearchInput] = useState<string>('');
   const refTokenSearchInput = useRef<HTMLInputElement>(null);
+
+  const loading = useSelector(selectLoading);
 
   const handleTokenClick = (token: SpicyToken) => {
     setPair(token);
@@ -75,21 +80,35 @@ export function SwapTokenList<SwapTokenListProps>({
         />
       </SwapTokenListSearch>
       <SwapTokenListContent>
-        {tokens.filter(trimTokenListByInput).map((token, index) => (
-          <SwapTokenListItem
-            onClick={() => handleTokenClick(token)}
-            key={index}
+        {loading ? (
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              paddingTop: '20px',
+              justifyContent: 'center',
+            }}
           >
-            <SwapTokenIcon url={token.img} />
-            <SwapTokenListAssetText>
-              <P>{token.name}</P>
-              <P2>{token.symbol}</P2>
-            </SwapTokenListAssetText>
-            <SwapTokenListAssetBalance>
-              <P>$ {token.derivedUsd.toFixed(2)}</P>
-            </SwapTokenListAssetBalance>
-          </SwapTokenListItem>
-        ))}
+            <LoadingIndicator />
+          </div>
+        ) : (
+          tokens.filter(trimTokenListByInput).map((token, index) => (
+            <SwapTokenListItem
+              onClick={() => handleTokenClick(token)}
+              key={index}
+            >
+              <SwapTokenIcon url={token.img} />
+              <SwapTokenListAssetText>
+                <P>{token.name}</P>
+                <P2>{token.symbol}</P2>
+              </SwapTokenListAssetText>
+              <SwapTokenListAssetBalance>
+                <P>$ {token.derivedUsd.toFixed(2)}</P>
+              </SwapTokenListAssetBalance>
+            </SwapTokenListItem>
+          ))
+        )}
       </SwapTokenListContent>
     </SwapTokenListBox>
   );
