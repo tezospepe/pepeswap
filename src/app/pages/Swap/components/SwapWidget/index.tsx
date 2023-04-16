@@ -24,6 +24,7 @@ import { Modal } from 'app/components/Modal';
 import LimitOrderPanel from '../LimitOrderPanel';
 import SwapWidgetTabs, { SwapWidgetTab } from '../SwapWidgetTabs';
 import { selectConnected } from 'app/slice/wallet/selectors';
+import { selectSwapParameters } from '../../slice/selectors';
 import LiquidityPanel from '../LiquidityPanel';
 
 type SwapWidgetProps = {
@@ -48,6 +49,8 @@ export function SwapWidget({
   togglePool,
 }: SwapWidgetProps) {
   const connected = useSelector(selectConnected);
+  const swapParameters = useSelector(selectSwapParameters);
+
   const [activeTab, setActiveTab] = useState<string>(SwapWidgetTab.Swap);
   const handleSwapClick = () => (connected ? false : onWalletConnect());
 
@@ -107,23 +110,39 @@ export function SwapWidget({
             </ConnectButton>
           </Execute>
         </MainWidget>
+        {swapParameters && swapParameters?.impact * -1 > 25 && (
+          <div
+            style={{
+              width: '100%',
+              height: '30px',
+              backgroundColor: `red`,
+            }}
+          >
+            <P2>High price impact</P2>
+          </div>
+        )}
         <SwapSubsection>
-          <Rate>
-            <P>Rate</P>
-            <P2>
-              {pair?.to && pair?.from
-                ? `1 ${pair?.from?.symbol} for 1 ${pair?.to?.symbol}`
-                : ''}
-            </P2>
-          </Rate>
-          <Slippage>
-            <P>Slippage</P>
-            <P2>0.01%</P2>
-          </Slippage>
-          <PriceImpact>
-            <P>Impact</P>
-            <P2>0.01%</P2>
-          </PriceImpact>
+          {swapParameters ? (
+            <>
+              <Rate>
+                <P>Rate</P>
+                <P2>
+                  {`${swapParameters?.rate.toFixed(6)} ${
+                    swapParameters?.fromToken?.symbol
+                  } for
+                  1 ${swapParameters?.toToken?.symbol}`}
+                </P2>
+              </Rate>
+              <Slippage>
+                <P>Slippage</P>
+                <P2>{`${(swapParameters?.slippage * 100).toFixed(2)}%`}</P2>
+              </Slippage>
+              <PriceImpact>
+                <P>Impact {swapParameters?.impact * -1 > 25 && '🚨'}</P>
+                <P2>{`${(swapParameters?.impact * -1).toFixed(2)}%`}</P2>
+              </PriceImpact>
+            </>
+          ) : null}
         </SwapSubsection>
       </Wrapper>
       {modalView && (
