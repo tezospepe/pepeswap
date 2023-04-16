@@ -18,6 +18,7 @@ import {
   Rate,
   Slippage,
   SwapSubsection,
+  Warning,
   Wrapper,
 } from './SwapWidget';
 import { Modal } from 'app/components/Modal';
@@ -108,19 +109,19 @@ export function SwapWidget({
             <ConnectButton onClick={handleSwapClick}>
               {connected ? 'Swap' : 'Connect'}
             </ConnectButton>
+            {swapParameters && swapParameters?.impact * -1 > 25 && (
+              <Warning>
+                <P>
+                  High price impact:&nbsp;
+                  {`${(swapParameters?.impact * -1).toFixed(2)}%`}
+                </P>
+                <P style={{ color: 'orange' }}>
+                  A large portion of your trade will be lost.
+                </P>
+              </Warning>
+            )}
           </Execute>
         </MainWidget>
-        {swapParameters && swapParameters?.impact * -1 > 25 && (
-          <div
-            style={{
-              width: '100%',
-              height: '30px',
-              backgroundColor: `red`,
-            }}
-          >
-            <P2>High price impact</P2>
-          </div>
-        )}
         <SwapSubsection>
           {swapParameters ? (
             <>
@@ -138,7 +139,7 @@ export function SwapWidget({
                 <P2>{`${(swapParameters?.slippage * 100).toFixed(2)}%`}</P2>
               </Slippage>
               <PriceImpact>
-                <P>Impact {swapParameters?.impact * -1 > 25 && '🚨'}</P>
+                <P>Impact</P>
                 <P2>{`${(swapParameters?.impact * -1).toFixed(2)}%`}</P2>
               </PriceImpact>
             </>

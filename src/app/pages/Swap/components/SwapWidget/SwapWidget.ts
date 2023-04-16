@@ -39,7 +39,7 @@ export const Header = styled.div`
 export const Swap = styled.div`
   grid-area: 2 / 1 / 3 / 4;
   text-align: center;
-  row-gap: 15px;
+  row-gap: 12px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -48,7 +48,8 @@ export const Swap = styled.div`
 
 export const Execute = styled.div`
   grid-area: 3 / 1 / 4 / 4;
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: flex-end;
 `;
@@ -116,4 +117,17 @@ export const Slippage = styled(SwapSubItem)`
 
 export const PriceImpact = styled(SwapSubItem)`
   grid-area: 3 / 1 / 4 / 2;
+`;
+
+export const Warning = styled.div`
+  margin-top: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 62px;
+  background-color: ${p => p.theme.border};
+  border-radius: 14px;
 `;
