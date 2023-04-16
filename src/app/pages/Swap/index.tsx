@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as _ from 'lodash';
+import { isEqual } from 'lodash/isEqual';
 import { Helmet } from 'react-helmet-async';
 import { PageWrapper } from 'app/components/PageWrapper';
 import { SwapWidget } from './components/SwapWidget';
@@ -96,7 +96,7 @@ export function Swap() {
     if (pools.length && pair && pair.from && pair.to) {
       const pool = getPoolByTags(pools, pair.from.tag, pair.to.tag);
 
-      if (!_.isEqual(pool, pair.pool)) {
+      if (!isEqual(pool, pair.pool)) {
         dispatch(actions.setPair({ ...pair, pool }));
       }
 
