@@ -1,5 +1,5 @@
 import { Box } from 'app/components/base/Box';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 export const CollectionsContainer = styled(Box)`
   width: 1400px;

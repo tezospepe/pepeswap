@@ -2,7 +2,7 @@ import isEqual from 'lodash/isEqual';
 import { Helmet } from 'react-helmet-async';
 import { PageWrapper } from 'app/components/PageWrapper';
 import { SwapWidget } from './components/SwapWidget';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { StyleConstants } from 'styles/StyleConstants';
 import { Footer } from 'app/components/Footer';
 import { media } from 'styles/media';

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { StyleConstants } from 'styles/StyleConstants';
 
 export const NavBarWrapper = styled.header`

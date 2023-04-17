@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { SwapTokenIcon } from '../SwapTokenIcon';
 import { UilScroll, UilAngleDown } from '@iconscout/react-unicons';
 import { P } from 'app/components/P';

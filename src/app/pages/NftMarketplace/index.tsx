@@ -1,6 +1,6 @@
 import { NavBar } from 'app/components/NavBar';
 import { Helmet } from 'react-helmet-async';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { StyleConstants } from 'styles/StyleConstants';
 import { CollectionsContainer } from './components/Collections/style';
 import Collections from './components/Collections';

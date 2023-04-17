@@ -1,6 +1,6 @@
 import { A } from 'app/components/A';
 import { ConnectButton } from 'app/components/ConnectButton';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { UilMultiply } from '@iconscout/react-unicons';
 
 export const MobileNavWrapper = styled.div`

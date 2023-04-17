@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { SwapSelection } from '../SwapSelection/SwapSelection';
 import { P } from 'app/components/P';
 import { ConnectButton } from 'app/components/ConnectButton';

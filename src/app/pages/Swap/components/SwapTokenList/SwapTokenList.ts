@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { SwapSelectionAmountInput } from '../SwapSelection/SwapSelection';
 import { UilSearch } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';

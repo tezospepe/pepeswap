@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { A } from 'app/components/A';
 import { ConnectButton } from 'app/components/ConnectButton';
 import { media } from 'styles/media';
