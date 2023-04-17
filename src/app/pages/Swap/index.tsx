@@ -1,11 +1,9 @@
-import * as React from 'react';
 import isEqual from 'lodash/isEqual';
 import { Helmet } from 'react-helmet-async';
 import { PageWrapper } from 'app/components/PageWrapper';
 import { SwapWidget } from './components/SwapWidget';
 import styled from 'styled-components';
 import { StyleConstants } from 'styles/StyleConstants';
-import { NavBar } from 'app/components/NavBar';
 import { Footer } from 'app/components/Footer';
 import { media } from 'styles/media';
 import PriceChart from 'app/components/PriceChart';
@@ -25,8 +23,6 @@ import { useEffect, useRef, useState } from 'react';
 import { SpicyToken } from 'types/SpicyToken';
 import { getPoolByTags } from 'utils/spicy';
 import PoolChart from 'app/components/PoolChart';
-import { constructPair } from './util/pair';
-import { defaultPairList } from 'app/common/const';
 import {
   LocalStorageService,
   StorageKeys,
@@ -71,6 +67,16 @@ export function Swap() {
     };
     dispatch(actions.setPair(swapPair));
   };
+
+  useEffect(() => {
+    const localSwapPair = storageService.getItem<SwapPair>(
+      StorageKeys.swapPair,
+    );
+
+    if (localSwapPair) {
+      dispatch(actions.setPair(localSwapPair));
+    }
+  }, []);
 
   useEffect(() => {
     const localTokenMetadata = storageService.getItem<SpicyToken[]>(

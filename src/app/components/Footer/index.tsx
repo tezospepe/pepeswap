@@ -1,9 +1,4 @@
-import * as React from 'react';
-import { PageWrapper } from '../PageWrapper';
-import { StyleConstants } from 'styles/StyleConstants';
 import styled from 'styled-components';
-import { NavLogo } from '../NavBar/NavLogo';
-import { StatisticsBanner } from '../StatisticsBanner';
 
 export function Footer() {
   return (

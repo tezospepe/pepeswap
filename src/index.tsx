@@ -16,13 +16,13 @@ import FontFaceObserver from 'fontfaceobserver';
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
 
-import { App } from 'app';
+import { App } from './app';
 
 import { HelmetProvider } from 'react-helmet-async';
 
-import { configureAppStore } from 'store/configureStore';
+import { configureAppStore } from './store/configureStore';
 
-import { ThemeProvider } from 'styles/theme/ThemeProvider';
+import { ThemeProvider } from './styles/theme/ThemeProvider';
 
 import reportWebVitals from 'reportWebVitals';
 

@@ -1,4 +1,4 @@
-import { AccountInfo, NetworkType, BeaconError } from '@airgap/beacon-sdk';
+import { AccountInfo, NetworkType } from '@airgap/beacon-sdk';
 
 /* --- STATE --- */
 export interface WalletState {

@@ -2,7 +2,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { walletActions as actions } from '.';
 import { WalletConnection } from './types';
 import { AccountInfo, BeaconError } from '@airgap/beacon-sdk';
-import { requestPermissions } from 'app/services/wallet-service';
+import { requestPermissions } from '../../services/wallet-service';
 import { beaconToWalletError } from 'utils/helper';
 
 export function* connectWallet() {
