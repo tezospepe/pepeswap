@@ -14,7 +14,6 @@ import {
 } from './NavBarContent';
 import { NavPage } from '../types';
 import { AccountInfo } from '@airgap/beacon-sdk';
-import { useState } from 'react';
 import ProfileOptions from '../ProfileOptions';
 
 type NavBarContentProps = {

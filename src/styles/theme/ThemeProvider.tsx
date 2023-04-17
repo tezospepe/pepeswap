@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children } from 'react';
 import { ThemeProvider as OriginalThemeProvider } from 'styled-components';
 import { useSelector } from 'react-redux';
 import { useThemeSlice } from './slice';
@@ -10,7 +10,7 @@ export const ThemeProvider = (props: { children: React.ReactChild }) => {
   const theme = useSelector(selectTheme);
   return (
     <OriginalThemeProvider theme={theme}>
-      {React.Children.only(props.children)}
+      {Children.only(props.children)}
     </OriginalThemeProvider>
   );
 };
