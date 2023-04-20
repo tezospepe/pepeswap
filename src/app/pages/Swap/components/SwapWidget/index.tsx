@@ -2,7 +2,7 @@ import { UilSlidersVAlt } from '@iconscout/react-unicons';
 import { UilSync } from '@iconscout/react-unicons';
 import { A } from 'app/components/A';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SwapDirection, SwapPair } from 'types/Swap';
 import { SwapAssetSelection } from '../SwapSelection';
 import { SwapTokenList } from '../SwapTokenList';
@@ -27,6 +27,7 @@ import SwapWidgetTabs, { SwapWidgetTab } from '../SwapWidgetTabs';
 import { selectConnected } from 'app/slice/wallet/selectors';
 import { selectSwapParameters } from '../../slice/selectors';
 import LiquidityPanel from '../LiquidityPanel';
+import { useSpicySwapSlice } from '../../slice';
 
 type SwapWidgetProps = {
   tokens?: SpicyToken[];
@@ -52,6 +53,9 @@ export function SwapWidget({
   const connected = useSelector(selectConnected);
   const swapParameters = useSelector(selectSwapParameters);
 
+  const dispatch = useDispatch();
+  const { actions } = useSpicySwapSlice();
+
   const [activeTab, setActiveTab] = useState<string>(SwapWidgetTab.Swap);
   const handleSwapClick = () => (connected ? false : onWalletConnect());
 
@@ -65,6 +69,9 @@ export function SwapWidget({
         togglePool(false);
         break;
     }
+
+    dispatch(actions.setFromAmount(0));
+    dispatch(actions.setToAmount(0));
 
     setActiveTab(tab);
   };
