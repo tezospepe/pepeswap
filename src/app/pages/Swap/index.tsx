@@ -6,7 +6,6 @@ import styled from 'styled-components/macro';
 import { StyleConstants } from 'styles/StyleConstants';
 import { Footer } from 'app/components/Footer';
 import { media } from 'styles/media';
-import PriceChart from 'app/components/PriceChart';
 import { useDispatch, useSelector } from 'react-redux';
 import { SwapDirection, SwapPair } from 'types/Swap';
 import { useSpicySwapSlice } from './slice';
@@ -136,16 +135,6 @@ export function Swap() {
       </Helmet>
       <Wrapper>
         <Content>
-          <PriceChart
-            tokens={tokens}
-            pools={pools}
-            metrics={poolMetrics}
-            pair={pair}
-            setPair={setPair}
-            modalView={modalView}
-            toggleModal={toggleModal}
-            active={limitView}
-          />
           <PoolChart
             tokens={tokens}
             pools={pools}
