@@ -3,7 +3,7 @@ import { LogoWrapper, LogoTitle, LogoDescription } from './NavLogo';
 export function NavLogo() {
   return (
     <LogoWrapper>
-      <LogoTitle>SourSwap</LogoTitle>
+      <LogoTitle>PepeSwap</LogoTitle>
       <LogoDescription>next-generation DEX</LogoDescription>
     </LogoWrapper>
   );
