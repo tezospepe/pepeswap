@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@airgap/beacon-sdk": "3.3.4",
+    "@airgap/beacon-sdk": "4.0.0",
     "@iconscout/react-unicons": "1.1.6",
     "@reduxjs/toolkit": "1.8.5",
     "@taquito/beacon-wallet": "16.1.2",
