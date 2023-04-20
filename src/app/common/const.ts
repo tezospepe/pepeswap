@@ -34,3 +34,15 @@ export const defaultFrom: SpicyToken = {
   totalLiquidityUsd: 92874.1649167061,
   totalLiquidityXtz: 74618.76053199123,
 };
+
+export const defaultTo: SpicyToken = {
+  decimals: 2,
+  derivedUsd: 0.000096774597620169,
+  derivedXtz: 0.00008606377324968,
+  img: 'ipfs://bafybeigqka2ynrib6ytxku3nvakork5smsxni5xdqro56kd7ecsfos7z7a',
+  name: 'Tezos Pepe',
+  symbol: 'PEPE',
+  tag: 'KT1MZg99PxMDEENwB4Fi64xkqAVh5d1rv8Z9:0',
+  totalLiquidityUsd: 2147.0167050012815,
+  totalLiquidityXtz: 2414.217618689571,
+};

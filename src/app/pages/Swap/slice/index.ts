@@ -6,7 +6,7 @@ import { SpicySwapState, SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
 import { SwapPair, SwapParameters } from 'types/Swap';
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
-import { defaultFrom } from 'app/common/const';
+import { defaultFrom, defaultTo } from 'app/common/const';
 
 export const initialState: SpicySwapState = {
   tokens: [],
@@ -19,7 +19,7 @@ export const initialState: SpicySwapState = {
   toAmount: 0,
   toAmountUsd: 0,
   swap: null,
-  pair: { from: defaultFrom },
+  pair: { from: defaultFrom, to: defaultTo },
 };
 
 const slice = createSlice({
