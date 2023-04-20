@@ -41,7 +41,6 @@ const slice = createSlice({
     loadPools(state) {
       state.loading = true;
       state.error = null;
-      state.pools = [];
     },
     poolsLoaded(state, action: PayloadAction<SpicyPool[]>) {
       const pools = action.payload;
