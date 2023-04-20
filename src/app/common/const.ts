@@ -6,9 +6,9 @@ import { SpicyToken } from 'types/SpicyToken';
 export const SPICY_API_URL: string = 'https://spicyb.sdaotools.xyz/';
 export const TZKT_API_URL: string = 'https://api.tzkt.io/v1/';
 
-export const DAPP_NAME: string = 'SourSwap';
+export const DAPP_NAME: string = 'PepeSwap';
 export const DAPP_ICON_URL: string =
-  'https://spicyswap.xyz/assets/spicy-pro.png';
+  'https://bafybeigqka2ynrib6ytxku3nvakork5smsxni5xdqro56kd7ecsfos7z7a.ipfs.dweb.link/';
 
 export const DEFAULT_RPC: string = 'https://rpc.ghostnet.teztnets.xyz/';
 export const DEFAULT_NETWORK_TYPE: NetworkType = NetworkType.GHOSTNET;

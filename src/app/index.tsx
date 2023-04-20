@@ -22,13 +22,13 @@ export function App() {
   return (
     <BrowserRouter>
       <Helmet
-        titleTemplate="%s - SpicySwap"
-        defaultTitle="SpicySwap"
+        titleTemplate="%s - PepeSwap"
+        defaultTitle="PepeSwap"
         htmlAttributes={{ lang: i18n.language }}
       >
         <meta
           name="description"
-          content="SpicySwap is a next-generation DEX built by Genius Contracts specifically for token-to-token swaps on Tezos. SpicySwap is governed by SalsaDAO ($sDAO)."
+          content="PepeSwap is a next-generation DEX built on top of Genius Contracts' SpicySwap specifically for token-to-token swaps on Tezos."
         />
       </Helmet>
       <NavBar />
