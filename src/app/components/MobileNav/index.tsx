@@ -37,21 +37,9 @@ export function MobileNav({
   const pages: NavPage[] = [
     {
       url: '#',
-      name: 'dashboard',
-      alt: '',
-      icon: <UilHome />,
-    },
-    {
-      url: '#',
       name: 'swap',
       alt: '',
       icon: <UilUsdCircle />,
-    },
-    {
-      url: '#',
-      name: 'analytics',
-      alt: '',
-      icon: <UilAnalytics />,
     },
     {
       url: '#',
