@@ -9,7 +9,6 @@ type SwapWidgetTabsProps = {
 
 export enum SwapWidgetTab {
   Swap = 'Swap',
-  Limit = 'Limit',
   Liquidity = 'Liquidity',
 }
 

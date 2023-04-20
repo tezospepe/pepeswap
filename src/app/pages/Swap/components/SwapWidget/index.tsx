@@ -58,28 +58,12 @@ export function SwapWidget({
   const handleTabChange = (tab: SwapWidgetTab | string) => {
     //todo: optimize this state management logic. it's ugly
     switch (tab) {
-      case SwapWidgetTab.Limit: {
-        togglePool(false);
-        toggleLimit();
-        break;
-      }
-
-      case SwapWidgetTab.Liquidity: {
-        toggleLimit(false);
+      case SwapWidgetTab.Liquidity:
         togglePool();
         break;
-      }
-
-      case SwapWidgetTab.Swap: {
-        toggleLimit(false);
+      case SwapWidgetTab.Swap:
         togglePool(false);
-      }
-    }
-
-    if (tab === SwapWidgetTab.Limit) {
-      toggleLimit();
-    } else {
-      toggleLimit(false);
+        break;
     }
 
     setActiveTab(tab);
@@ -102,7 +86,6 @@ export function SwapWidget({
             handleTabChange={handleTabChange}
           >
             <SwapAssetSelection toggleModal={toggleModal} pair={pair} />
-            <LimitOrderPanel toggleModal={toggleModal} pair={pair} />
             <LiquidityPanel toggleModal={toggleModal} pair={pair} />
           </SwapWidgetTabs>
           <Execute>
