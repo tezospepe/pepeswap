@@ -112,6 +112,17 @@ export function Swap() {
     }
   }, [pair, pools, actions, dispatch]);
 
+  useEffect(() => {
+    if (!pools) return;
+
+    const refetchPoolTimer = setInterval(
+      () => dispatch(actions.loadPools()),
+      15000,
+    );
+
+    return () => clearInterval(refetchPoolTimer);
+  }, []);
+
   return (
     <>
       <Helmet>
