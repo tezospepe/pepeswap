@@ -26,9 +26,7 @@ export function NavBarContent({
   isProfileActive,
 }: NavBarContentProps) {
   const handleHamburgerClick = () => {
-    if (!connected) {
-      toggleModal();
-    }
+    toggleModal();
   };
 
   const pages: NavPage[] = [
