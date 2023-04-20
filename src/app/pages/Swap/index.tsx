@@ -107,7 +107,7 @@ export function Swap() {
         storageService.setItem(StorageKeys.swapPair, { ...pair, pool });
       }
 
-      if (pool) {
+      if (pool && !poolMetrics) {
         dispatch(actions.loadPoolMetrics(pool?.pairId));
       }
     }
@@ -118,7 +118,7 @@ export function Swap() {
 
     const refetchPoolTimer = setInterval(
       () => dispatch(actions.loadPools()),
-      15000,
+      30000,
     );
 
     return () => clearInterval(refetchPoolTimer);
