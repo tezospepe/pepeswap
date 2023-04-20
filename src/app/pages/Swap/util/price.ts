@@ -34,7 +34,8 @@ export const getSwapQuote = ({
   const newToken2Reserve =
     (tokenFromReserve * tokenToReserve) / newToken1Reserve;
 
-  const token2Amount = tokenToReserve - newToken2Reserve;
+  const token2Amount =
+    tokenFromAmount > 0 ? tokenToReserve - newToken2Reserve : 0;
 
   if (token2Amount < 0) {
     console.error('Calculated token2Amount is negative');
