@@ -104,6 +104,7 @@ export function Swap() {
 
       if (!isEqual(pool, pair.pool)) {
         dispatch(actions.setPair({ ...pair, pool }));
+        storageService.setItem(StorageKeys.swapPair, { ...pair, pool });
       }
 
       if (pool) {
