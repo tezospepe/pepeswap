@@ -18,7 +18,7 @@ import {
 import { P, P2 } from 'app/components/P';
 import { useSelector } from 'react-redux';
 import { selectLoading } from '../../slice/selectors';
-import { LoadingIndicator } from 'app/components/LoadingIndicator';
+import pepedance from '../../../../assets/pepedance.gif';
 
 interface SwapTokenListProps {
   toggleModal: void;
@@ -90,7 +90,7 @@ export function SwapTokenList<SwapTokenListProps>({
               justifyContent: 'center',
             }}
           >
-            <LoadingIndicator />
+            <img src={pepedance} width={80} height={48}></img>
           </div>
         ) : (
           tokens.filter(trimTokenListByInput).map((token, index) => (
