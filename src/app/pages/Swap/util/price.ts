@@ -25,7 +25,7 @@ export const getSwapQuote = ({
   tradeFee = 0.003,
 }: QuoteParameters): QuoteResponse => {
   if (tokenFromReserve < 0 || tokenToReserve < 0 || tokenFromAmount < 0) {
-    throw new Error('Reserves and amounts must be non-negative');
+    console.error('Reserves and amounts must be non-negative');
   }
 
   const token1AmountAfterFee = tokenFromAmount * (1 - tradeFee);
@@ -37,7 +37,7 @@ export const getSwapQuote = ({
   const token2Amount = tokenToReserve - newToken2Reserve;
 
   if (token2Amount < 0) {
-    throw new Error('Calculated token2Amount is negative');
+    console.error('Calculated token2Amount is negative');
   }
 
   const priceBeforeTrade = tokenToReserve / tokenFromReserve;
