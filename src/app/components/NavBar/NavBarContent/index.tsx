@@ -1,9 +1,4 @@
-import {
-  UilAnalytics,
-  UilUsdCircle,
-  UilHome,
-  UilBars,
-} from '@iconscout/react-unicons';
+import { UilUsdCircle, UilBars } from '@iconscout/react-unicons';
 import {
   NavWrapper,
   NavItem,
@@ -14,7 +9,6 @@ import {
 } from './NavBarContent';
 import { NavPage } from '../types';
 import { AccountInfo } from '@airgap/beacon-sdk';
-import ProfileOptions from '../ProfileOptions';
 
 type NavBarContentProps = {
   toggleModal: () => void;
@@ -40,21 +34,9 @@ export function NavBarContent({
   const pages: NavPage[] = [
     {
       url: '#',
-      name: 'Dashboard',
-      alt: 'Dashboard Page',
-      icon: <UilHome />,
-    },
-    {
-      url: '#',
       name: 'Swap',
       alt: 'Swap Page',
       icon: <UilUsdCircle />,
-    },
-    {
-      url: '#',
-      name: 'Analytics',
-      alt: 'Analytics Page',
-      icon: <UilAnalytics />,
     },
   ];
 
@@ -77,7 +59,6 @@ export function NavBarContent({
           {connected ? account?.address : 'Connect Wallet'}
         </NavWalletButton>
       </NavWrapper>
-      <ProfileOptions account={account} visible={isProfileActive} />
       <MobileNavWrapper>
         <NavHamburgerButton onClick={handleHamburgerClick}>
           <UilBars />

@@ -7,7 +7,7 @@
     "@iconscout/react-unicons": "1.1.6",
     "@reduxjs/toolkit": "1.8.5",
     "@taquito/beacon-wallet": "15.1.0",
-    "@taquito/taquito": "15.1.0",
+    "@taquito/taquito": "16.1.2-beta-RC.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@types/fontfaceobserver": "^2.1.0",
