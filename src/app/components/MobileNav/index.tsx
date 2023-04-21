@@ -16,6 +16,7 @@ import {
 } from './MobileNav';
 import { NavPage } from './types';
 import { AccountInfo } from '@airgap/beacon-sdk';
+import { truncateMiddle } from 'utils/user-address';
 
 interface MobileNavProps {
   toggleModal: () => void;
@@ -69,7 +70,7 @@ export function MobileNav({
       ))}
       <MobileNavItem>
         <MobileNavWalletButton onClick={handleButtonClick}>
-          {connected ? account?.address : 'Connect Wallet'}
+          {connected ? truncateMiddle(account?.address, 12) : 'Connect Wallet'}
         </MobileNavWalletButton>
       </MobileNavItem>
       <RpcStatus>

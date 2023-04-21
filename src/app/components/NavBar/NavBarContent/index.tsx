@@ -9,6 +9,7 @@ import {
 } from './NavBarContent';
 import { NavPage } from '../types';
 import { AccountInfo } from '@airgap/beacon-sdk';
+import { truncateMiddle } from 'utils/user-address';
 
 type NavBarContentProps = {
   toggleModal: () => void;
@@ -54,7 +55,7 @@ export function NavBarContent({
           </NavItem>
         ))}
         <NavWalletButton onClick={handleButtonClick}>
-          {connected ? account?.address : 'Connect Wallet'}
+          {connected ? truncateMiddle(account?.address, 12) : 'Connect Wallet'}
         </NavWalletButton>
       </NavWrapper>
       <MobileNavWrapper>
