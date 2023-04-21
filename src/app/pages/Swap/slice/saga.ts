@@ -2,12 +2,16 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { request } from 'utils/request';
 import { spicySwapActions as actions } from '.';
 import { GetPoolProps, GetTokenProps, SpicySwapErrorType } from './types';
-import { calculateDayAgg, calculateHourAgg } from 'utils/spicy';
+import { calculateDayAgg, calculateHourAgg, convertToMuTez } from 'utils/spicy';
+import { secondsFromNow } from './util';
 import { transformPoolMetrics, transformPools, transformTokens } from './util';
 import {
   LocalStorageService,
   StorageKeys,
 } from 'app/services/local-storage-service';
+import { Tezos } from 'app/services/wallet-service';
+import { SPICY_ROUTER } from 'app/common/const';
+import { TransactionStatus } from 'types/transaction';
 
 const SPICY_API = 'https://spicyb.sdaotools.xyz/api/rest';
 const storageService = new LocalStorageService();
@@ -73,6 +77,92 @@ export function* getPoolMetrics({
   }
 }
 
+export function* executeSwap({
+  payload,
+}: ReturnType<typeof actions.executeSwap>) {
+  try {
+    const userAddress = payload.userAddress;
+    const fromToken = payload.fromToken.tag.split(':');
+    const toToken = payload.toToken.tag.split(':');
+
+    const dexContract = yield Tezos.wallet.at(SPICY_ROUTER);
+    const fromTokenContract = yield Tezos.wallet.at(fromToken[0]);
+
+    const input = convertToMuTez(payload.fromToken, payload.fromAmount);
+    const output = convertToMuTez(
+      payload.toToken,
+      payload.toAmount - (payload.toAmount * payload.slippage) / 100,
+    );
+
+    const batch = yield Tezos.wallet
+      .batch()
+      .withContractCall(
+        fromTokenContract.methods.update_operators([
+          {
+            add_operator: {
+              owner: userAddress,
+              operator: SPICY_ROUTER,
+              token_id: fromToken[1],
+            },
+          },
+        ]),
+      )
+      .withContractCall(
+        dexContract.methodsObject.swap_exact_for_tokens({
+          _to: userAddress,
+          amountIn: input,
+          amountOutMin: output,
+          deadline: `${secondsFromNow(300)}`,
+          tokenIn: {
+            fa2_address: fromToken[0],
+            token_id: fromToken[1] || null,
+          },
+          tokenOut: {
+            fa2_address: toToken[0],
+            token_id: toToken[1] || null,
+          },
+        }),
+      )
+      .withContractCall(
+        fromTokenContract.methods.update_operators([
+          {
+            remove_operator: {
+              owner: userAddress,
+              operator: SPICY_ROUTER,
+              token_id: fromToken[1],
+            },
+          },
+        ]),
+      )
+      .send();
+
+    yield batch.confirmation();
+
+    yield put(
+      actions.transactionUpdate({
+        status: TransactionStatus.CONFIRMED,
+        hash: batch.opHash,
+        fromToken: payload.fromToken.symbol,
+        toToken: payload.toToken.symbol,
+        fromAmount: input,
+        toAmount: output,
+      }),
+    );
+  } catch (e) {
+    console.log(e);
+    yield put(
+      actions.transactionUpdate({
+        status: TransactionStatus.FAILED,
+        hash: '',
+        fromToken: payload.fromToken.symbol,
+        toToken: payload.toToken.symbol,
+        fromAmount: payload.fromAmount,
+        toAmount: payload.toAmount,
+      }),
+    );
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
@@ -91,5 +181,6 @@ export function* spicySwapSaga() {
       transformPools,
     }),
   );
+  yield takeLatest(actions.executeSwap.type, executeSwap);
   yield takeLatest(actions.loadPoolMetrics.type, getPoolMetrics);
 }

@@ -6,12 +6,14 @@ import { SpicyToken } from 'types/SpicyToken';
 export const SPICY_API_URL: string = 'https://spicyb.sdaotools.xyz/';
 export const TZKT_API_URL: string = 'https://api.tzkt.io/v1/';
 
+export const SPICY_ROUTER: string = 'KT1PwoZxyv4XkPEGnTqWYvjA1UYiPTgAGyqL';
+
 export const DAPP_NAME: string = 'PepeSwap';
 export const DAPP_ICON_URL: string =
   'https://bafybeigqka2ynrib6ytxku3nvakork5smsxni5xdqro56kd7ecsfos7z7a.ipfs.dweb.link/';
 
-export const DEFAULT_RPC: string = 'https://rpc.ghostnet.teztnets.xyz/';
-export const DEFAULT_NETWORK_TYPE: NetworkType = NetworkType.GHOSTNET;
+export const DEFAULT_RPC: string = 'https://mainnet.api.tez.ie';
+export const DEFAULT_NETWORK_TYPE: NetworkType = NetworkType.MAINNET;
 
 export const dappOptions: DAppClientOptions = {
   iconUrl: DAPP_ICON_URL,

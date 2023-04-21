@@ -18,3 +18,7 @@ export interface SwapParameters {
   impact: number;
   slippage: number;
 }
+
+export interface UserSwapParameters extends SwapParameters {
+  userAddress: string;
+}

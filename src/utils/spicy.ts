@@ -52,3 +52,6 @@ export const getPoolByTags = (pools: SpicyPool[], fromTag, toTag) =>
 
 export const calculateRate = ({ reserveFrom, reserveTo }) =>
   numberToLocaleAndFix(reserveFrom / reserveTo, 4);
+
+export const convertToMuTez = (token, amount) =>
+  Math.floor(amount * Math.pow(10, token.decimals));

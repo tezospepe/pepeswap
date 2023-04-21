@@ -3,6 +3,7 @@ import { SpicyToken } from 'types/SpicyToken';
 import { SwapPair, SwapParameters } from 'types/Swap';
 import { SpicyPoolResponse } from './types/pool';
 import { SpicyTokenResponse } from './types/token';
+import { Transaction } from 'types/transaction';
 
 /* --- STATE --- */
 export interface SpicySwapState {
@@ -10,12 +11,14 @@ export interface SpicySwapState {
   error?: SpicySwapErrorType | null;
   tokens: SpicyToken[];
   pools: SpicyPool[];
+  txLog: Transaction[];
   poolMetrics: SpicyPoolMetric[] | null;
   fromAmount: number;
   toAmount: number;
   fromAmountUsd?: number;
   toAmountUsd?: number;
   pair?: SwapPair;
+  swapping: boolean;
   swap: SwapParameters | null;
 }
 

@@ -4,13 +4,15 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { spicySwapSaga } from './saga';
 import { SpicySwapState, SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
-import { SwapPair, SwapParameters } from 'types/Swap';
+import { SwapPair, SwapParameters, UserSwapParameters } from 'types/Swap';
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { defaultFrom, defaultTo } from 'app/common/const';
+import { Transaction } from 'types/transaction';
 
 export const initialState: SpicySwapState = {
   tokens: [],
   pools: [],
+  txLog: [],
   poolMetrics: null,
   loading: false,
   error: null,
@@ -19,6 +21,7 @@ export const initialState: SpicySwapState = {
   toAmount: 0,
   toAmountUsd: 0,
   swap: null,
+  swapping: false,
   pair: { from: defaultFrom, to: defaultTo },
 };
 
@@ -77,6 +80,13 @@ const slice = createSlice({
     tokensError(state, action: PayloadAction<SpicySwapErrorType>) {
       state.error = action.payload;
       state.loading = false;
+    },
+    executeSwap(state, action: PayloadAction<UserSwapParameters>) {
+      state.swapping = true;
+    },
+    transactionUpdate(state, action: PayloadAction<Transaction>) {
+      state.swapping = false;
+      state.txLog.push(action.payload);
     },
   },
 });

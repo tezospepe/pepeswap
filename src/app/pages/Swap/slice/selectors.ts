@@ -50,3 +50,8 @@ export const selectToAmount = createSelector(
   [selectDomain],
   spicySwapState => spicySwapState.toAmount,
 );
+
+export const selectIsSwapping = createSelector(
+  [selectDomain],
+  spicySwapState => spicySwapState.swapping,
+);

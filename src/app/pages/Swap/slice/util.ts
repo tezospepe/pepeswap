@@ -81,3 +81,9 @@ export const timestamptoDayMonth = (timestamp: Date): string => {
   const month = date.toLocaleString('default', { month: 'short' });
   return `${day} ${month}`;
 };
+
+export const secondsFromNow = s => {
+  const now = new Date();
+  now.setSeconds(now.getSeconds() + s);
+  return Math.floor(now.getTime() / 1000);
+};
