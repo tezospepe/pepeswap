@@ -103,7 +103,7 @@ export function SwapAssetSelection({
             <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
-        <TitleText>Balance: 1212.22</TitleText>
+        <TitleText>Balance: 0</TitleText>
         <SwapSelectionAmountInput
           type="number"
           onChange={handleFromAmountChange}
