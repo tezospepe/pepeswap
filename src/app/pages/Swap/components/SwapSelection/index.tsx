@@ -17,11 +17,13 @@ import {
   selectFromAmount,
   selectSwapParameters,
   selectToAmount,
+  selectUserBalance,
 } from '../../slice/selectors';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { getSwapAmount } from '../../util/price';
 import { constructSwapParameters, switchPairDirection } from '../../util/pair';
 import { handleSwapKeyPress } from './input-helper';
+import { selectAccount } from 'app/slice/wallet/selectors';
 interface SwapAssetSelectionProps {
   toggleModal: (dir?: SwapDirection) => void;
   pair?: SwapPair;
@@ -38,6 +40,11 @@ export function SwapAssetSelection({
 
   const fromAmount = useSelector(selectFromAmount);
   const toAmount = useSelector(selectToAmount);
+  const userBalances = useSelector(selectUserBalance);
+  const account = useSelector(selectAccount);
+
+  const fromBalance = userBalances.find(b => b.token.tag === pair?.from?.tag);
+  const toBalance = userBalances.find(b => b.token.tag === pair?.to?.tag);
 
   const handleTokenClick = (dir: SwapDirection) => {
     toggleModal(dir);
@@ -82,6 +89,17 @@ export function SwapAssetSelection({
     }
   }, [pair, fromAmount]);
 
+  useEffect(() => {
+    if (account && pair) {
+      dispatch(
+        actions.getTokenBalance({
+          token: pair.from!,
+          userAddress: account?.address,
+        }),
+      );
+    }
+  }, [pair]);
+
   return (
     <>
       <SwapSelection>
@@ -103,7 +121,7 @@ export function SwapAssetSelection({
             <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
-        <TitleText>Balance: 0</TitleText>
+        <TitleText>{`Balance: ${fromBalance?.balance || 0}`}</TitleText>
         <SwapSelectionAmountInput
           type="number"
           onChange={handleFromAmountChange}
@@ -136,7 +154,7 @@ export function SwapAssetSelection({
             <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
-        <TitleText>Balance: 0.00</TitleText>
+        <TitleText>{`Balance: ${toBalance?.balance || 0}`}</TitleText>
         <SwapSelectionAmountInput
           type="number"
           onChange={handleToAmountChange}

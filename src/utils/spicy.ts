@@ -55,3 +55,6 @@ export const calculateRate = ({ reserveFrom, reserveTo }) =>
 
 export const convertToMuTez = (token, amount) =>
   Math.floor(amount * Math.pow(10, token.decimals));
+
+export const rawToBalance = (amount, decimals) =>
+  amount / Math.pow(10, decimals);

@@ -22,3 +22,13 @@ export interface SwapParameters {
 export interface UserSwapParameters extends SwapParameters {
   userAddress: string;
 }
+
+export interface TokenBalanceRequest {
+  userAddress: string;
+  token: SpicyToken;
+}
+
+export interface TokenBalanceResponse {
+  balance: number;
+  token: SpicyToken;
+}

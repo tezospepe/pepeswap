@@ -93,6 +93,10 @@ export function SwapWidget({
   };
 
   const isButtonDisabled = () => {
+    if (!connected) {
+      return false;
+    }
+
     if (activeTab !== SwapWidgetTab.Swap) {
       return true;
     }

@@ -2,7 +2,12 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { request } from 'utils/request';
 import { spicySwapActions as actions } from '.';
 import { GetPoolProps, GetTokenProps, SpicySwapErrorType } from './types';
-import { calculateDayAgg, calculateHourAgg, convertToMuTez } from 'utils/spicy';
+import {
+  calculateDayAgg,
+  calculateHourAgg,
+  convertToMuTez,
+  rawToBalance,
+} from 'utils/spicy';
 import { secondsFromNow } from './util';
 import { transformPoolMetrics, transformPools, transformTokens } from './util';
 import {
@@ -10,11 +15,44 @@ import {
   StorageKeys,
 } from 'app/services/local-storage-service';
 import { Tezos } from 'app/services/wallet-service';
-import { SPICY_ROUTER } from 'app/common/const';
+import { SPICY_ROUTER, TZKT_API_URL } from 'app/common/const';
 import { TransactionStatus } from 'types/transaction';
 
 const SPICY_API = 'https://spicyb.sdaotools.xyz/api/rest';
 const storageService = new LocalStorageService();
+
+export function* getTokenBalance({
+  payload,
+}: ReturnType<typeof actions.getTokenBalance>) {
+  const { userAddress, token } = payload;
+
+  const tokenContract = token.tag.split(':')[0];
+  const tokenId =
+    token.tag.split(':')[1] === 'null' ? 0 : token.tag.split(':')[1];
+
+  try {
+    const requestURL = `
+      ${TZKT_API_URL}tokens/balances?account=${userAddress}&token.contract=${tokenContract}&token.tokenId=${tokenId}
+    `;
+
+    const balances = yield call(request, requestURL);
+
+    if (balances.length) {
+      const balance =
+        rawToBalance(Number(balances[0]?.balance), token.decimals) || 0;
+
+      yield put(
+        actions.setUserTokenBalance({
+          token,
+          balance,
+        }),
+      );
+    }
+  } catch (e) {
+    //todo better error handling
+    console.log(e);
+  }
+}
 
 export function* getTokens({ transformTokens }: GetTokenProps) {
   const requestURL = `${SPICY_API}/TokenList?day_agg_start=${calculateDayAgg()}`;
@@ -183,4 +221,5 @@ export function* spicySwapSaga() {
   );
   yield takeLatest(actions.executeSwap.type, executeSwap);
   yield takeLatest(actions.loadPoolMetrics.type, getPoolMetrics);
+  yield takeLatest(actions.getTokenBalance.type, getTokenBalance);
 }

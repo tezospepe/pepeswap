@@ -55,3 +55,8 @@ export const selectIsSwapping = createSelector(
   [selectDomain],
   spicySwapState => spicySwapState.swapping,
 );
+
+export const selectUserBalance = createSelector(
+  [selectDomain],
+  spicySwapState => spicySwapState.userBalance,
+);

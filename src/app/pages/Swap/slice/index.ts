@@ -4,7 +4,13 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { spicySwapSaga } from './saga';
 import { SpicySwapState, SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
-import { SwapPair, SwapParameters, UserSwapParameters } from 'types/Swap';
+import {
+  SwapPair,
+  SwapParameters,
+  TokenBalanceRequest,
+  TokenBalanceResponse,
+  UserSwapParameters,
+} from 'types/Swap';
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { defaultFrom, defaultTo } from 'app/common/const';
 import { Transaction } from 'types/transaction';
@@ -23,6 +29,7 @@ export const initialState: SpicySwapState = {
   swap: null,
   swapping: false,
   pair: { from: defaultFrom, to: defaultTo },
+  userBalance: [],
 };
 
 const slice = createSlice({
@@ -80,6 +87,18 @@ const slice = createSlice({
     tokensError(state, action: PayloadAction<SpicySwapErrorType>) {
       state.error = action.payload;
       state.loading = false;
+    },
+    getTokenBalance(state, action: PayloadAction<TokenBalanceRequest>) {},
+    setUserTokenBalance(state, action: PayloadAction<TokenBalanceResponse>) {
+      const prevBalance = state.userBalance.findIndex(
+        b => b.token.symbol === action.payload.token.symbol,
+      );
+
+      if (prevBalance !== -1) {
+        state.userBalance[prevBalance] = action.payload;
+      } else {
+        state.userBalance = [...state.userBalance, action.payload];
+      }
     },
     executeSwap(state, action: PayloadAction<UserSwapParameters>) {
       state.swapping = true;
