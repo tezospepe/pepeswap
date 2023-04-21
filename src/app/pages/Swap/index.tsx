@@ -117,7 +117,7 @@ export function Swap() {
 
     const refetchPoolTimer = setInterval(
       () => dispatch(actions.loadPools()),
-      30000,
+      20000,
     );
 
     return () => clearInterval(refetchPoolTimer);
