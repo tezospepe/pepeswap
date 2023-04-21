@@ -41,8 +41,8 @@ export const getSwapQuote = ({
     console.error('Calculated token2Amount is negative');
   }
 
-  const priceBeforeTrade = tokenToReserve / tokenFromReserve;
-  const priceAfterTrade = newToken2Reserve / newToken1Reserve;
+  const priceBeforeTrade = tokenFromReserve / tokenToReserve;
+  const priceAfterTrade = newToken1Reserve / newToken2Reserve;
 
   const priceImpact =
     ((priceAfterTrade - priceBeforeTrade) / priceBeforeTrade) * 100;
