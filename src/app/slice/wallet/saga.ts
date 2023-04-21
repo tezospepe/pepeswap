@@ -29,7 +29,6 @@ export function* connectWallet() {
 export function* getActiveAccount() {
   try {
     const account = yield getAccount();
-    console.log(account);
     if (account) {
       yield put(actions.setAccount(account));
       yield put(
