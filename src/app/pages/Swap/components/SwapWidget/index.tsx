@@ -63,7 +63,7 @@ export function SwapWidget({
   const handleSwapClick = () => {
     if (!connected) {
       return onWalletConnect();
-    } else if (!swapping) {
+    } else if (!swapping && activeTab === SwapWidgetTab.Swap) {
       if (swapParameters && account) {
         dispatch(
           actions.executeSwap({
@@ -112,8 +112,15 @@ export function SwapWidget({
             <LiquidityPanel toggleModal={toggleModal} pair={pair} />
           </SwapWidgetTabs>
           <Execute>
-            <ConnectButton onClick={handleSwapClick}>
-              {connected ? <SwapButtonContent /> : 'Connect'}
+            <ConnectButton
+              onClick={handleSwapClick}
+              disabled={activeTab !== SwapWidgetTab.Swap}
+            >
+              {connected ? (
+                <SwapButtonContent activeTab={activeTab as string} />
+              ) : (
+                'Connect'
+              )}
             </ConnectButton>
             {swapParameters && swapParameters?.impact * -1 > 25 && (
               <Warning>

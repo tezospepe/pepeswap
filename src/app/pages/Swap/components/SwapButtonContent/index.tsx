@@ -1,11 +1,19 @@
-import { selectAccount, selectConnected } from 'app/slice/wallet/selectors';
 import { useSelector } from 'react-redux';
 import { selectIsSwapping } from '../../slice/selectors';
 import { LoadingIndicator } from 'app/components/LoadingIndicator';
 import { Fragment } from 'react';
+import { SwapWidgetTab } from '../SwapWidgetTabs';
 
-export const SwapButtonContent = (): JSX.Element => {
+export const SwapButtonContent = ({
+  activeTab,
+}: {
+  activeTab: string;
+}): JSX.Element => {
   const isSwapping = useSelector(selectIsSwapping);
+
+  if (activeTab === SwapWidgetTab.Liquidity) {
+    return <Fragment>{'Add Liquidity'}</Fragment>;
+  }
 
   if (!isSwapping) {
     return <Fragment>{'Swap'}</Fragment>;

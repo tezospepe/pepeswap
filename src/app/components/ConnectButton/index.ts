@@ -1,6 +1,7 @@
+import { HTMLProps } from 'react';
 import styled from 'styled-components/macro';
 
-export const ConnectButton = styled.button`
+export const ConnectButton = styled.button<HTMLProps<HTMLButtonElement>>`
   width: 100%;
   background: ${p => p.theme.backgroundVariant};
   border: 1px solid ${p => p.theme.backgroundVariant};
@@ -8,7 +9,7 @@ export const ConnectButton = styled.button`
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
   color: ${p => p.theme.background};
-  cursor: pointer;
+  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
   display: inline-block;
   font-size: 16px;
   font-weight: 600;
