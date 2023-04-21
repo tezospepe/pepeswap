@@ -30,7 +30,7 @@ export const constructSwapParameters = ({
   toAmount,
   rate,
   impact,
-  slippage = 0.02,
+  slippage = 2,
 }) => ({
   fromToken: pair.from,
   toToken: pair.to,
