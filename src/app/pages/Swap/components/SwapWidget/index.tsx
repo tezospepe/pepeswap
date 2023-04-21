@@ -24,10 +24,11 @@ import {
 import { Modal } from 'app/components/Modal';
 import LimitOrderPanel from '../LimitOrderPanel';
 import SwapWidgetTabs, { SwapWidgetTab } from '../SwapWidgetTabs';
-import { selectConnected } from 'app/slice/wallet/selectors';
-import { selectSwapParameters } from '../../slice/selectors';
+import { selectAccount, selectConnected } from 'app/slice/wallet/selectors';
+import { selectIsSwapping, selectSwapParameters } from '../../slice/selectors';
 import LiquidityPanel from '../LiquidityPanel';
 import { useSpicySwapSlice } from '../../slice';
+import { SwapButtonContent } from '../SwapButtonContent';
 
 type SwapWidgetProps = {
   tokens?: SpicyToken[];
@@ -52,12 +53,27 @@ export function SwapWidget({
 }: SwapWidgetProps) {
   const connected = useSelector(selectConnected);
   const swapParameters = useSelector(selectSwapParameters);
+  const account = useSelector(selectAccount);
+  const swapping = useSelector(selectIsSwapping);
 
   const dispatch = useDispatch();
   const { actions } = useSpicySwapSlice();
 
   const [activeTab, setActiveTab] = useState<string>(SwapWidgetTab.Swap);
-  const handleSwapClick = () => (connected ? false : onWalletConnect());
+  const handleSwapClick = () => {
+    if (!connected) {
+      return onWalletConnect();
+    } else if (!swapping) {
+      if (swapParameters && account) {
+        dispatch(
+          actions.executeSwap({
+            ...swapParameters,
+            userAddress: account.address,
+          }),
+        );
+      }
+    }
+  };
 
   const handleTabChange = (tab: SwapWidgetTab | string) => {
     //todo: optimize this state management logic. it's ugly
@@ -97,7 +113,7 @@ export function SwapWidget({
           </SwapWidgetTabs>
           <Execute>
             <ConnectButton onClick={handleSwapClick}>
-              {connected ? 'Swap' : 'Connect'}
+              {connected ? <SwapButtonContent /> : 'Connect'}
             </ConnectButton>
             {swapParameters && swapParameters?.impact * -1 > 25 && (
               <Warning>
