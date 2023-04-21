@@ -5,7 +5,7 @@ import { AccountInfo, BeaconError } from '@airgap/beacon-sdk';
 import { requestPermissions } from '../../services/wallet-service';
 import { beaconToWalletError } from 'utils/helper';
 import { getActiveAccount as getAccount } from '../../services/wallet-service';
-
+import { clearActiveAccount as clearAccount } from '../../services/wallet-service';
 export function* connectWallet() {
   try {
     const account: AccountInfo = yield requestPermissions();
@@ -44,6 +44,20 @@ export function* getActiveAccount() {
   }
 }
 
+export function* clearActiveAccount() {
+  try {
+    yield clearAccount();
+    yield put(actions.setAccount(undefined));
+    yield put(
+      actions.setConnected({
+        connected: false,
+      }),
+    );
+  } catch (err) {
+    // do nothing
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
@@ -51,4 +65,5 @@ export function* walletSaga() {
   // Watches for wallet connection actions and calls connectWallet when one comes in.
   yield takeLatest(actions.connectWallet.type, connectWallet);
   yield takeLatest(actions.getActiveAccount.type, getActiveAccount);
+  yield takeLatest(actions.resetConnection.type, clearActiveAccount);
 }

@@ -22,9 +22,8 @@ export async function requestPermissions(): Promise<AccountInfo | undefined> {
   return account;
 }
 
-export async function clearActiveAccount(): Promise<boolean> {
+export async function clearActiveAccount(): Promise<void> {
   await beacon.clearActiveAccount();
-  return true;
 }
 
 export async function getActiveAccount(): Promise<AccountInfo | undefined> {

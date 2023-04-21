@@ -26,7 +26,7 @@ export function NavBar() {
 
   const handleButtonClick = () => {
     if (connected) {
-      setProfileActive(!isProfileActive);
+      dispatch(walletActions.resetConnection());
     } else {
       onWalletConnect();
     }

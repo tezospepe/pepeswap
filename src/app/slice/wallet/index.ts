@@ -22,18 +22,22 @@ const slice = createSlice({
       state.error = action.payload;
     },
     setConnected(state, action: PayloadAction<WalletConnection>) {
-      const { connected, network } = action.payload;
-      state.connected = connected;
-      state.network = network;
+      if (action.payload.network) {
+        state.network = action.payload.network;
+      }
+
+      state.connected = action.payload.connected;
       state.error = undefined;
     },
-    setAccount(state, action: PayloadAction<AccountInfo>) {
+    setAccount(state, action: PayloadAction<AccountInfo | undefined>) {
       state.account = action.payload;
+      console.log(action.payload);
     },
     setNetwork(state, action: PayloadAction<NetworkType>) {
       state.network = action.payload;
     },
     getActiveAccount(state) {},
+    resetConnection(state) {},
   },
 });
 

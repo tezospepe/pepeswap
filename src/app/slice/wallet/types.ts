@@ -10,7 +10,7 @@ export interface WalletState {
 
 export type WalletConnection = {
   connected: boolean;
-  network: NetworkType;
+  network?: NetworkType;
 };
 
 export type WalletConnectionError = {
