@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import { media } from 'styles/media';
 
 export const Wrapper = styled.div`
   height: 100%;

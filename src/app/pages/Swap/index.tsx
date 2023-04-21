@@ -13,8 +13,6 @@ import { useWalletSlice } from 'app/slice/wallet';
 import {
   selectTokens,
   selectPools,
-  selectLoading,
-  selectError,
   selectPair,
   selectPoolMetrics,
 } from './slice/selectors';
@@ -37,8 +35,6 @@ export function Swap() {
   const tokens = useSelector(selectTokens);
   const pools = useSelector(selectPools);
   const poolMetrics = useSelector(selectPoolMetrics);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
   const pair = useSelector(selectPair);
 
   const [modalView, setModalView] = useState(false);
