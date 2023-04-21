@@ -165,7 +165,7 @@ export function SwapWidget({
               </Rate>
               <Slippage>
                 <P>Slippage</P>
-                <P2>{`${(swapParameters?.slippage * 100).toFixed(2)}%`}</P2>
+                <P2>{`${(swapParameters?.slippage).toFixed(2)}%`}</P2>
               </Slippage>
               <PriceImpact>
                 <P>Impact</P>
