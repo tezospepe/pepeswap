@@ -92,6 +92,18 @@ export function SwapWidget({
     setActiveTab(tab);
   };
 
+  const isButtonDisabled = () => {
+    if (activeTab !== SwapWidgetTab.Swap) {
+      return true;
+    }
+
+    if (swapParameters && swapParameters.fromAmount === 0) {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <>
       <Wrapper>
@@ -114,7 +126,7 @@ export function SwapWidget({
           <Execute>
             <ConnectButton
               onClick={handleSwapClick}
-              disabled={activeTab !== SwapWidgetTab.Swap}
+              disabled={isButtonDisabled()}
             >
               {connected ? (
                 <SwapButtonContent activeTab={activeTab as string} />
