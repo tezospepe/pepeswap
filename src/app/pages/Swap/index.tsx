@@ -24,7 +24,7 @@ import {
   LocalStorageService,
   StorageKeys,
 } from 'app/services/local-storage-service';
-import { selectConnected } from 'app/slice/wallet/selectors';
+import { selectAccount, selectConnected } from 'app/slice/wallet/selectors';
 
 export function Swap() {
   const dispatch = useDispatch();
@@ -33,6 +33,7 @@ export function Swap() {
   const { actions } = useSpicySwapSlice();
   const { actions: walletActions } = useWalletSlice();
 
+  const account = useSelector(selectAccount);
   const connected = useSelector(selectConnected);
   const tokens = useSelector(selectTokens);
   const pools = useSelector(selectPools);
@@ -126,8 +127,15 @@ export function Swap() {
   }, []);
 
   useEffect(() => {
-    console.log(connected);
     if (!connected) dispatch(actions.clearUserTokenBalance());
+    else if (pair) {
+      dispatch(
+        actions.getTokenBalance({
+          pair: { from: pair.from!, to: pair.to! },
+          userAddress: account!.address,
+        }),
+      );
+    }
   }, [connected]);
 
   return (
