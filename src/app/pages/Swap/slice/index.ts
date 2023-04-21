@@ -5,6 +5,7 @@ import { spicySwapSaga } from './saga';
 import { SpicySwapState, SpicySwapErrorType } from './types';
 import { SpicyToken } from 'types/SpicyToken';
 import {
+  SingleTokenBalanceRequest,
   SwapPair,
   SwapParameters,
   TokenBalanceRequest,
@@ -14,6 +15,7 @@ import {
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { defaultFrom, defaultTo } from 'app/common/const';
 import { Transaction } from 'types/transaction';
+import { Payload } from 'recharts/types/component/DefaultLegendContent';
 
 export const initialState: SpicySwapState = {
   tokens: [],
@@ -89,9 +91,13 @@ const slice = createSlice({
       state.loading = false;
     },
     getTokenBalance(state, action: PayloadAction<TokenBalanceRequest>) {},
+    getSingleTokenBalance(
+      state,
+      action: PayloadAction<SingleTokenBalanceRequest>,
+    ) {},
     setUserTokenBalance(state, action: PayloadAction<TokenBalanceResponse>) {
       const prevBalance = state.userBalance.findIndex(
-        b => b.token.symbol === action.payload.token.symbol,
+        b => b.token?.symbol === action.payload.token?.symbol,
       );
 
       if (prevBalance !== -1) {
@@ -99,6 +105,9 @@ const slice = createSlice({
       } else {
         state.userBalance = [...state.userBalance, action.payload];
       }
+    },
+    clearUserTokenBalance(state) {
+      state.userBalance = [];
     },
     executeSwap(state, action: PayloadAction<UserSwapParameters>) {
       state.swapping = true;

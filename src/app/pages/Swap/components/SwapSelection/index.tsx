@@ -43,8 +43,8 @@ export function SwapAssetSelection({
   const userBalances = useSelector(selectUserBalance);
   const account = useSelector(selectAccount);
 
-  const fromBalance = userBalances.find(b => b.token.tag === pair?.from?.tag);
-  const toBalance = userBalances.find(b => b.token.tag === pair?.to?.tag);
+  const fromBalance = userBalances.find(b => b.token?.tag === pair?.from?.tag);
+  const toBalance = userBalances.find(b => b.token?.tag === pair?.to?.tag);
 
   const handleTokenClick = (dir: SwapDirection) => {
     toggleModal(dir);
@@ -55,6 +55,15 @@ export function SwapAssetSelection({
       const pairSwitched = switchPairDirection(pair);
       dispatch(actions.setPair(pairSwitched));
     }
+  };
+
+  const retrieveAndSetTokenBalances = (pair, userAddress) => {
+    dispatch(
+      actions.getTokenBalance({
+        pair: { from: pair.from, to: pair.to },
+        userAddress,
+      }),
+    );
   };
 
   const formatAmount = (value: number | undefined) => (value ? value : '');
@@ -90,13 +99,9 @@ export function SwapAssetSelection({
   }, [pair, fromAmount]);
 
   useEffect(() => {
-    if (account && pair) {
-      dispatch(
-        actions.getTokenBalance({
-          token: pair.from!,
-          userAddress: account?.address,
-        }),
-      );
+    if (account && pair && pair.from && pair.to) {
+      console.log(pair);
+      retrieveAndSetTokenBalances(pair, account.address);
     }
   }, [pair]);
 

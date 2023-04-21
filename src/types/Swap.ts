@@ -7,6 +7,11 @@ export interface SwapPair {
   pool?: SpicyPool | undefined;
 }
 
+export interface SwapPairTokens {
+  from: SpicyToken;
+  to: SpicyToken;
+}
+
 export type SwapDirection = 'from' | 'to';
 
 export interface SwapParameters {
@@ -25,10 +30,15 @@ export interface UserSwapParameters extends SwapParameters {
 
 export interface TokenBalanceRequest {
   userAddress: string;
+  pair: SwapPairTokens;
+}
+
+export interface SingleTokenBalanceRequest {
+  userAddress: string;
   token: SpicyToken;
 }
 
 export interface TokenBalanceResponse {
-  balance: number;
-  token: SpicyToken;
+  balance?: number;
+  token?: SpicyToken;
 }

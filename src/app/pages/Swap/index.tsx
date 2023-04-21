@@ -24,6 +24,7 @@ import {
   LocalStorageService,
   StorageKeys,
 } from 'app/services/local-storage-service';
+import { selectConnected } from 'app/slice/wallet/selectors';
 
 export function Swap() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export function Swap() {
   const { actions } = useSpicySwapSlice();
   const { actions: walletActions } = useWalletSlice();
 
+  const connected = useSelector(selectConnected);
   const tokens = useSelector(selectTokens);
   const pools = useSelector(selectPools);
   const poolMetrics = useSelector(selectPoolMetrics);
@@ -122,6 +124,11 @@ export function Swap() {
   useEffect(() => {
     dispatch(walletActions.getActiveAccount());
   }, []);
+
+  useEffect(() => {
+    console.log(connected);
+    if (!connected) dispatch(actions.clearUserTokenBalance());
+  }, [connected]);
 
   return (
     <>
