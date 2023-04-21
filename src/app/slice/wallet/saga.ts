@@ -4,6 +4,7 @@ import { WalletConnection } from './types';
 import { AccountInfo, BeaconError } from '@airgap/beacon-sdk';
 import { requestPermissions } from '../../services/wallet-service';
 import { beaconToWalletError } from 'utils/helper';
+import { getActiveAccount as getAccount } from '../../services/wallet-service';
 
 export function* connectWallet() {
   try {
@@ -25,10 +26,29 @@ export function* connectWallet() {
   }
 }
 
+export function* getActiveAccount() {
+  try {
+    const account = yield getAccount();
+    console.log(account);
+    if (account) {
+      yield put(actions.setAccount(account));
+      yield put(
+        actions.setConnected({
+          connected: true,
+          network: account.network.type,
+        }),
+      );
+    }
+  } catch (err) {
+    // do nothing
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
 export function* walletSaga() {
   // Watches for wallet connection actions and calls connectWallet when one comes in.
   yield takeLatest(actions.connectWallet.type, connectWallet);
+  yield takeLatest(actions.getActiveAccount.type, getActiveAccount);
 }

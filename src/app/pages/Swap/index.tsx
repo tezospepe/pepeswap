@@ -123,6 +123,10 @@ export function Swap() {
     return () => clearInterval(refetchPoolTimer);
   }, []);
 
+  useEffect(() => {
+    dispatch(walletActions.getActiveAccount());
+  }, []);
+
   return (
     <>
       <Helmet>

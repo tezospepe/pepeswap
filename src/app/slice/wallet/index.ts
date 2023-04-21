@@ -33,6 +33,7 @@ const slice = createSlice({
     setNetwork(state, action: PayloadAction<NetworkType>) {
       state.network = action.payload;
     },
+    getActiveAccount(state) {},
   },
 });
 

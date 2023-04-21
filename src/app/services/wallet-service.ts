@@ -9,6 +9,7 @@ import {
 
 export const Tezos = new TezosToolkit(DEFAULT_RPC);
 export const beacon = new BeaconWallet(dappOptions);
+Tezos.setWalletProvider(beacon);
 
 export async function requestPermissions(): Promise<AccountInfo | undefined> {
   await beacon.requestPermissions({
@@ -17,8 +18,6 @@ export async function requestPermissions(): Promise<AccountInfo | undefined> {
     },
   });
 
-  Tezos.setWalletProvider(beacon);
-
   const account = await beacon.client.getActiveAccount();
   return account;
 }
@@ -26,4 +25,9 @@ export async function requestPermissions(): Promise<AccountInfo | undefined> {
 export async function clearActiveAccount(): Promise<boolean> {
   await beacon.clearActiveAccount();
   return true;
+}
+
+export async function getActiveAccount(): Promise<AccountInfo | undefined> {
+  const account = await beacon.client.getActiveAccount();
+  return account;
 }
