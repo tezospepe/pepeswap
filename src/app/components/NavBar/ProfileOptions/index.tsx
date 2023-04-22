@@ -1,4 +1,4 @@
-import { AccountInfo } from '@airgap/beacon-sdk';
+import { AccountInfo } from '@airgap/beacon-types/dist/esm/types/AccountInfo';
 import { ProfileOptionContainer } from './styles';
 import { useEffect, useState } from 'react';
 import { fetchAvatarByAddress } from '../api';

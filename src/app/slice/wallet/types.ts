@@ -1,4 +1,5 @@
-import { AccountInfo, NetworkType } from '@airgap/beacon-sdk';
+import { NetworkType } from '@airgap/beacon-types';
+import { AccountInfo } from '@airgap/beacon-types/dist/esm/types/AccountInfo';
 
 /* --- STATE --- */
 export interface WalletState {

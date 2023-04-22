@@ -1,4 +1,4 @@
-import { AccountInfo } from '@airgap/beacon-sdk';
+import { AccountInfo } from '@airgap/beacon-types/dist/esm/types/AccountInfo';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 import { TezosToolkit } from '@taquito/taquito';
 import {

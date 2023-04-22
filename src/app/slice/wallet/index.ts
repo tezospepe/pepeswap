@@ -2,7 +2,8 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { WalletConnection, WalletConnectionError, WalletState } from './types';
-import { AccountInfo, NetworkType } from '@airgap/beacon-sdk';
+import { AccountInfo } from '@airgap/beacon-types/dist/esm/types/AccountInfo';
+import { NetworkType } from '@airgap/beacon-types';
 import { walletSaga } from './saga';
 
 export const initialState: WalletState = {

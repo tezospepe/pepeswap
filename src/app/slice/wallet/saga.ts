@@ -1,7 +1,8 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { walletActions as actions } from '.';
 import { WalletConnection } from './types';
-import { AccountInfo, BeaconError } from '@airgap/beacon-sdk';
+import { AccountInfo } from '@airgap/beacon-types/dist/esm/types/AccountInfo';
+import { BeaconError } from '@airgap/beacon-core/dist/esm/errors/BeaconError';
 import { requestPermissions } from '../../services/wallet-service';
 import { beaconToWalletError } from 'utils/helper';
 import { getActiveAccount as getAccount } from '../../services/wallet-service';

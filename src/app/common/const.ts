@@ -1,4 +1,5 @@
-import { DAppClientOptions, NetworkType } from '@airgap/beacon-sdk';
+import { NetworkType } from '@airgap/beacon-types';
+import { DAppClientOptions } from '@airgap/beacon-dapp/dist/esm/dapp-client/DAppClientOptions';
 import { SpicyToken } from 'types/SpicyToken';
 
 /* todo: refactor into one global config object for easy access and import */

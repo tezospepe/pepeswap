@@ -8,7 +8,7 @@ import {
   NavIcon,
 } from './NavBarContent';
 import { NavPage } from '../types';
-import { AccountInfo } from '@airgap/beacon-sdk';
+import { AccountInfo } from '@airgap/beacon-types/dist/esm/types/AccountInfo';
 import { truncateMiddle } from 'utils/user-address';
 
 type NavBarContentProps = {

@@ -1,6 +1,6 @@
 import { WalletConnectionError } from 'app/slice/wallet/types';
 import { MouseEvent } from 'react';
-import { BeaconError } from '@airgap/beacon-sdk';
+import { BeaconError } from '@airgap/beacon-core/dist/esm/errors/BeaconError';
 
 export const numberToLocaleAndFix = (number: number, precision: number) => {
   return number.toLocaleString(undefined, { maximumFractionDigits: precision });
