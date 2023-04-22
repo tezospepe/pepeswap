@@ -23,7 +23,7 @@ export default function LiquidityPanel({
       <SwapAssetSelection
         toggleModal={toggleModal}
         pair={pair}
-        showSwitch={false}
+        showSwitch={true}
       />
       <LiquidityAmountSelection>
         <Subtext>
