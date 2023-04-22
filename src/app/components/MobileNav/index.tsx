@@ -1,10 +1,4 @@
-import * as React from 'react';
-import {
-  UilAnalytics,
-  UilUsdCircle,
-  UilHome,
-  UilNotebooks,
-} from '@iconscout/react-unicons';
+import { UilUsdCircle, UilNotebooks } from '@iconscout/react-unicons';
 import { OnlineIndicator } from '../OnlineIndicator';
 import {
   MobileNavCloseIcon,

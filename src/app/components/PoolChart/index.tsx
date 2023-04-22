@@ -21,9 +21,7 @@ import {
   PoolChart as PoolChartBox,
   PoolChartPlaceholder,
   PoolChartStatistic,
-  QuestionMarkIconSmall,
 } from './styles';
-import { TimeSelectOption } from '../../common/types';
 import { useEffect, useState } from 'react';
 import ReactPlaceholder from 'react-placeholder/lib';
 import 'react-placeholder/lib/reactPlaceholder.css';
@@ -46,17 +44,8 @@ export default function PoolChart({
   active,
 }: PoolChartProps) {
   const theme = useTheme();
-  const [activeTab, setActiveTab] = useState(0);
   const [poolDynamicValue, setPoolDynamicValue] = useState('');
   const [initialPoolValue, setInitialPoolValue] = useState('');
-
-  const timeSelectOptions = Object.values(TimeSelectOption);
-
-  const isActiveTab = (tab: TimeSelectOption) =>
-    timeSelectOptions.indexOf(tab) === activeTab ? 'active' : '';
-
-  const handleTabChange = (tab: TimeSelectOption) =>
-    setActiveTab(timeSelectOptions.indexOf(tab));
 
   let pool: SpicyPool | undefined;
 

@@ -15,7 +15,6 @@ import {
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { defaultFrom, defaultTo } from 'app/common/const';
 import { Transaction } from 'types/transaction';
-import { Payload } from 'recharts/types/component/DefaultLegendContent';
 
 export const initialState: SpicySwapState = {
   tokens: [],

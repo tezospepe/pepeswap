@@ -3,8 +3,7 @@ import styled from 'styled-components/macro';
 export function Footer() {
   return (
     <Wrapper>
-      <P>a community-made demo.&nbsp;</P>
-      <P2>SalsaDAO</P2>
+      <P>a community driven project.</P>
     </Wrapper>
   );
 }
@@ -37,19 +36,5 @@ const P = styled.p`
 
   &.active {
     opacity: 1;
-  }
-`;
-
-const P2 = styled(P)`
-  cursor: pointer;
-  color: #b8b8b8;
-  text-decoration: underline;
-
-  &:hover {
-    opacity: 0.8;
-  }
-
-  &:active {
-    opacity: 0.4;
   }
 `;

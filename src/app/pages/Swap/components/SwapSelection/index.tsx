@@ -1,6 +1,5 @@
 import { SwapDirection, SwapPair } from 'types/Swap';
 import {
-  MainText,
   Subtext,
   SwapSelection,
   SwapSelectionAmountInput,
@@ -15,11 +14,10 @@ import { useSpicySwapSlice } from '../../slice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectFromAmount,
-  selectSwapParameters,
   selectToAmount,
   selectUserBalance,
 } from '../../slice/selectors';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { getSwapAmount } from '../../util/price';
 import { constructSwapParameters, switchPairDirection } from '../../util/pair';
 import { handleSwapKeyPress } from './input-helper';
@@ -65,8 +63,6 @@ export function SwapAssetSelection({
       }),
     );
   };
-
-  const formatAmount = (value: number | undefined) => (value ? value : '');
 
   const handleFromAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const fromInputValue = Number(event.target.value);

@@ -14,7 +14,7 @@ export function NavBar() {
   const account = useSelector(selectAccount);
 
   const [modalView, setModalView] = useState(false);
-  const [isProfileActive, setProfileActive] = useState(false);
+  const [isProfileActive] = useState(false);
 
   const onWalletConnect = async () => {
     dispatch(walletActions.connectWallet());

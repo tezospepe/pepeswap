@@ -22,7 +22,6 @@ import {
   Wrapper,
 } from './SwapWidget';
 import { Modal } from 'app/components/Modal';
-import LimitOrderPanel from '../LimitOrderPanel';
 import SwapWidgetTabs, { SwapWidgetTab } from '../SwapWidgetTabs';
 import { selectAccount, selectConnected } from 'app/slice/wallet/selectors';
 import { selectIsSwapping, selectSwapParameters } from '../../slice/selectors';
