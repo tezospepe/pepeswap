@@ -61,7 +61,8 @@ export const SwapTokenListContent = styled.div`
   padding-left: 16px;
   padding-bottom: 12px;
   overflow-y: scroll;
-  scrollbar-width: none;
+  scrollbar-color: ${p => p.theme.backgroundVariant};
+  scrollbar-width: 20px;
 
   &::-webkit-scrollbar {
     width: 20px;
