@@ -13,19 +13,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { GlobalStyle } from 'styles/global-styles';
 
 import { Swap } from './pages/Swap/Loadable';
-import { useTranslation } from 'react-i18next';
-import { NftMarketplace } from './pages/NftMarketplace/Loadable';
 import { NavBar } from './components/NavBar';
 
 export function App() {
-  const { i18n } = useTranslation();
   return (
     <BrowserRouter>
-      <Helmet
-        titleTemplate="%s - PepeSwap"
-        defaultTitle="PepeSwap"
-        htmlAttributes={{ lang: i18n.language }}
-      >
+      <Helmet titleTemplate="%s - PepeSwap" defaultTitle="PepeSwap">
         <meta
           name="description"
           content="PepeSwap is a next-generation DEX built on top of Genius Contracts' SpicySwap specifically for token-to-token swaps on Tezos."
@@ -34,7 +27,6 @@ export function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Swap />} />
-        <Route path="/nft" element={<NftMarketplace />} />
         <Route path="*" element={<Swap />} />
       </Routes>
       <GlobalStyle />
