@@ -166,9 +166,12 @@ export function* executeSwapToTez({
 
     const input = convertToMuTez(payload.fromToken, payload.fromAmount);
 
+    const swapRatio = yield wtzSwapRatio({ wtzContract });
+
     const wtzOutput = convertToMuTez(
       payload.toToken,
-      payload.toAmount - (payload.toAmount * payload.slippage) / 100,
+      swapRatio.div(payload.toAmount) -
+        (swapRatio.div(payload.toAmount) * payload.slippage) / 100,
     );
 
     const batch = yield Tezos.wallet
