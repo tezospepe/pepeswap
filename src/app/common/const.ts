@@ -33,7 +33,7 @@ export const defaultFrom: SpicyToken = {
   decimals: 6,
   derivedUsd: 1.244648989805831,
   derivedXtz: 1,
-  img: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Tezos_Logo_2022.png',
+  img: 'https://seeklogo.com/images/T/tezos-xtz-logo-C96D3F7FB9-seeklogo.com.png',
   name: 'XTZ',
   symbol: 'XTZ',
   tag: 'KT1PnUZCp3u2KzWr93pn4DD7HAJnm3rWVrgn:0',
