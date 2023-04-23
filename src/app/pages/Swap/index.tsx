@@ -100,11 +100,7 @@ export function Swap() {
     if (pools.length && pair && pair.from && pair.to) {
       const pool = getPoolByTags(pools, pair.from.tag, pair.to.tag);
 
-      if (
-        !isEqual(pool, pair.pool) &&
-        !isEqual(pair.from, pair.pool?.fromToken) &&
-        !isEqual(pair.to, pair.pool?.toToken)
-      ) {
+      if (!isEqual(pool, pair.pool)) {
         dispatch(actions.setPair({ ...pair, pool }));
         storageService.setItem(StorageKeys.swapPair, { ...pair, pool });
       }

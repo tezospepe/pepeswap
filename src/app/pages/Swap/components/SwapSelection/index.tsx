@@ -41,8 +41,12 @@ export function SwapAssetSelection({
   const userBalances = useSelector(selectUserBalance);
   const account = useSelector(selectAccount);
 
-  const fromBalance = userBalances.find(b => b.token?.tag === pair?.from?.tag);
-  const toBalance = userBalances.find(b => b.token?.tag === pair?.to?.tag);
+  const fromBalance = userBalances.find(
+    b => b.token?.symbol === pair?.from?.symbol,
+  );
+  const toBalance = userBalances.find(
+    b => b.token?.symbol === pair?.to?.symbol,
+  );
 
   const handleTokenClick = (dir: SwapDirection) => {
     toggleModal(dir);

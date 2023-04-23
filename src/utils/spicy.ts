@@ -44,12 +44,13 @@ export const calculateFarmAprXtz = ({ volume, staked }) =>
   ((volume * 0.001) / staked) * 365 * 100;
 
 // find pool by tag in from token and to token
-export const getPoolByTags = (pools: SpicyPool[], fromTag, toTag) =>
-  pools?.find(
+export const getPoolByTags = (pools: SpicyPool[], fromTag, toTag) => {
+  return pools?.find(
     pool =>
       (pool.fromToken.tag === fromTag || pool.fromToken.tag === toTag) &&
       (pool.toToken.tag === fromTag || pool.toToken.tag === toTag),
   );
+};
 
 export const calculateRate = ({ reserveFrom, reserveTo }) =>
   numberToLocaleAndFix(reserveFrom / reserveTo, 4);
