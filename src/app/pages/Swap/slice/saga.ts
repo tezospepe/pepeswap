@@ -19,13 +19,9 @@ import {
   SPICY_ROUTER,
   TZKT_API_URL,
   WTZ_CONTRACT,
-  WTZ_PRECISION,
   WTZ_TOKEN,
 } from 'app/common/const';
 import { TransactionStatus } from 'types/transaction';
-import { BigNumber } from 'bignumber.js';
-import { transpileModule } from 'typescript';
-import { ContractMethodObject, Wallet } from '@taquito/taquito';
 import {
   convertToAmountToWtz,
   unwrapXtz,
