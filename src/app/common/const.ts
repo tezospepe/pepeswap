@@ -58,7 +58,7 @@ export const nonDefaultTokens: SpicyToken[] = [
     name: 'Tezos',
     symbol: 'XTZ',
     decimals: 6,
-    img: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Tezos_Logo_2022.png',
+    img: 'https://seeklogo.com/images/T/tezos-xtz-logo-C96D3F7FB9-seeklogo.com.png',
     tag: 'KT1PnUZCp3u2KzWr93pn4DD7HAJnm3rWVrgn:0',
     derivedXtz: 1,
     derivedUsd: 1,
