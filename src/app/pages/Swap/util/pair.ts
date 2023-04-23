@@ -1,3 +1,4 @@
+import { WTZ_TOKEN } from 'app/common/const';
 import { getTokenByTag } from 'utils/spicy';
 
 export const constructPair = (tags, tokenList) => {
@@ -40,3 +41,5 @@ export const constructSwapParameters = ({
   impact,
   slippage,
 });
+
+export const isTezos = token => token === `${WTZ_TOKEN}:0`;

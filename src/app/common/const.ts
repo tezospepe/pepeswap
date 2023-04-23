@@ -1,6 +1,7 @@
 import { NetworkType } from '@airgap/beacon-types';
 import { DAppClientOptions } from '@airgap/beacon-dapp/dist/esm/dapp-client/DAppClientOptions';
 import { SpicyToken } from 'types/SpicyToken';
+import { BigNumber } from 'bignumber.js';
 
 /* todo: refactor into one global config object for easy access and import */
 
@@ -8,6 +9,8 @@ export const SPICY_API_URL: string = 'https://spicyb.sdaotools.xyz/';
 export const TZKT_API_URL: string = 'https://api.tzkt.io/v1/';
 
 export const SPICY_ROUTER: string = 'KT1PwoZxyv4XkPEGnTqWYvjA1UYiPTgAGyqL';
+export const WTZ_CONTRACT: string = 'KT1Pyd1r9F4nMaHy8pPZxPSq6VCn9hVbVrf4';
+export const WTZ_TOKEN: string = 'KT1PnUZCp3u2KzWr93pn4DD7HAJnm3rWVrgn';
 
 export const DAPP_NAME: string = 'PepeSwap';
 export const DAPP_ICON_URL: string =
@@ -30,9 +33,9 @@ export const defaultFrom: SpicyToken = {
   decimals: 6,
   derivedUsd: 1.244648989805831,
   derivedXtz: 1,
-  img: 'ipfs://bafybeidwsid6fvv4vxbqja7er3b4exsht5r7umv6hpz7rc3ujg7xilhwv4',
-  name: 'WTZ',
-  symbol: 'WTZ',
+  img: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Tezos_Logo_2022.png',
+  name: 'XTZ',
+  symbol: 'XTZ',
   tag: 'KT1PnUZCp3u2KzWr93pn4DD7HAJnm3rWVrgn:0',
   totalLiquidityUsd: 92874.1649167061,
   totalLiquidityXtz: 74618.76053199123,
@@ -49,3 +52,20 @@ export const defaultTo: SpicyToken = {
   totalLiquidityUsd: 2147.0167050012815,
   totalLiquidityXtz: 2414.217618689571,
 };
+
+export const nonDefaultTokens: SpicyToken[] = [
+  {
+    name: 'Tezos',
+    symbol: 'XTZ',
+    decimals: 6,
+    img: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Tezos_Logo_2022.png',
+    tag: 'KT1PnUZCp3u2KzWr93pn4DD7HAJnm3rWVrgn:0',
+    derivedXtz: 1,
+    derivedUsd: 1,
+    totalLiquidityXtz: 1,
+    totalLiquidityUsd: 1,
+  },
+];
+
+export const TEZ_DECIMALS: number = 6;
+export const WTZ_PRECISION: BigNumber = new BigNumber(10).pow(18);

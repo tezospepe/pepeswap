@@ -15,6 +15,7 @@ export interface SpicyPool {
 
 export interface SpicyPoolToken {
   reserve: number;
+  reserveXtz: number;
   tag: string;
   volume: number;
   price: TokenPrice;

@@ -65,8 +65,15 @@ export const getSwapAmount = ({ pair, fromAmount }: SwapAmountParameters) => {
       ? pair.pool?.toToken
       : pair.pool?.fromToken;
 
-  const tokenFromReserve = Number(tokenFrom?.reserve);
-  const tokenToReserve = Number(tokenTo?.reserve);
+  const tokenFromReserve =
+    pair.from?.symbol === 'XTZ'
+      ? Number(tokenFrom?.reserveXtz)
+      : Number(tokenFrom?.reserve);
+
+  const tokenToReserve =
+    pair.to?.symbol === 'XTZ'
+      ? Number(tokenTo?.reserveXtz)
+      : Number(tokenTo?.reserve);
 
   return getSwapQuote({
     tokenFromReserve,

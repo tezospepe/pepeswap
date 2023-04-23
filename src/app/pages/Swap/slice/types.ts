@@ -35,7 +35,10 @@ export type GetTokenProps = {
 };
 
 export type GetPoolProps = {
-  transformPools: (pools: SpicyPoolResponse[]) => SpicyPool[];
+  transformPools: (
+    pools: SpicyPoolResponse[],
+    wtzSwapRatio: () => Number,
+  ) => SpicyPool[];
 };
 
 export type GetPoolMetricsProps = {

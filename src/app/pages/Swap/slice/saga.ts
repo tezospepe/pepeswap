@@ -15,8 +15,24 @@ import {
   StorageKeys,
 } from 'app/services/local-storage-service';
 import { Tezos } from 'app/services/wallet-service';
-import { SPICY_ROUTER, TZKT_API_URL } from 'app/common/const';
+import {
+  SPICY_ROUTER,
+  TZKT_API_URL,
+  WTZ_CONTRACT,
+  WTZ_PRECISION,
+  WTZ_TOKEN,
+} from 'app/common/const';
 import { TransactionStatus } from 'types/transaction';
+import { BigNumber } from 'bignumber.js';
+import { transpileModule } from 'typescript';
+import { ContractMethodObject, Wallet } from '@taquito/taquito';
+import {
+  convertToAmountToWtz,
+  unwrapXtz,
+  wrapXtz,
+  wtzSwapRatio,
+  wtzSwapRatioTzkt,
+} from '../util/wtz';
 
 const SPICY_API = 'https://spicyb.sdaotools.xyz/api/rest';
 const storageService = new LocalStorageService();
@@ -26,17 +42,20 @@ export function* getSingleTokenBalance({
 }: ReturnType<typeof actions.getSingleTokenBalance>) {
   const { userAddress, token } = payload;
 
+  const isTezos = payload.token.symbol === 'XTZ';
+
   const tokenContract = token.tag.split(':')[0];
   const tokenId =
     token.tag.split(':')[1] === 'null' ? 0 : token.tag.split(':')[1];
 
-  const requestURL = `
-    ${TZKT_API_URL}tokens/balances?account=${userAddress}&token.contract=${tokenContract}&token.tokenId=${tokenId}
-  `;
+  const requestURL = isTezos
+    ? `${TZKT_API_URL}accounts/${userAddress}/balance`
+    : `${TZKT_API_URL}tokens/balances?account=${userAddress}&token.contract=${tokenContract}&token.tokenId=${tokenId}`;
 
   const balances = yield call(request, requestURL);
-  const balance =
-    rawToBalance(Number(balances[0]?.balance), token.decimals) || 0;
+  const balance = isTezos
+    ? rawToBalance(Number(balances), token.decimals) || 0
+    : rawToBalance(Number(balances[0]?.balance), token.decimals) || 0;
 
   yield put(
     actions.setUserTokenBalance({
@@ -95,12 +114,14 @@ export function* getPools({ transformPools }: GetPoolProps) {
     ${SPICY_API}/PoolListAll?day_agg_start=${calculateDayAgg()}&hour_agg_start=${calculateHourAgg()}
   `;
 
+  const wtzSwapRatio = yield wtzSwapRatioTzkt();
+
   try {
     // Call our request helper (see 'utils/request')
     const { pair_info: pools } = yield call(request, requestURL);
 
     if (pools?.length > 0) {
-      const transformedPools = transformPools(pools);
+      const transformedPools = transformPools(pools, wtzSwapRatio);
       yield put(actions.poolsLoaded(transformedPools));
     } else {
       yield put(actions.poolsError(SpicySwapErrorType.POOL_NOT_FOUND));
@@ -128,6 +149,209 @@ export function* getPoolMetrics({
     }
   } catch (err: any) {
     yield put(actions.poolMetricsError(SpicySwapErrorType.RESPONSE_ERROR));
+  }
+}
+
+export function* executeSwapToTez({
+  payload,
+}: ReturnType<typeof actions.executeSwap>) {
+  const userAddress = payload.userAddress;
+  const fromToken = payload.fromToken.tag.split(':');
+  const toToken = payload.toToken.tag.split(':');
+
+  try {
+    const dexContract = yield Tezos.wallet.at(SPICY_ROUTER);
+    const wtzContract = yield Tezos.wallet.at(WTZ_CONTRACT);
+    const fromTokenContract = yield Tezos.wallet.at(fromToken[0]);
+
+    const input = convertToMuTez(payload.fromToken, payload.fromAmount);
+
+    const wtzOutput = convertToMuTez(
+      payload.toToken,
+      payload.toAmount - (payload.toAmount * payload.slippage) / 100,
+    );
+
+    const batch = yield Tezos.wallet
+      .batch()
+      .withContractCall(
+        fromTokenContract.methods.update_operators([
+          {
+            add_operator: {
+              owner: userAddress,
+              operator: SPICY_ROUTER,
+              token_id: fromToken[1],
+            },
+          },
+        ]),
+      )
+      .withContractCall(
+        dexContract.methodsObject.swap_exact_for_tokens({
+          _to: userAddress,
+          amountIn: input,
+          amountOutMin: wtzOutput,
+          deadline: `${secondsFromNow(300)}`,
+          tokenIn: {
+            fa2_address: fromToken[0],
+            token_id: fromToken[1] || null,
+          },
+          tokenOut: {
+            fa2_address: toToken[0],
+            token_id: toToken[1] || null,
+          },
+        }),
+      )
+      .withContractCall(
+        fromTokenContract.methods.update_operators([
+          {
+            remove_operator: {
+              owner: userAddress,
+              operator: SPICY_ROUTER,
+              token_id: fromToken[1],
+            },
+          },
+        ]),
+      )
+      .withContractCall(
+        yield unwrapXtz({
+          amount: wtzOutput,
+          userAddress,
+          wtzContract,
+        }),
+      )
+      .send();
+
+    yield batch.confirmation();
+
+    yield put(
+      actions.transactionUpdate({
+        status: TransactionStatus.CONFIRMED,
+        hash: batch.opHash,
+        fromToken: payload.fromToken.symbol,
+        toToken: payload.toToken.symbol,
+        fromAmount: input,
+        toAmount: wtzOutput,
+      }),
+    );
+  } catch (e) {
+    console.log(e);
+    yield put(
+      actions.transactionUpdate({
+        status: TransactionStatus.FAILED,
+        hash: '',
+        fromToken: payload.fromToken.symbol,
+        toToken: payload.toToken.symbol,
+        fromAmount: payload.fromAmount,
+        toAmount: payload.toAmount,
+      }),
+    );
+  }
+}
+
+export function* executeTezSwap({
+  payload,
+}: ReturnType<typeof actions.executeSwap>) {
+  const userAddress = payload.userAddress;
+  const fromToken = payload.fromToken.tag.split(':');
+  const toToken = payload.toToken.tag.split(':');
+
+  try {
+    const dexContract = yield Tezos.wallet.at(SPICY_ROUTER);
+    const wtzContract = yield Tezos.wallet.at(WTZ_CONTRACT);
+    const wtzTokenContract = yield Tezos.wallet.at(WTZ_TOKEN);
+    const tezToWtzRatio = yield wtzSwapRatio({ wtzContract });
+
+    const input = convertToMuTez(payload.fromToken, payload.fromAmount);
+    const wtzOutput = Number(tezToWtzRatio.multipliedBy(input).toFixed(0));
+
+    const output = convertToMuTez(
+      payload.toToken,
+      convertToAmountToWtz({
+        swapRatio: tezToWtzRatio,
+        amount: payload.toAmount,
+      }) -
+        (convertToAmountToWtz({
+          swapRatio: tezToWtzRatio,
+          amount: payload.toAmount,
+        }) *
+          payload.slippage) /
+          100,
+    );
+
+    const batch = yield Tezos.wallet
+      .batch()
+      .withContractCall(
+        yield wrapXtz({
+          amount: payload.fromAmount,
+          userAddress,
+          swapRatio: tezToWtzRatio,
+          wtzContract,
+        }),
+        { amount: input, mutez: true },
+      )
+      .withContractCall(
+        wtzTokenContract.methods.update_operators([
+          {
+            add_operator: {
+              owner: userAddress,
+              operator: SPICY_ROUTER,
+              token_id: fromToken[1],
+            },
+          },
+        ]),
+      )
+      .withContractCall(
+        dexContract.methodsObject.swap_exact_for_tokens({
+          _to: userAddress,
+          amountIn: wtzOutput,
+          amountOutMin: output,
+          deadline: `${secondsFromNow(300)}`,
+          tokenIn: {
+            fa2_address: fromToken[0],
+            token_id: fromToken[1] || null,
+          },
+          tokenOut: {
+            fa2_address: toToken[0],
+            token_id: toToken[1] || null,
+          },
+        }),
+      )
+      .withContractCall(
+        wtzTokenContract.methods.update_operators([
+          {
+            remove_operator: {
+              owner: userAddress,
+              operator: SPICY_ROUTER,
+              token_id: fromToken[1],
+            },
+          },
+        ]),
+      )
+      .send();
+
+    yield batch.confirmation();
+
+    yield put(
+      actions.transactionUpdate({
+        status: TransactionStatus.CONFIRMED,
+        hash: batch.opHash,
+        fromToken: payload.fromToken.symbol,
+        toToken: payload.toToken.symbol,
+        fromAmount: input,
+        toAmount: output,
+      }),
+    );
+  } catch (e) {
+    console.log(e);
+    yield put(
+      actions.transactionUpdate({
+        status: TransactionStatus.FAILED,
+        hash: '',
+        fromToken: payload.fromToken.symbol,
+        toToken: payload.toToken.symbol,
+        fromAmount: payload.fromAmount,
+        toAmount: payload.toAmount,
+      }),
+    );
   }
 }
 
@@ -236,6 +460,8 @@ export function* spicySwapSaga() {
     }),
   );
   yield takeLatest(actions.executeSwap.type, executeSwap);
+  yield takeLatest(actions.executeTezSwap.type, executeTezSwap);
+  yield takeLatest(actions.executeSwapToTez.type, executeSwapToTez);
   yield takeLatest(actions.loadPoolMetrics.type, getPoolMetrics);
   yield takeLatest(actions.getTokenBalance.type, getTokenBalance);
   yield takeLatest(actions.getSingleTokenBalance.type, getSingleTokenBalance);

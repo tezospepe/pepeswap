@@ -1,9 +1,11 @@
+import { WTZ_TOKEN, nonDefaultTokens } from 'app/common/const';
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
 import { calculateLPAprXtz, calculateFarmAprXtz } from 'utils/spicy';
+import { isTezos } from '../util/pair';
 
 export const transformTokens = (tokens): SpicyToken[] => {
-  return tokens.map(token => ({
+  const transformedTokens = tokens.map(token => ({
     name: token.name,
     symbol: token.symbol,
     decimals: token.decimals,
@@ -14,15 +16,16 @@ export const transformTokens = (tokens): SpicyToken[] => {
     totalLiquidityXtz: token.totalliquidityxtz,
     totalLiquidityUsd: token.totalliquidityusd,
   }));
+
+  return [...nonDefaultTokens, ...transformedTokens];
 };
 
-export const transformPools = (pools): SpicyPool[] => {
-  return pools.map(pool => {
+export const transformPools = (pools, wtzSwapRatio): SpicyPool[] => {
+  const transformedPools = pools.map(pool => {
     const lpApr = calculateLPAprXtz({
       volume: pool.pairHourData_aggregate.aggregate.sum.hourlyvolumextz,
       reserve: pool.reservextz,
     });
-
     const farmApr = calculateFarmAprXtz({
       volume: pool.pairHourData_aggregate.aggregate.sum.hourlyvolumextz,
       staked: pool.totalstakedfarmxtz,
@@ -33,6 +36,11 @@ export const transformPools = (pools): SpicyPool[] => {
       contract: pool.contract,
       fromToken: {
         reserve: pool.reserve0,
+        ...(isTezos(pool.token0) && {
+          reserveXtz: isTezos(pool.token0)
+            ? pool.reserve0 / wtzSwapRatio
+            : pool.reserve0,
+        }),
         tag: pool.token0,
         volume: pool.volumetoken0,
         price: {
@@ -42,6 +50,11 @@ export const transformPools = (pools): SpicyPool[] => {
       },
       toToken: {
         reserve: pool.reserve1,
+        ...(isTezos(pool.token1) && {
+          reserveXtz: isTezos(pool.token1)
+            ? pool.reserve1 / wtzSwapRatio
+            : pool.reserve1,
+        }),
         tag: pool.token1,
         volume: pool.volumetoken1,
         price: {
@@ -62,6 +75,8 @@ export const transformPools = (pools): SpicyPool[] => {
       farmApr,
     };
   });
+
+  return transformedPools;
 };
 
 export const transformPoolMetrics = (metrics): SpicyPoolMetric[] => {
@@ -87,3 +102,5 @@ export const secondsFromNow = s => {
   now.setSeconds(now.getSeconds() + s);
   return Math.floor(now.getTime() / 1000);
 };
+
+export const getSwapOutput = 0;

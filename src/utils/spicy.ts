@@ -1,6 +1,7 @@
 import { SpicyPool } from 'types/SpicyPool';
 import { SpicyToken } from 'types/SpicyToken';
 import { numberToLocaleAndFix } from './helper';
+import { TEZ_DECIMALS } from 'app/common/const';
 
 /**
  * calculates an aggregate value for the day based on the current time.
@@ -55,6 +56,9 @@ export const calculateRate = ({ reserveFrom, reserveTo }) =>
 
 export const convertToMuTez = (token, amount) =>
   Math.floor(amount * Math.pow(10, token.decimals));
+
+export const convertTezToMuTez = amount =>
+  Math.floor(amount * Math.pow(10, TEZ_DECIMALS));
 
 export const rawToBalance = (amount, decimals) =>
   amount / Math.pow(10, decimals);

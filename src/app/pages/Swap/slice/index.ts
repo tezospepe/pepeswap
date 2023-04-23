@@ -111,6 +111,15 @@ const slice = createSlice({
     executeSwap(state, action: PayloadAction<UserSwapParameters>) {
       state.swapping = true;
     },
+    executeTezSwap(state, action: PayloadAction<UserSwapParameters>) {
+      state.swapping = true;
+    },
+    executeSwapToTez(state, action: PayloadAction<UserSwapParameters>) {
+      state.swapping = true;
+    },
+    executeWtzWrap(state, action: PayloadAction<UserSwapParameters>) {
+      state.swapping = true;
+    },
     transactionUpdate(state, action: PayloadAction<Transaction>) {
       state.swapping = false;
       state.txLog.push(action.payload);

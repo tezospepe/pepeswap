@@ -64,12 +64,28 @@ export function SwapWidget({
       return onWalletConnect();
     } else if (!swapping && activeTab === SwapWidgetTab.Swap) {
       if (swapParameters && account) {
-        dispatch(
-          actions.executeSwap({
-            ...swapParameters,
-            userAddress: account.address,
-          }),
-        );
+        if (swapParameters.fromToken.symbol === 'XTZ') {
+          dispatch(
+            actions.executeTezSwap({
+              ...swapParameters,
+              userAddress: account.address,
+            }),
+          );
+        } else if (swapParameters.toToken.symbol === 'XTZ') {
+          dispatch(
+            actions.executeSwapToTez({
+              ...swapParameters,
+              userAddress: account.address,
+            }),
+          );
+        } else {
+          dispatch(
+            actions.executeSwap({
+              ...swapParameters,
+              userAddress: account.address,
+            }),
+          );
+        }
       }
     }
   };
