@@ -96,7 +96,6 @@ export function SwapAssetSelection({
 
   useEffect(() => {
     if (account && pair && pair.from && pair.to) {
-      console.log(pair);
       retrieveAndSetTokenBalances(pair, account.address);
     }
   }, [pair]);

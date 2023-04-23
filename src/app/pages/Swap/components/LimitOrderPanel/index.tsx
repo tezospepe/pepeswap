@@ -30,7 +30,6 @@ export default function LimitOrderPanel({
 
   const handleSliderChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSwapRate(Number(event.target.value));
-    console.log(swapRate);
   };
 
   return (
