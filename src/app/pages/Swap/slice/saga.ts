@@ -301,7 +301,7 @@ export function* executeTezSwap({
       .withContractCall(
         dexContract.methodsObject.swap_exact_for_tokens({
           _to: userAddress,
-          amountIn: wtzOutput,
+          amountIn: wtzOutput - 1,
           amountOutMin: output,
           deadline: `${secondsFromNow(300)}`,
           tokenIn: {
