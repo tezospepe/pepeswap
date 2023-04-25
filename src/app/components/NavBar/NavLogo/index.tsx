@@ -4,7 +4,7 @@ export function NavLogo() {
   return (
     <LogoWrapper>
       <LogoTitle>PepeSwap</LogoTitle>
-      <LogoDescription>next-generation DEX</LogoDescription>
+      <LogoDescription>powered by SpicySwap 🌶️</LogoDescription>
     </LogoWrapper>
   );
 }
