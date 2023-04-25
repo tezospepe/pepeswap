@@ -70,11 +70,12 @@ export const MainText = styled(P)`
   color: rgba(255, 255, 255, 0.5);
 `;
 
-export const TitleText = styled(P)`
+export const TitleText = styled(P)<{ selectable?: Boolean }>`
   justify-self: flex-end;
   font-size: 0.75rem;
   grid-area: 1 / 2 / 2 / 3;
   color: rgba(255, 255, 255, 0.5);
+  cursor: ${p => p.selectable && 'pointer'};
 `;
 
 export const SwapSelectionTokenIcon = styled(SwapTokenIcon)`

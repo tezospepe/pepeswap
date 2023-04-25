@@ -41,12 +41,11 @@ export function SwapAssetSelection({
   const userBalances = useSelector(selectUserBalance);
   const account = useSelector(selectAccount);
 
-  const fromBalance = userBalances.find(
-    b => b.token?.symbol === pair?.from?.symbol,
-  );
-  const toBalance = userBalances.find(
-    b => b.token?.symbol === pair?.to?.symbol,
-  );
+  const fromBalance =
+    userBalances.find(b => b.token?.symbol === pair?.from?.symbol)?.balance ||
+    0;
+  const toBalance =
+    userBalances.find(b => b.token?.symbol === pair?.to?.symbol)?.balance || 0;
 
   const handleTokenClick = (dir: SwapDirection) => {
     toggleModal(dir);
@@ -66,6 +65,12 @@ export function SwapAssetSelection({
         userAddress,
       }),
     );
+  };
+
+  const handleFillBalance = (dir: SwapDirection) => {
+    if (dir === 'from' && fromBalance) {
+      dispatch(actions.setFromAmount(fromBalance));
+    }
   };
 
   const handleFromAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -125,7 +130,14 @@ export function SwapAssetSelection({
             <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
-        <TitleText>{`Balance: ${fromBalance?.balance || 0}`}</TitleText>
+        <TitleText
+          onClick={() => {
+            handleFillBalance('from');
+          }}
+          selectable
+        >
+          {`Balance: ${fromBalance}`}
+        </TitleText>
         <SwapSelectionAmountInput
           type="number"
           onChange={handleFromAmountChange}
@@ -134,6 +146,7 @@ export function SwapAssetSelection({
           step={0.000000000001}
           maxLength={14}
           onKeyPress={handleSwapKeyPress}
+          value={fromAmount || ''}
         />
       </SwapSelection>
       {showSwitch ? (
@@ -158,14 +171,14 @@ export function SwapAssetSelection({
             <SwapSelectionArrowIcon />
           </SwapSelectionAsset>
         </A>
-        <TitleText>{`Balance: ${toBalance?.balance || 0}`}</TitleText>
+        <TitleText>{`Balance: ${toBalance}`}</TitleText>
         <SwapSelectionAmountInput
           type="number"
           onChange={handleToAmountChange}
           min={0}
           step={0.000000000001}
           placeholder="0.00000000"
-          value={toAmount}
+          value={toAmount || ''}
           maxLength={14}
           onInput={handleSwapKeyPress}
         />
