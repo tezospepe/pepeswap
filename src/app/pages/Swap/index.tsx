@@ -1,5 +1,6 @@
 import isEqual from 'lodash/isEqual';
 import { Helmet } from 'react-helmet-async';
+import { Toaster } from 'react-hot-toast';
 import { PageWrapper } from 'app/components/PageWrapper';
 import { SwapWidget } from './components/SwapWidget';
 import styled from 'styled-components/macro';
@@ -172,6 +173,7 @@ export function Swap() {
           />
         </Content>
         <Footer />
+        <Toaster />
       </Wrapper>
     </>
   );
