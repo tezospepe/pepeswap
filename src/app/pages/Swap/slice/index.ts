@@ -14,7 +14,9 @@ import {
 } from 'types/Swap';
 import { SpicyPool, SpicyPoolMetric } from 'types/SpicyPool';
 import { defaultFrom, defaultTo } from 'app/common/const';
-import { Transaction } from 'types/transaction';
+import { Transaction, TransactionStatus } from 'types/transaction';
+import toast from 'react-hot-toast';
+import { toastConfig } from 'app/common/toast';
 
 export const initialState: SpicySwapState = {
   tokens: [],
@@ -121,6 +123,15 @@ const slice = createSlice({
       state.swapping = true;
     },
     transactionUpdate(state, action: PayloadAction<Transaction>) {
+      action.payload.status === TransactionStatus.CONFIRMED
+        ? toast.success('Swap confirmed!', {
+            ...toastConfig,
+            icon: '🐸',
+          })
+        : toast.error('Swap failed. Please try again.', {
+            ...toastConfig,
+          });
+
       state.swapping = false;
       state.txLog.push(action.payload);
     },
