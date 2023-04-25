@@ -45,7 +45,7 @@ export const getSwapQuote = ({
   const priceAfterTrade = newToken1Reserve / newToken2Reserve;
 
   const priceImpact =
-    ((priceAfterTrade - priceBeforeTrade) / priceBeforeTrade) * 100;
+    ((priceBeforeTrade - priceAfterTrade) / priceAfterTrade) * 100;
 
   return {
     rate: priceAfterTrade,
